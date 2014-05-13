@@ -293,7 +293,7 @@ public class Cliente {
 		if (eServicio)
 			System.out.println("No existe el servicio que quiere pagar.");
 				
-		
+		 
 	}
 	
 	public void agregarServicio(String tipo, double monto, Date fechaPago, Date fechaVencimiento, long numeroPagoElectronico){
