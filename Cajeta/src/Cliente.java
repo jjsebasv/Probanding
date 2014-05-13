@@ -317,8 +317,8 @@ public class Cliente {
 					System.out.println("Vence " + s.getFechaVencimiento());
 				}
 				 
-			}  
-		}
+			}   
+		}  
 	} 
 
 
