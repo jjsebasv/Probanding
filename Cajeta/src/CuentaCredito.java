@@ -19,9 +19,7 @@ public class CuentaCredito {
 		private double limiteFinanciacion;
 		private boolean debitoAutomatico;
 		private final double TEM = 1.0407;
-		
-		// modificando 
-		
+				
 		public CuentaCredito ( Cliente titular, long nroCuenta, String fechaAlta, String marca, Tarjeta tarTitular, 
 				double limiteFinanciacion ){
 			this.titular = titular;
@@ -153,7 +151,7 @@ public class CuentaCredito {
 		return result;
 	}
 
-	@Override
+	
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -205,6 +203,10 @@ public class CuentaCredito {
 		} else if (!titular.equals(other.titular))
 			return false;
 		return true;
+	}
+	
+	public String toString(){
+		return "CUENTA CREDITO: "+ this.marca +" "+this.nroCuenta ;
 	}
 	
 }

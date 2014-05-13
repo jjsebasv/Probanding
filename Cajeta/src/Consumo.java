@@ -5,8 +5,9 @@ public class Consumo extends Movimiento {
 	
 	private final String comercio;
 	private final String domicilio;
+	
 
-	public Consumo(String tipo, Date fecha, double monto, Tarjeta tarjeta, String comercio, String domicilio) {
+	public Consumo(String tipo, String fecha, double monto, Tarjeta tarjeta, String comercio, String domicilio) {
 		super(tipo, fecha, monto, tarjeta);
 		this.comercio = comercio;
 		this.domicilio = domicilio;
@@ -15,7 +16,6 @@ public class Consumo extends Movimiento {
 
 	// --- ------------------------ HASHCODE, EQUALS, TOSTRING -----------------------------------
 
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();

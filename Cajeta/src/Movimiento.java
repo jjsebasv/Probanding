@@ -7,12 +7,12 @@ import java.util.Date;
 public class Movimiento {
 
 	private final String tipo;
-	private final Date fecha;
+	private final String fecha;
 	private final double monto;
 	private final Tarjeta tarjeta;
 	private final int codigoDeTransaccion = this.hashCode();
  
-	public Movimiento ( String tipo, Date fecha, double monto, Tarjeta tarjeta){
+	public Movimiento ( String tipo, String fecha, double monto, Tarjeta tarjeta){
 		this.tipo = tipo;
 		this.fecha = fecha;
 		this.monto = monto;
@@ -107,7 +107,7 @@ public class Movimiento {
 	}
 
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 

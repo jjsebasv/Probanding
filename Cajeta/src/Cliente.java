@@ -11,11 +11,14 @@ public class Cliente {
 	private String usuario;
 	private TarjetaDebito tajetaDeDebito;
 	
+	
 	private Set<CuentaCredito> cuentasCredito;
 	private Set<Cuenta> cuentasMonetarias;
 	private Set<Movimiento> movimientos;
 	private Set<Seguro> seguros;
 	private Set<Tarjeta> tarjetasCredito;
+	private Set<Servicio> listaServicios;
+	
 	
 	public Cliente ( long numeroCliente ){
 		this.numeroCliente = numeroCliente;
@@ -110,13 +113,21 @@ public class Cliente {
 	// --------------------------- GETTERS Y SETTERS   -----------------------------------
 
 
-	
+		
+		
+		
 	public int getClaveHomeBanking() {
 		return claveHomeBanking;
 	}
 
 
+	public Set<Servicio> getListaServicios() {
+		return listaServicios;
+	}
 
+	public void setListaServicios(Set<Servicio> listaServicios) {
+		this.listaServicios = listaServicios;
+	}
 
 	public void setClaveHomeBanking(int claveHomeBanking) {
 		this.claveHomeBanking = claveHomeBanking;
@@ -251,6 +262,20 @@ public class Cliente {
 	}
 
 	
+	
+	// ------------------ Metodos ---------------------------------
+	
+	
+	
+	public void pagarServicio(String tipo){
+		if(getListaServicios() == null)
+			System.out.println("No hay servicios a pagar");
+		else{
+			for (Servicio s : this.listaServicios) {
+				if s.
+			}
+		}
+	}
 	
 
 }
