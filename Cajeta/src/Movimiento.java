@@ -16,7 +16,7 @@ public class Movimiento {
 		this.tipo = tipo;
 		this.fecha = fecha;
 		this.monto = monto;
-		this.tarjeta = tarjeta;
+		this.tarjeta = tarjeta;  
 	}
 	
 	

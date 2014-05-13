@@ -2,7 +2,7 @@
 
 
 public class Servicio{
-	
+	  
 	private final String tipo;
 	private final Date fechaVencimiento;
 	private final Date fechaPago;
@@ -73,8 +73,40 @@ public class Servicio{
 			return false;
 		return true;
 	}
+
 	
 	// --------------- Getters  & Setters ----------------
+	public boolean isPago() {
+		return pago;
+	}
+
+	public void setPago(boolean pago) {
+		this.pago = pago;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public Date getFechaVencimiento() {
+		return fechaVencimiento;
+	}
+
+	public Date getFechaPago() {
+		return fechaPago;
+	}
+
+	public long getNumeroPagoElectronico() {
+		return numeroPagoElectronico;
+	}
+
+	public double getMonto() {
+		return monto;
+	}
+	
+
+	
+		
 
 	
 }
