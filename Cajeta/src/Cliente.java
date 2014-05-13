@@ -311,7 +311,7 @@ public class Cliente {
 			System.out.println("No registra servicios a su nombre.");
 		else{
 			for (Servicio s : this.listaServicios) {
-				System.out.println(s.getTipo());
+				System.out.println(s.getTipo()); 
 				if (!s.isPago()) {
 					System.out.println("SERVICIO NO PAGO");
 					System.out.println("Vence " + s.getFechaVencimiento());
