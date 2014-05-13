@@ -316,7 +316,7 @@ public class Cliente {
 					System.out.println("SERVICIO NO PAGO");
 					System.out.println("Vence " + s.getFechaVencimiento());
 				}
-				
+				 
 			} 
 		}
 	}
