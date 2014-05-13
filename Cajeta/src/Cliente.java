@@ -1,4 +1,5 @@
- import java.util.HashMap;
+ import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -18,10 +19,9 @@ public class Cliente {
 	
 	private Map<Long,CuentaCredito> cuentasCredito;
 	private Map<Long, Cuenta> cuentasMonetarias;
-	private Map<Long,Tarjeta> tarjetasCredito;
 	private Set<Movimiento> movimientos;
-	
 	private Set<Seguro> seguros;
+	private Map<Long,Tarjeta> tarjetasCredito;
 	private Set<Servicio> listaServicios;
 	
 	
@@ -118,103 +118,148 @@ public class Cliente {
 	// --------------------------- GETTERS Y SETTERS   -----------------------------------
 
 
-		public int getClaveHomeBanking() {
-			return claveHomeBanking;
-		}
-
-		public void setClaveHomeBanking(int claveHomeBanking) {
-			this.claveHomeBanking = claveHomeBanking;
-		}
-
-		public int getClavePin() {
-			return clavePin;
-		}
-
-		public void setClavePin(int clavePin) {
-			this.clavePin = clavePin;
-		}
-
-		public long getCBU() {
-			return CBU;
-		}
-
-		public void setCBU(long cBU) {
-			CBU = cBU;
-		}
-
-		public String getUsuario() {
-			return usuario;
-		}
-
-		public void setUsuario(String usuario) {
-			this.usuario = usuario;
-		}
-
-		public TarjetaDebito getTajetaDeDebito() {
-			return tajetaDeDebito;
-		}
-
-		public void setTajetaDeDebito(TarjetaDebito tajetaDeDebito) {
-			this.tajetaDeDebito = tajetaDeDebito;
-		}
-
-		public Map<Long, CuentaCredito> getCuentasCredito() {
-			return cuentasCredito;
-		}
-
-		public void setCuentasCredito(Map<Long, CuentaCredito> cuentasCredito) {
-			this.cuentasCredito = cuentasCredito;
-		}
-
-		public Map<Long, Cuenta> getCuentasMonetarias() {
-			return cuentasMonetarias;
-		}
-
-		public void setCuentasMonetarias(Map<Long, Cuenta> cuentasMonetarias) {
-			this.cuentasMonetarias = cuentasMonetarias;
-		}
-
-		public Map<Long, Tarjeta> getTarjetasCredito() {
-			return tarjetasCredito;
-		}
-
-		public void setTarjetasCredito(Map<Long, Tarjeta> tarjetasCredito) {
-			this.tarjetasCredito = tarjetasCredito;
-		}
-
-		public Set<Movimiento> getMovimientos() {
-			return movimientos;
-		}
-
-		public void setMovimientos(Set<Movimiento> movimientos) {
-			this.movimientos = movimientos;
-		}
-
-		public Set<Seguro> getSeguros() {
-			return seguros;
-		}
-
-		public void setSeguros(Set<Seguro> seguros) {
-			this.seguros = seguros;
-		}
-
-		public Set<Servicio> getListaServicios() {
-			return listaServicios;
-		}
-
-		public void setListaServicios(Set<Servicio> listaServicios) {
-			this.listaServicios = listaServicios;
-		}
-
-		public long getNumeroCliente() {
-			return numeroCliente;
-		}
 		
+		
+		
+	public int getClaveHomeBanking() {
+		return claveHomeBanking;
+	}
+
+
+	public Set<Servicio> getListaServicios() {
+		return listaServicios;
+	}
+
+	public void setListaServicios(Set<Servicio> listaServicios) {
+		this.listaServicios = listaServicios;
+	}
+
+	public void setClaveHomeBanking(int claveHomeBanking) {
+		this.claveHomeBanking = claveHomeBanking;
+	}
+
+
+
+	public int getClavePin() {
+		return clavePin;
+	}
+
+
+
+	public void setClavePin(int clavePin) {
+		this.clavePin = clavePin;
+	}
+
+
+
+	public long getCBU() {
+		return CBU;
+	}
+
+
+
+	public void setCBU(long cBU) {
+		CBU = cBU;
+	}
+
+
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+
+
+
+
+
+	public Map<Long, CuentaCredito> getCuentasCredito() {
+		return cuentasCredito;
+	}
+
+	public void setCuentasCredito(Map<Long, CuentaCredito> cuentasCredito) {
+		this.cuentasCredito = cuentasCredito;
+	}
+
+	public void setTarjetasCredito(Map<Long, Tarjeta> tarjetasCredito) {
+		this.tarjetasCredito = tarjetasCredito;
+	}
+
+	public Map<Long, Cuenta> getCuentasMonetarias() {
+		return cuentasMonetarias;
+	}
+
+	public void setCuentasMonetarias(Map<Long, Cuenta> cuentasMonetarias) {
+		this.cuentasMonetarias = cuentasMonetarias;
+	}
+
+	public Set<Movimiento> getMovimientos() {
+		return movimientos;
+	}
+
+
+
+	public void setMovimientos(Set<Movimiento> movimientos) {
+		this.movimientos = movimientos;
+	}
+
+
+
+	public Set<Seguro> getSeguros() {
+		return seguros;
+	}
+
+
+
+	public void setSeguros(Set<Seguro> seguros) {
+		this.seguros = seguros;
+	}
+
+
+
+
+	public long getNumeroCliente() {
+		return numeroCliente;
+	}
+
+
+
+	public TarjetaDebito getTajetaDeDebito() {
+		return tajetaDeDebito;
+	}
+
+
+
+	public void setTajetaDeDebito(TarjetaDebito tajetaDeDebito) {
+		this.tajetaDeDebito = tajetaDeDebito;
+	}
+
+
+
+	public void generacionClavePIN( int clavePIN){
+		this.clavePin = clavePIN;
+	}
+	
+	public void generacionClaveHomeBanking( int claveHomeBanking){
+		this.claveHomeBanking = claveHomeBanking;
+	}
+	
+	public void generacionDeUsuario( String usuario ){
+		this.usuario = usuario;
+	}
+
+	
 	
 	// ------------------ Metodos ---------------------------------
 	
 	
-	
+		// ------ Servicios -----
 	public void pagarServicio(String tipo, long numeroCuenta){
 		boolean eServicio = false;
 		if(getListaServicios() == null){
@@ -233,6 +278,7 @@ public class Cliente {
 				if ( this.cuentasMonetarias.containsKey(numeroCuenta) ){
 					double saldoViejo = this.cuentasMonetarias.get(numeroCuenta).getSaldoActual();
 					this.cuentasMonetarias.get(numeroCuenta).setSaldoActual(saldoViejo - s.getMonto());
+					s.setPago(true);
 				} 
 				else{ 
 					System.out.println("No existe esa cuenta.");
@@ -246,7 +292,34 @@ public class Cliente {
 				
 		
 	}
+	
+	public void agregarServicio(String tipo, double monto, Date fechaPago, Date fechaVencimiento, long numeroPagoElectronico){
+		if( this.listaServicios == null ){
+			Set<Servicio> listaServicio = new HashSet<>();
+			this.listaServicios = listaServicio;
+		}
+		Servicio servicioNuevo = new Servicio( tipo, monto, fechaPago, fechaVencimiento, numeroPagoElectronico);
+		
+		this.listaServicios.add(servicioNuevo);
+	}
 
+	public void listaServicios(){
+		if(this.listaServicios == null)
+			System.out.println("No registra servicios a su nombre.");
+		else{
+			for (Servicio s : this.listaServicios) {
+				System.out.println(s.getTipo());
+				if (!s.isPago()) {
+					System.out.println("SERVICIO NO PAGO");
+					System.out.println("Vence " + s.getFechaVencimiento());
+				}
+				
+			}
+		}
+	}
 
 
 }
+
+
+

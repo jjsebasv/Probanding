@@ -9,6 +9,7 @@ public class Servicio{
 	private final long numeroPagoElectronico;
 	private final double monto;
 	private boolean pago = false;
+	private final static double impuesto = 50.0;
 	
 	public Servicio ( String tipo, double monto, Date fechaPago, Date fechaVencimiento, long numeroPagoElectronico ){
 		this.monto = monto;
