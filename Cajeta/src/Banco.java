@@ -17,6 +17,8 @@ public class Banco {
 	private Set<Seguro> listaSeguros;
 	private final String nombre;
 	
+	// hola sebas 
+	  
 	public Banco ( String nombre, int numeroEntidad ){
 		this.nombre = nombre;
 		this.numeroEntidad = numeroEntidad;

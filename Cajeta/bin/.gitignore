@@ -1,4 +1,3 @@
-/Piloto.class
 /Banco.class
 /CajaDeAhorro.class
 /Celular.class
@@ -12,6 +11,7 @@
 /Movimiento.class
 /NoExisteLaCuenta.class
 /NoHayDineroDisponible.class
+/Piloto.class
 /Prueba.class
 /Resumen.class
 /Seguro.class
