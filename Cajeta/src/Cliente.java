@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 
+
 public class Cliente {
 
 	private int claveHomeBanking;
@@ -15,20 +16,21 @@ public class Cliente {
 	private TarjetaDebito tajetaDeDebito;
 	
 	
-	private Set<CuentaCredito> cuentasCredito;
+	private Map<Long,CuentaCredito> cuentasCredito;
 	private Map<Long, Cuenta> cuentasMonetarias;
+	private Map<Long,Tarjeta> tarjetasCredito;
 	private Set<Movimiento> movimientos;
+	
 	private Set<Seguro> seguros;
-	private Set<Tarjeta> tarjetasCredito;
 	private Set<Servicio> listaServicios;
 	
 	
 	public Cliente ( long numeroCliente ){
 		this.numeroCliente = numeroCliente;
-		cuentasCredito = new HashSet<CuentaCredito>();
+		cuentasCredito = new HashMap<Long,CuentaCredito>();
 		cuentasMonetarias = new HashMap<Long,Cuenta>();
 		seguros = new HashSet<Seguro>();
-		tarjetasCredito = new HashSet<Tarjeta>();
+		tarjetasCredito = new HashMap<Long,Tarjeta>();
 		movimientos = new HashSet<Movimiento>();
 
 	}
@@ -116,154 +118,98 @@ public class Cliente {
 	// --------------------------- GETTERS Y SETTERS   -----------------------------------
 
 
+		public int getClaveHomeBanking() {
+			return claveHomeBanking;
+		}
+
+		public void setClaveHomeBanking(int claveHomeBanking) {
+			this.claveHomeBanking = claveHomeBanking;
+		}
+
+		public int getClavePin() {
+			return clavePin;
+		}
+
+		public void setClavePin(int clavePin) {
+			this.clavePin = clavePin;
+		}
+
+		public long getCBU() {
+			return CBU;
+		}
+
+		public void setCBU(long cBU) {
+			CBU = cBU;
+		}
+
+		public String getUsuario() {
+			return usuario;
+		}
+
+		public void setUsuario(String usuario) {
+			this.usuario = usuario;
+		}
+
+		public TarjetaDebito getTajetaDeDebito() {
+			return tajetaDeDebito;
+		}
+
+		public void setTajetaDeDebito(TarjetaDebito tajetaDeDebito) {
+			this.tajetaDeDebito = tajetaDeDebito;
+		}
+
+		public Map<Long, CuentaCredito> getCuentasCredito() {
+			return cuentasCredito;
+		}
+
+		public void setCuentasCredito(Map<Long, CuentaCredito> cuentasCredito) {
+			this.cuentasCredito = cuentasCredito;
+		}
+
+		public Map<Long, Cuenta> getCuentasMonetarias() {
+			return cuentasMonetarias;
+		}
+
+		public void setCuentasMonetarias(Map<Long, Cuenta> cuentasMonetarias) {
+			this.cuentasMonetarias = cuentasMonetarias;
+		}
+
+		public Map<Long, Tarjeta> getTarjetasCredito() {
+			return tarjetasCredito;
+		}
+
+		public void setTarjetasCredito(Map<Long, Tarjeta> tarjetasCredito) {
+			this.tarjetasCredito = tarjetasCredito;
+		}
+
+		public Set<Movimiento> getMovimientos() {
+			return movimientos;
+		}
+
+		public void setMovimientos(Set<Movimiento> movimientos) {
+			this.movimientos = movimientos;
+		}
+
+		public Set<Seguro> getSeguros() {
+			return seguros;
+		}
+
+		public void setSeguros(Set<Seguro> seguros) {
+			this.seguros = seguros;
+		}
+
+		public Set<Servicio> getListaServicios() {
+			return listaServicios;
+		}
+
+		public void setListaServicios(Set<Servicio> listaServicios) {
+			this.listaServicios = listaServicios;
+		}
+
+		public long getNumeroCliente() {
+			return numeroCliente;
+		}
 		
-		
-		
-	public int getClaveHomeBanking() {
-		return claveHomeBanking;
-	}
-
-
-	public Set<Servicio> getListaServicios() {
-		return listaServicios;
-	}
-
-	public void setListaServicios(Set<Servicio> listaServicios) {
-		this.listaServicios = listaServicios;
-	}
-
-	public void setClaveHomeBanking(int claveHomeBanking) {
-		this.claveHomeBanking = claveHomeBanking;
-	}
-
-
-
-	public int getClavePin() {
-		return clavePin;
-	}
-
-
-
-	public void setClavePin(int clavePin) {
-		this.clavePin = clavePin;
-	}
-
-
-
-	public long getCBU() {
-		return CBU;
-	}
-
-
-
-	public void setCBU(long cBU) {
-		CBU = cBU;
-	}
-
-
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
-
-
-	public Set<CuentaCredito> getCuentasCredito() {
-		return cuentasCredito;
-	}
-
-
-
-	public void setCuentasCredito(Set<CuentaCredito> cuentasCredito) {
-		this.cuentasCredito = cuentasCredito;
-	}
-
-
-
-
-
-
-	public Map<Long, Cuenta> getCuentasMonetarias() {
-		return cuentasMonetarias;
-	}
-
-	public void setCuentasMonetarias(Map<Long, Cuenta> cuentasMonetarias) {
-		this.cuentasMonetarias = cuentasMonetarias;
-	}
-
-	public Set<Movimiento> getMovimientos() {
-		return movimientos;
-	}
-
-
-
-	public void setMovimientos(Set<Movimiento> movimientos) {
-		this.movimientos = movimientos;
-	}
-
-
-
-	public Set<Seguro> getSeguros() {
-		return seguros;
-	}
-
-
-
-	public void setSeguros(Set<Seguro> seguros) {
-		this.seguros = seguros;
-	}
-
-
-
-	public Set<Tarjeta> getTarjetasCredito() {
-		return tarjetasCredito;
-	}
-
-
-
-	public void setTarjetasCredito(Set<Tarjeta> tarjetas) {
-		this.tarjetasCredito = tarjetas;
-	}
-
-
-
-	public long getNumeroCliente() {
-		return numeroCliente;
-	}
-
-
-
-	public TarjetaDebito getTajetaDeDebito() {
-		return tajetaDeDebito;
-	}
-
-
-
-	public void setTajetaDeDebito(TarjetaDebito tajetaDeDebito) {
-		this.tajetaDeDebito = tajetaDeDebito;
-	}
-
-
-
-	public void generacionClavePIN( int clavePIN){
-		this.clavePin = clavePIN;
-	}
-	
-	public void generacionClaveHomeBanking( int claveHomeBanking){
-		this.claveHomeBanking = claveHomeBanking;
-	}
-	
-	public void generacionDeUsuario( String usuario ){
-		this.usuario = usuario;
-	}
-
-	
 	
 	// ------------------ Metodos ---------------------------------
 	
@@ -300,6 +246,7 @@ public class Cliente {
 				
 		
 	}
-	
+
+
 
 }

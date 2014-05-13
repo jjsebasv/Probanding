@@ -9,9 +9,9 @@ import java.util.Set;
 public abstract class Cuenta {
 
 	private final long CBU;
-	private final long numeroCuenta;
 	private final String fechaAlta;
 	private double saldoActual;
+	private final long numeroCuenta;
 	private Map<String,Movimiento> ultimosMovimientos; 
 	// que sean 10, el key es la fecha. 
 	
@@ -32,6 +32,26 @@ public abstract class Cuenta {
 	}
 	
 	
+	public Map<String, Movimiento> getUltimosMovimientos() {
+		return ultimosMovimientos;
+	}
+
+	public void setUltimosMovimientos(Map<String, Movimiento> ultimosMovimientos) {
+		this.ultimosMovimientos = ultimosMovimientos;
+	}
+
+	public long getCBU() {
+		return CBU;
+	}
+
+	public String getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public long getNumeroCuenta() {
+		return numeroCuenta;
+	}
+
 	// IMPRIME EJ: CUENTA: 123/4. 
 	public String toString(){
 		int cuenta = (int) (this.numeroCuenta / 10);

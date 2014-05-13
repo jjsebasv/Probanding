@@ -22,7 +22,7 @@ public class Prueba {
 		System.out.println("TARJETA DE DEBITO NOELIA:" + bancoFrances.verCliente(37905934L).getTajetaDeDebito());
 		System.out.println("CUENTAS CREDITO NOELIA: "+ bancoFrances.verCliente(37905934L).getCuentasCredito());
 		
-	//Consumo consumo = new Consumo("Starbucks", 100.00, bancoFrances.verCliente(37905934L).getTarjetasCredito().
+		Consumo consumo = new Consumo("Starbucks", 100.00, bancoFrances.verCliente(37905934L).getTarjetasCredito().get(key)
 	
 	}
 	
