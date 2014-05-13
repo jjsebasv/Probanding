@@ -1,10 +1,12 @@
- import java.util.Date;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Locale;
+
 import java.util.Map;
 import java.util.Set;
+
+import org.joda.time.LocalDate;
 
 
 
@@ -279,8 +281,14 @@ public class Cliente {
 			Servicio s = (Servicio) itS.next();
 			if ( s.getTipo().equals(tipo) ) {
 				if ( this.cuentasMonetarias.containsKey(numeroCuenta) ){
+					double impuesto = 0.0;
+					LocalDate fecha = new LocalDate();
+					if( s.getFechaVencimiento().before(fecha.toDate())){
+						impuesto = s.getImpuesto();
+						System.out.println("Por pago fuera de termino, se aplicara un impuesto de " + impuesto);
+					}
 					double saldoViejo = this.cuentasMonetarias.get(numeroCuenta).getSaldoActual();
-					this.cuentasMonetarias.get(numeroCuenta).setSaldoActual(saldoViejo - s.getMonto());
+					this.cuentasMonetarias.get(numeroCuenta).setSaldoActual(saldoViejo - s.getMonto() - impuesto);
 					s.setPago(true);
 				} 
 				else{ 
@@ -321,7 +329,9 @@ public class Cliente {
 		}  
 	} 
 
-
+		// ----- Cuentas -------
+	
+	
 }
 
 
