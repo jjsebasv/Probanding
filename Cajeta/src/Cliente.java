@@ -288,7 +288,7 @@ public class Cliente {
 					double saldoViejo = this.cuentasMonetarias.get(numeroCuenta).getSaldoActual();
 					this.cuentasMonetarias.get(numeroCuenta).setSaldoActual(saldoViejo - s.getMonto());
 				}
-				else{
+				else{ 
 					System.out.println("No existe esa cuenta.");
 					return;
 				}

@@ -2,7 +2,7 @@
 
 
 public class Servicio{
-	
+	 
 	private final String tipo;
 	private final Date fechaVencimiento;
 	private final Date fechaPago;
