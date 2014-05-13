@@ -18,6 +18,7 @@ public class Banco {
 	private final String nombre;
 	
 	// hola sebas 
+	//hola nowi
 	  
 	public Banco ( String nombre, int numeroEntidad ){
 		this.nombre = nombre;
