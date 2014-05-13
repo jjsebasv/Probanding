@@ -287,7 +287,7 @@ public class Cliente {
 				if ( this.cuentasMonetarias.containsKey(numeroCuenta) ){
 					double saldoViejo = this.cuentasMonetarias.get(numeroCuenta).getSaldoActual();
 					this.cuentasMonetarias.get(numeroCuenta).setSaldoActual(saldoViejo - s.getMonto());
-				}
+				} 
 				else{ 
 					System.out.println("No existe esa cuenta.");
 					return;
