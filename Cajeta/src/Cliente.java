@@ -1,4 +1,7 @@
- import java.util.HashSet;
+ import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -13,7 +16,7 @@ public class Cliente {
 	
 	
 	private Set<CuentaCredito> cuentasCredito;
-	private Set<Cuenta> cuentasMonetarias;
+	private Map<Long, Cuenta> cuentasMonetarias;
 	private Set<Movimiento> movimientos;
 	private Set<Seguro> seguros;
 	private Set<Tarjeta> tarjetasCredito;
@@ -23,7 +26,7 @@ public class Cliente {
 	public Cliente ( long numeroCliente ){
 		this.numeroCliente = numeroCliente;
 		cuentasCredito = new HashSet<CuentaCredito>();
-		cuentasMonetarias = new HashSet<Cuenta>();
+		cuentasMonetarias = new HashMap<Long,Cuenta>();
 		seguros = new HashSet<Seguro>();
 		tarjetasCredito = new HashSet<Tarjeta>();
 		movimientos = new HashSet<Movimiento>();
@@ -183,17 +186,16 @@ public class Cliente {
 
 
 
-	public Set<Cuenta> getCuentasMonetarias() {
+
+
+
+	public Map<Long, Cuenta> getCuentasMonetarias() {
 		return cuentasMonetarias;
 	}
 
-
-
-	public void setCuentasMonetarias(Set<Cuenta> cuentasMonetarias) {
+	public void setCuentasMonetarias(Map<Long, Cuenta> cuentasMonetarias) {
 		this.cuentasMonetarias = cuentasMonetarias;
 	}
-
-
 
 	public Set<Movimiento> getMovimientos() {
 		return movimientos;
@@ -267,14 +269,36 @@ public class Cliente {
 	
 	
 	
-	public void pagarServicio(String tipo){
-		if(getListaServicios() == null)
-			System.out.println("No hay servicios a pagar");
-		else{
-			for (Servicio s : this.listaServicios) {
-				if s.
+	public void pagarServicio(String tipo, long numeroCuenta){
+		boolean eServicio = false;
+		if(getListaServicios() == null){
+			System.out.println("No hay servicios a pagar.");
+			return;
+		}
+		if(this.cuentasMonetarias == null){
+			System.out.println("No registra cuentas a su nombre.");
+			return;
+		}
+		
+		Iterator<Servicio> itS = this.listaServicios.iterator();
+		while (itS.hasNext() && !eServicio ) {
+			Servicio s = (Servicio) itS.next();
+			if ( s.getTipo().equals(tipo) ) {
+				if ( this.cuentasMonetarias.containsKey(numeroCuenta) ){
+					double saldoViejo = this.cuentasMonetarias.get(numeroCuenta).getSaldoActual();
+					this.cuentasMonetarias.get(numeroCuenta).setSaldoActual(saldoViejo - s.getMonto());
+				}
+				else{
+					System.out.println("No existe esa cuenta.");
+					return;
+				}
+				eServicio = true;
 			}
 		}
+		if (eServicio)
+			System.out.println("No existe el servicio que quiere pagar.");
+				
+		
 	}
 	
 
