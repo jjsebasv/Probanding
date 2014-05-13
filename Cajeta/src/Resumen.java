@@ -1,22 +1,21 @@
- import java.util.Date;
-
+import org.joda.time.LocalDate;
 
 public class Resumen {
 
+	private final double PORCENTAJE = 0.3;
 	private final long numeroResumen;
 	private final double monto;
 	private final double pagoMinimo;
-	private final String fechaCierre;
-	private final String fechaVencimiento;
+	private final LocalDate fechaCierre;
+	private final LocalDate fechaVencimiento;
 	private double montoAbonado;
 	
-	public Resumen ( long numeroResumen, double monto, double pagoMinimo, String fechaCierre,  String fechaVencimiento ){
-		this.montoAbonado = 0;
+	public Resumen ( long numeroResumen, double monto ){
 		this.numeroResumen = numeroResumen;
 		this.monto = monto;
-		this.pagoMinimo = pagoMinimo;
-		this.fechaCierre = fechaCierre;
-		this.fechaVencimiento = fechaVencimiento;
+		this.pagoMinimo = monto * PORCENTAJE;
+		this.fechaCierre = new LocalDate();
+		this.fechaVencimiento = this.fechaCierre.plusWeeks(2);
 		
 	}
 
@@ -40,11 +39,11 @@ public class Resumen {
 		return pagoMinimo;
 	}
 
-	public String getFechaCierre() {
+	public LocalDate getFechaCierre() {
 		return fechaCierre;
 	}
 
-	public String getFechaVencimiento() {
+	public LocalDate getFechaVencimiento() {
 		return fechaVencimiento;
 	}
 	

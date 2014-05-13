@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.joda.time.LocalDate;
+
 
 public class Banco {
 
@@ -28,7 +30,7 @@ public class Banco {
 		listaSeguros = new HashSet<Seguro>();
 	}
 
-	public void nuevoCliente ( long dni, String apellido, String domicilio, String nombre, String telefono, String fechaNacimiento ){
+	public void nuevoCliente ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento ){
 		Usuario usuario = new Usuario(dni,apellido, domicilio, nombre, telefono, fechaNacimiento);
 		Cliente cliente = new Cliente(this.listaClientes.size()+1L);
 		this.listaClientes.put(usuario, cliente);
@@ -62,58 +64,59 @@ public class Banco {
 
 	
 	// EL CLIENTE EXISTE. Tirar excepcion si el cliente buscado no existe. Si no tiene tarjeta de debito crear, sino,no
-	public void altaCajaAhorro ( long DNI, String fechaAlta ){
-		CajaDeAhorro cajaDeAhorro = new CajaDeAhorro(this.getNumeroEntidad()*10000+this.listaCajasDeAhorro.size()+1L, this.listaCajasDeAhorro.size()+1L, fechaAlta);
+	public void altaCajaAhorro ( long DNI ){
+		CajaDeAhorro cajaDeAhorro = new CajaDeAhorro(this.getNumeroEntidad()*10000+this.listaCajasDeAhorro.size()+1L, this.listaCajasDeAhorro.size()+1L);
 		this.listaCajasDeAhorro.add(cajaDeAhorro);
 		verCliente(DNI).getCuentasMonetarias().put(cajaDeAhorro.getNumeroCuenta(), cajaDeAhorro);
+		
 		if ( verCliente(DNI).getTajetaDeDebito() == null ){
-			TarjetaDebito tarjetaDebito = nuevaTarjetaDebito(fechaAlta, fechaAlta);
+			TarjetaDebito tarjetaDebito = new TarjetaDebito(this.listaTarjetas.size()+1L);
 			verCliente(DNI).setTajetaDeDebito(tarjetaDebito);
 		} 
+		
 	}
 	
 	// EL CLIENTE ES NUEVO. Si existe lo pisa no? Si no tiene tarjeta de debito crear, sino, no. EXCEPCIONES. 
-	public void altaCajaDeAhorro ( long dni, String apellido, String domicilio, String nombre, String telefono, String fechaNacimiento, String fechaAlta, String fechaVencimiento){
+	public void altaCajaDeAhorro ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento){
 		Usuario usuario = new Usuario(dni, apellido, domicilio, nombre, telefono, fechaNacimiento);
 		Cliente cliente = new Cliente(this.listaClientes.size()+1L);
 		this.listaClientes.put(usuario, cliente);
-		altaCajaAhorro(dni, fechaAlta);	
+		altaCajaAhorro(dni);	
 	}
 	
 	// EL CLIENTE EXISTE. Tirar excepcion si el cliente buscado no existe.
-	public void altaCuentaCorriente ( long DNI, String fechaAlta){
-		CuentaCorriente cuentaCorriente = new CuentaCorriente(this.getNumeroEntidad()*10000+this.listaCajasDeAhorro.size()+1L, this.listaCajasDeAhorro.size()+1L, fechaAlta, 0 );
+	public void altaCuentaCorriente ( long DNI ){
+		CuentaCorriente cuentaCorriente = new CuentaCorriente(this.getNumeroEntidad()*10000+this.listaCajasDeAhorro.size()+1L, this.listaCajasDeAhorro.size()+1L,  0 );
 		this.listaCuentasCorriente.add(cuentaCorriente);
 		verCliente(DNI).getCuentasMonetarias().put(cuentaCorriente.getNumeroCuenta(), cuentaCorriente);
 		if ( verCliente(DNI).getTajetaDeDebito() == null ){
-			TarjetaDebito tarjetaDebito = nuevaTarjetaDebito(fechaAlta, fechaAlta);
+			TarjetaDebito tarjetaDebito = new TarjetaDebito(this.listaTarjetas.size()+1L);
 			verCliente(DNI).setTajetaDeDebito(tarjetaDebito);
 		} 
 	}
 	
 	// EL CLIENTE ES NUEVO
-	public void altaCuentaCorriente ( long dni, String apellido, String domicilio, String nombre, String telefono, String fechaNacimiento, String fechaAlta, String fechaEmision, String fechaVencimiento){
+	public void altaCuentaCorriente ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento){
 		Usuario usuario = new Usuario(dni, apellido, domicilio, nombre, telefono, fechaNacimiento);
 		Cliente cliente = new Cliente(this.listaClientes.size()+1L);
 		this.listaClientes.put(usuario, cliente);
-		altaCuentaCorriente(dni,fechaAlta);
+		altaCuentaCorriente(dni);
 	}
 	
 	// 	EL CLIENTE EXISTE
-	public void altaCuentaCredito( long DNI, String fechaAlta, String marca, double limiteCompra ){
-		int codigoSeg = (int)Math.floor( Math.random() *(1-11)+998);
-		TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito(this.listaTarjetas.size()+1L, fechaAlta, fechaAlta, limiteCompra, codigoSeg, 0,0,1);
-		CuentaCredito cuentaCredito = new CuentaCredito( this.verCliente(DNI), this.listaCuentasCredito.size()+1L, fechaAlta, marca, tarjetaDeCredito, limiteCompra );
+	public void altaCuentaCredito( long DNI, String marca, double limiteCompra ){
+		TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito(this.listaTarjetas.size()+1L, limiteCompra,1);
+		CuentaCredito cuentaCredito = new CuentaCredito( this.verCliente(DNI), this.listaCuentasCredito.size()+1L, marca, tarjetaDeCredito, limiteCompra );
 		this.listaCuentasCredito.add(cuentaCredito);
 		verCliente(DNI).getCuentasCredito().put(cuentaCredito.getNroCuenta(), cuentaCredito);
 	}
 	
 	// EL CLIENTE ES NUEVO
-	public void altaCuentaCredito(long dni, String apellido, String marca, String domicilio, String nombre, String telefono, String fechaNacimiento, String fechaAlta, double limiteCompra){
+	public void altaCuentaCredito(long dni, String apellido, String marca, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento, double limiteCompra){
 		Usuario usuario = new Usuario(dni, apellido, domicilio, nombre, telefono, fechaNacimiento);
 		Cliente cliente = new Cliente(this.listaClientes.size()+1L);
 		this.listaClientes.put(usuario, cliente);
-		altaCuentaCredito(dni, fechaAlta, marca, limiteCompra);
+		altaCuentaCredito(dni, marca, limiteCompra);
 	}
 
 	
@@ -122,17 +125,13 @@ public class Banco {
 	// --------------------------- ALTA TARJETAS  -----------------------------------
 	
 	public TarjetaDebito nuevaTarjetaDebito ( String fechaEmision, String fechaVencimiento ){
-		
-		int codigoDeSeguridad = (int)Math.floor( Math.random() *(1-11)+1000);
-		TarjetaDebito tarjetaDebito = new TarjetaDebito(this.listaTarjetas.size()+1L, fechaEmision,
-				fechaVencimiento, 0, codigoDeSeguridad, 0);
+		TarjetaDebito tarjetaDebito = new TarjetaDebito(this.listaTarjetas.size()+1L);
 		this.listaTarjetas.add(tarjetaDebito);
 		return tarjetaDebito;
 	}
 	
 	public TarjetaDeCredito nuevaTarjetaDeCredito( double limiteCompra, double porcentajeLimite, String fechaEmision, String fechaVencimiento){
-		int codigoDeSeguridad = (int)Math.floor( Math.random() *(1-11)+1000);
-		TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito(this.listaTarjetas.size()+1L,fechaEmision,fechaVencimiento,limiteCompra, codigoDeSeguridad, 0, 0, porcentajeLimite );
+		TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito(this.listaTarjetas.size()+1L, limiteCompra, porcentajeLimite );
 		this.listaTarjetas.add(tarjetaDeCredito);
 		return tarjetaDeCredito;
 	}
@@ -152,7 +151,7 @@ public class Banco {
 	}
 
 	// EL CLIENTE ES NUEVO
-	public void altaSeguro (  String tipo, long dni, String apellido, String domicilio, String nombre, String telefono, String fechaNacimiento){
+	public void altaSeguro (  String tipo, long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento){
 		Usuario usuario = new Usuario(dni, apellido, domicilio, nombre, telefono, fechaNacimiento);
 		Cliente cliente = new Cliente(this.listaClientes.size()+1L);
 		this.listaClientes.put(usuario, cliente);

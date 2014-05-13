@@ -1,9 +1,10 @@
- import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+
+import org.joda.time.LocalDate;
 
 
 
@@ -293,7 +294,7 @@ public class Cliente {
 		
 	}
 	
-	public void agregarServicio(String tipo, double monto, Date fechaPago, Date fechaVencimiento, long numeroPagoElectronico){
+	public void agregarServicio(String tipo, double monto, LocalDate fechaPago, LocalDate fechaVencimiento, long numeroPagoElectronico){
 		if( this.listaServicios == null ){
 			Set<Servicio> listaServicio = new HashSet<>();
 			this.listaServicios = listaServicio;

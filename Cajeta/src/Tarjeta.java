@@ -1,28 +1,27 @@
- import java.util.Date;
+
+import org.joda.time.LocalDate;
 
 
 
 public abstract class Tarjeta {
 
 	private final long numeroTarjeta;
-	private final String fechaEmision;
-	private final String fechaVencimiento;
+	private final LocalDate fechaEmision;
+	private final LocalDate fechaVencimiento;
 	private boolean status; // ver si esta habilitada o no.
 	private double limiteCompra;
 	private final int codigoDeSeguridad;
 
 	
 
-	public Tarjeta(long numeroTarjeta, String fechaEmision,
-			String fechaVencimiento, 
-			double limiteCompra, int codigoDeSeguridad) {
+	public Tarjeta(long numeroTarjeta, double limiteCompra) {
 		
 		this.numeroTarjeta = numeroTarjeta;
-		this.fechaEmision = fechaEmision;
-		this.fechaVencimiento = fechaVencimiento;
+		this.fechaEmision = new LocalDate();
+		this.fechaVencimiento = this.fechaEmision.plusYears(4);
 		this.status = false;
 		this.limiteCompra = limiteCompra;
-		this.codigoDeSeguridad = codigoDeSeguridad;
+		this.codigoDeSeguridad =  (int)Math.floor( Math.random() *(1-11)+998);
 	}
 
 	
@@ -43,12 +42,12 @@ public abstract class Tarjeta {
 	}
 
 
-	public String getFechaEmision() {
+	public LocalDate getFechaEmision() {
 		return fechaEmision;
 	}
 
 
-	public String getFechaVencimiento() {
+	public LocalDate getFechaVencimiento() {
 		return fechaVencimiento;
 	}
 
@@ -78,9 +77,11 @@ public abstract class Tarjeta {
 		this.limiteCompra = limiteCompra;
 	}
 
+
 	// --------------------------- HASHCODE, EQUALS  -----------------------------------
 
 	
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -95,10 +96,13 @@ public abstract class Tarjeta {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result
 				+ (int) (numeroTarjeta ^ (numeroTarjeta >>> 32));
+		result = prime * result + (status ? 1231 : 1237);
 		return result;
 	}
 
 
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -124,9 +128,10 @@ public abstract class Tarjeta {
 			return false;
 		if (numeroTarjeta != other.numeroTarjeta)
 			return false;
+		if (status != other.status)
+			return false;
 		return true;
 	}
-	
 
 	
 }

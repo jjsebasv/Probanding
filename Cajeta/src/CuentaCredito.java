@@ -1,16 +1,17 @@
  import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.joda.time.LocalDate;
 
 
 public class CuentaCredito {
 
 		private final Cliente titular;
 		private final long nroCuenta;
-		private final String fechaAlta;
+		private final LocalDate fechaAlta;
 		private final String marca;
 		private Set<TarjetaDeCredito> adicionales;
 		private Tarjeta tarTitular;
@@ -20,11 +21,10 @@ public class CuentaCredito {
 		private boolean debitoAutomatico;
 		private final double TEM = 1.0407;
 				
-		public CuentaCredito ( Cliente titular, long nroCuenta, String fechaAlta, String marca, Tarjeta tarTitular, 
-				double limiteFinanciacion ){
+		public CuentaCredito ( Cliente titular, long nroCuenta, String marca, Tarjeta tarTitular, double limiteFinanciacion ){
 			this.titular = titular;
 			this.nroCuenta = nroCuenta;
-			this.fechaAlta = fechaAlta;
+			this.fechaAlta = new LocalDate();
 			this.marca = marca;
 			this.tarTitular = tarTitular;
 			this.limiteFinanciacion = limiteFinanciacion;
@@ -109,7 +109,7 @@ public class CuentaCredito {
 			return nroCuenta;
 		}
 
-		public String getFechaAlta() {
+		public LocalDate getFechaAlta() {
 			return fechaAlta;
 		}
 

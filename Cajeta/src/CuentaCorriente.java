@@ -12,9 +12,8 @@ public class CuentaCorriente extends Cuenta {
 	private double giroEnDescubierto;
 	
 
-	public CuentaCorriente(long CBU, long numeroCuenta,
-			String fechaAlta, double giroEnDescubierto) {
-		super(CBU, numeroCuenta, fechaAlta);
+	public CuentaCorriente(long CBU, long numeroCuenta, double giroEnDescubierto) {
+		super(CBU, numeroCuenta);
 		chequesEmitidos = new HashSet<Cheque>();
 		chequesRechazados = new HashSet<Cheque>();
 		chequera = new HashSet<Cheque>();
