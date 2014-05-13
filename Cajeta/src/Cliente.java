@@ -2,6 +2,7 @@
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -262,6 +263,8 @@ public class Cliente {
 		// ------ Servicios -----
 	public void pagarServicio(String tipo, long numeroCuenta){
 		boolean eServicio = false;
+		
+		
 		if(getListaServicios() == null){
 			System.out.println("No hay servicios a pagar.");
 			return;
