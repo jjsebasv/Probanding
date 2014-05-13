@@ -1,4 +1,5 @@
- import java.util.HashMap;
+ import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,20 +17,20 @@ public class Cliente {
 	private TarjetaDebito tajetaDeDebito;
 	
 	
-	private Set<CuentaCredito> cuentasCredito;
+	private Map<Long,CuentaCredito> cuentasCredito;
 	private Map<Long, Cuenta> cuentasMonetarias;
 	private Set<Movimiento> movimientos;
 	private Set<Seguro> seguros;
-	private Set<Tarjeta> tarjetasCredito;
+	private Map<Long,Tarjeta> tarjetasCredito;
 	private Set<Servicio> listaServicios;
 	
 	
 	public Cliente ( long numeroCliente ){
 		this.numeroCliente = numeroCliente;
-		cuentasCredito = new HashSet<CuentaCredito>();
+		cuentasCredito = new HashMap<Long,CuentaCredito>();
 		cuentasMonetarias = new HashMap<Long,Cuenta>();
 		seguros = new HashSet<Seguro>();
-		tarjetasCredito = new HashSet<Tarjeta>();
+		tarjetasCredito = new HashMap<Long,Tarjeta>();
 		movimientos = new HashSet<Movimiento>();
 
 	}
@@ -175,20 +176,20 @@ public class Cliente {
 
 
 
-	public Set<CuentaCredito> getCuentasCredito() {
+
+
+
+	public Map<Long, CuentaCredito> getCuentasCredito() {
 		return cuentasCredito;
 	}
 
-
-
-	public void setCuentasCredito(Set<CuentaCredito> cuentasCredito) {
+	public void setCuentasCredito(Map<Long, CuentaCredito> cuentasCredito) {
 		this.cuentasCredito = cuentasCredito;
 	}
 
-
-
-
-
+	public void setTarjetasCredito(Map<Long, Tarjeta> tarjetasCredito) {
+		this.tarjetasCredito = tarjetasCredito;
+	}
 
 	public Map<Long, Cuenta> getCuentasMonetarias() {
 		return cuentasMonetarias;
@@ -220,17 +221,6 @@ public class Cliente {
 		this.seguros = seguros;
 	}
 
-
-
-	public Set<Tarjeta> getTarjetasCredito() {
-		return tarjetasCredito;
-	}
-
-
-
-	public void setTarjetasCredito(Set<Tarjeta> tarjetas) {
-		this.tarjetasCredito = tarjetas;
-	}
 
 
 
@@ -269,7 +259,7 @@ public class Cliente {
 	// ------------------ Metodos ---------------------------------
 	
 	
-	
+		// ------ Servicios -----
 	public void pagarServicio(String tipo, long numeroCuenta){
 		boolean eServicio = false;
 		if(getListaServicios() == null){
@@ -288,6 +278,7 @@ public class Cliente {
 				if ( this.cuentasMonetarias.containsKey(numeroCuenta) ){
 					double saldoViejo = this.cuentasMonetarias.get(numeroCuenta).getSaldoActual();
 					this.cuentasMonetarias.get(numeroCuenta).setSaldoActual(saldoViejo - s.getMonto());
+					s.setPago(true);
 				} 
 				else{ 
 					System.out.println("No existe esa cuenta.");
@@ -302,5 +293,33 @@ public class Cliente {
 		
 	}
 	
+	public void agregarServicio(String tipo, double monto, Date fechaPago, Date fechaVencimiento, long numeroPagoElectronico){
+		if( this.listaServicios == null ){
+			Set<Servicio> listaServicio = new HashSet<>();
+			this.listaServicios = listaServicio;
+		}
+		Servicio servicioNuevo = new Servicio( tipo, monto, fechaPago, fechaVencimiento, numeroPagoElectronico);
+		
+		this.listaServicios.add(servicioNuevo);
+	}
+
+	public void listaServicios(){
+		if(this.listaServicios == null)
+			System.out.println("No registra servicios a su nombre.");
+		else{
+			for (Servicio s : this.listaServicios) {
+				System.out.println(s.getTipo());
+				if (!s.isPago()) {
+					System.out.println("SERVICIO NO PAGO");
+					System.out.println("Vence " + s.getFechaVencimiento());
+				}
+				
+			}
+		}
+	}
+
 
 }
+
+
+
