@@ -17,9 +17,6 @@ public class Banco {
 	private Set<Seguro> listaSeguros;
 	private final String nombre;
 	
-	// hola sebas 
-	//hola nowi
-	  
 	public Banco ( String nombre, int numeroEntidad ){
 		this.nombre = nombre;
 		this.numeroEntidad = numeroEntidad;
@@ -105,7 +102,9 @@ public class Banco {
 	// EL CLIENTE EXISTE Tirar excepcion si el cliente buscado no existe.
 	public void altaCuentaCredito ( long DNI, String marca, double limiteCompra, String fechaEmision, String fechaVencimiento){
 		TarjetaDeCredito tarjetaNueva = nuevaTarjetaDeCredito(limiteCompra, 1, fechaEmision, fechaVencimiento);
-		CuentaCredito cuentaCredito = new CuentaCredito( verCliente(DNI), this.listaCuentasCredito.size()+1L, fechaEmision, marca, tarjetaNueva, limiteCompra );
+		System.out.println("hola");
+		CuentaCredito cuentaCredito = new CuentaCredito( verCliente(DNI), this.listaCuentasCredito.size()+1L, "hoy","VISA", tarjetaNueva, 
+				14000.00);
 		this.listaCuentasCredito.add(cuentaCredito);
 	}
 

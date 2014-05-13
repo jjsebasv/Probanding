@@ -20,6 +20,8 @@ public class CuentaCredito {
 		private boolean debitoAutomatico;
 		private final double TEM = 1.0407;
 		
+		// modificando 
+		
 		public CuentaCredito ( Cliente titular, long nroCuenta, String fechaAlta, String marca, Tarjeta tarTitular, 
 				double limiteFinanciacion ){
 			this.titular = titular;

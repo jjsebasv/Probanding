@@ -9,14 +9,10 @@ public class Prueba {
 		
 		//	REVISAR CUENTAS CREDITO
 		//	bancoFrances.altaCuentaCredito(37905934L, "VISA", 14000.00,"05-07-2014", "05-07-2015");
-		//	bancoFrances.altaCuentaCredito(14908654L, "Lopez", "Mastercard", "LN Alem", "Carlos", "2342-2342", "ayer", 30000.00, "hoy", "mañana");
+		bancoFrances.altaCuentaCredito(14908654L, "Lopez", "Mastercard", "LN Alem", "Carlos", "2342-2342", "ayer", 30000.00, "hoy", "ma��ana");
 		 
 		bancoFrances.altaCajaAhorro(37905934L, "04-04-2001");
 		bancoFrances.altaCuentaCorriente(16599403L, "hoy");
-		
-		//	System.out.println(bancoFrances.getListaCajasDeAhorro().size());
-		//	System.out.println(bancoFrances.getListaCuentasCorriente().size());
-		
 		
 		System.out.println(bancoFrances.verCliente(37905934L));
 		System.out.println(bancoFrances.verUsuario(37905934L));
