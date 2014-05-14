@@ -1,6 +1,5 @@
 import java.util.HashSet;
 import java.util.Set;
-// ver si le alcana la plata o no
 
 public class CuentaCorriente extends Cuenta {
 

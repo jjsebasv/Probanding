@@ -1,3 +1,4 @@
+
 public class Consumo extends Movimiento {
 	
 	private final String comercio;

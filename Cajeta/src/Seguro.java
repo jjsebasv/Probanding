@@ -1,4 +1,5 @@
- 
+
+
 public class Seguro {
 
 	// hacer algo para cobrar todos los meses.

@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.joda.time.LocalDate;
 
+
 public class Resumen {
 
 	private final double PORCENTAJE = 0.3;

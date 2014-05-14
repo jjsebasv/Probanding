@@ -2,7 +2,6 @@
 import org.joda.time.LocalDate;
 
 
-
 public abstract class Tarjeta {
 
 	private final long numeroTarjeta;

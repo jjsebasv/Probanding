@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+
 public class TarjetaDeCoordenadas {
 
 	private final long numeroTarjeta;
