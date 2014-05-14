@@ -20,6 +20,11 @@ public abstract class Cuenta {
 		this.fechaAlta = new LocalDate();
 		ultimosMovimientos = new HashMap<String,Movimiento>();
 	}
+	
+	public abstract void transferir( double monto, Cuenta cuentaDestino);
+	public abstract void extraccion( double monto );
+	public abstract void depositar ( double monto );
+	public abstract void depositar ( Cheque cheque );
 
 	public double getSaldoActual() {
 		return saldoActual;

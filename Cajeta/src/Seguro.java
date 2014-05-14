@@ -11,6 +11,22 @@ public class Seguro {
 		this.nroPoliza = nroPoliza;
 		this.cuotaMensual = cuotaMensual;
 	}
+
+	public int getCuotaMensual() {
+		return cuotaMensual;
+	}
+
+	public void setCuotaMensual(int cuotaMensual) {
+		this.cuotaMensual = cuotaMensual;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public long getNroPoliza() {
+		return nroPoliza;
+	}
 	
 	
 	

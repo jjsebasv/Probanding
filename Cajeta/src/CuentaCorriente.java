@@ -1,14 +1,13 @@
 import java.util.HashSet;
 import java.util.Set;
-
+// ver si le alcana la plata o no
 
 public class CuentaCorriente extends Cuenta {
 
-	private final double impDebitosYCredios = 0.006;
+	private final double IMP_DEBITOS_Y_CREDITOS  = 0.006;
 	
 	private Set<Cheque> chequesEmitidos;
 	private Set<Cheque> chequesRechazados;
-	private Set<Cheque> chequera;
 	private double giroEnDescubierto;
 	
 
@@ -16,9 +15,46 @@ public class CuentaCorriente extends Cuenta {
 		super(CBU, numeroCuenta);
 		chequesEmitidos = new HashSet<Cheque>();
 		chequesRechazados = new HashSet<Cheque>();
-		chequera = new HashSet<Cheque>();
 		this.giroEnDescubierto = giroEnDescubierto;
 	} 
+
+	
+	// --------------------------- OTROS  -----------------------------------
+
+	
+	public void cobrarImpuesto (double monto){
+		this.setSaldoActual(getSaldoActual()-monto*IMP_DEBITOS_Y_CREDITOS);
+	}
+	
+	public void cobrarCheque ( Cheque cheque ){
+		this.setSaldoActual(getSaldoActual()-cheque.getMonto());
+		this.cobrarImpuesto(cheque.getMonto());
+		cheque.setCobrado(true);
+	}
+	
+	// --------------------------- DEPOSITAR, EXTRAER, TRANSFERIR  -----------------------------------
+
+	public void extraccion(double monto) {
+		this.setSaldoActual(getSaldoActual()-monto);
+		this.cobrarImpuesto(monto);
+	}
+
+	public void depositar(double monto) {
+		this.setSaldoActual(getSaldoActual()+monto);
+		this.cobrarImpuesto(monto);
+	}
+
+	public void depositar(Cheque cheque) {
+		this.setSaldoActual(getSaldoActual()+cheque.getMonto());
+		this.cobrarImpuesto(cheque.getMonto());
+	}
+	
+	public void transferir(double monto, Cuenta cuentaDestino) {
+		this.setSaldoActual(getSaldoActual()-monto);
+		this.cobrarImpuesto(monto);
+		cuentaDestino.depositar(monto);
+	}
+	
 
 	// --------------------------- GETTERS Y SETTERS  -----------------------------------
 
@@ -39,13 +75,6 @@ public class CuentaCorriente extends Cuenta {
 		this.chequesRechazados = chequesRechazados;
 	}
 
-	public Set<Cheque> getChequera() {
-		return chequera;
-	}
-
-	public void setChequera(Set<Cheque> chequera) {
-		this.chequera = chequera;
-	}
 
 	public double getGiroEnDescubierto() {
 		return giroEnDescubierto;
@@ -55,8 +84,5 @@ public class CuentaCorriente extends Cuenta {
 		this.giroEnDescubierto = giroEnDescubierto;
 	}
 
-	public double getImpDebitosYCredios() {
-		return impDebitosYCredios;
-	}
-	
+
 }

@@ -145,7 +145,87 @@ public class Banco {
 		return new TarjetaDeCoordenadas(this.listaTarjetas.size());
 	}
 	
-	// --------------------------- ALTA Y BAJA SEGUROS -----------------------------------
+	// --------------------------- EXTRACCION, DEPOSITO, TRASNFERENCIA -----------------------------------
+	
+	public void extraccion ( CajaDeAhorro cuenta, double monto){
+		if ( cuenta.getSaldoActual() >= monto ){
+			cuenta.extraccion(monto);
+		}
+		System.out.println("No posee saldo suficiente");
+		System.out.println("Su saldo es"+cuenta.getSaldoActual());
+	}
+	
+	public void extraccion ( CuentaCorriente cuenta, double monto){
+		if ( (cuenta.getSaldoActual()+cuenta.getGiroEnDescubierto()) >= monto ){
+			cuenta.extraccion(monto);
+		}
+		System.out.println("No posee saldo suficiente");
+		System.out.println("Su saldo es"+cuenta.getSaldoActual());
+	}
+	
+	public void deposito ( Cheque cheque, CuentaCorriente emisora, CajaDeAhorro destino){
+		LocalDate hoy = new LocalDate();
+		if ( emisora.getSaldoActual()+emisora.getGiroEnDescubierto() >= cheque.getMonto() ){
+			if ( destino.getFechaAlta().isBefore(hoy.minusMonths(6))){
+				emisora.cobrarCheque(cheque);
+				destino.depositar(cheque);
+			}
+			else{
+				System.out.println("No es posible depositar Cheque");
+			}
+			
+		}
+		else{
+			System.out.println("No hay fondos suficientes");
+			emisora.getChequesRechazados().add(cheque);
+		}
+	}
+	
+	
+	public void deposito ( Cheque cheque, CuentaCorriente emisora, CuentaCorriente destino){
+		if ( emisora.getSaldoActual()+emisora.getGiroEnDescubierto() >= cheque.getMonto() ){
+			emisora.cobrarCheque(cheque);
+			destino.depositar(cheque);
+		}
+		else{
+			emisora.getChequesRechazados().add(cheque);
+			System.out.println("No hay fondos suficientes");
+		}
+	}
+	
+	public void transferencia ( double monto, CajaDeAhorro emisora, Cuenta destino){
+		if ( emisora.getSaldoActual() >= monto ){
+			if ( this.listaCajasDeAhorro.contains(destino) || this.listaCuentasCorriente.contains(destino) ){
+				emisora.transferir(monto, destino);
+			}
+			else{
+				System.out.println("No existe cuenta destino");
+			}
+		}
+		else{
+			System.out.println("No hay fondos suficientes");
+		}
+	}
+	
+	public void transferencia ( double monto, CuentaCorriente emisora, Cuenta destino){
+		if ( emisora.getSaldoActual()+emisora.getGiroEnDescubierto() >= monto ){
+			if ( this.listaCajasDeAhorro.contains(destino) || this.listaCuentasCorriente.contains(destino) ){
+				emisora.transferir(monto, destino);
+			}
+			else{
+				System.out.println("No existe cuenta destino");
+			}
+		}
+		else{
+			System.out.println("No hay fondos suficientes");
+		}
+	}
+	
+	
+	
+	
+	// --------------------------- ALTA Y BAJA SEGUROS --------------------------------------------------
+	
 
 	// EL CLIENTE EXISTE
 	public void altaSeguro ( long DNI, String tipo ){

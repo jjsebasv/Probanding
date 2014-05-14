@@ -1,17 +1,17 @@
- import java.util.Date;
+import org.joda.time.LocalDate;
 
 
 public class Servicio{
 	  
 	private final String tipo;
-	private final Date fechaVencimiento;
-	private final Date fechaPago;
+	private final LocalDate fechaVencimiento;
+	private final LocalDate fechaPago;
 	private final long numeroPagoElectronico;
 	private final double monto;
 	private boolean pago = false;
 	private final double impuesto = 50.0;
 	
-	public Servicio ( String tipo, double monto, Date fechaPago, Date fechaVencimiento, long numeroPagoElectronico ){
+	public Servicio ( String tipo, double monto, LocalDate fechaPago, LocalDate fechaVencimiento, long numeroPagoElectronico ){
 		this.monto = monto;
 		this.tipo = tipo;
 		this.fechaPago = fechaPago;
@@ -93,11 +93,11 @@ public class Servicio{
 		return tipo;
 	}
 
-	public Date getFechaVencimiento() {
+	public LocalDate getFechaVencimiento() {
 		return fechaVencimiento;
 	}
 
-	public Date getFechaPago() {
+	public LocalDate getFechaPago() {
 		return fechaPago;
 	}
 

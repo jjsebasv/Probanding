@@ -1,5 +1,4 @@
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -8,7 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.joda.time.LocalDate;
-// hola sebas!!!!
+
+// CHAU SEBAS
 
 
 public class Cliente {
@@ -26,7 +26,7 @@ public class Cliente {
 	private Set<Movimiento> movimientos;
 	private Set<Seguro> seguros;
 	private Map<Long,Tarjeta> tarjetasCredito;
-	private Set<Servicio> listaServicios;
+	private Map<Long,Servicio> listaServicios;
 	
 	
 	public Cliente ( long numeroCliente ){
@@ -36,14 +36,13 @@ public class Cliente {
 		seguros = new HashSet<Seguro>();
 		tarjetasCredito = new HashMap<Long,Tarjeta>();
 		movimientos = new HashSet<Movimiento>();
+		listaServicios = new HashMap<Long,Servicio>();
 
 	}
 	
 	// --------------------------- HASH CODE AND EQUALS, TO STRING   -----------------------------------
 
 	
-	
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -133,12 +132,11 @@ public class Cliente {
 		return claveHomeBanking;
 	}
 
-
-	public Set<Servicio> getListaServicios() {
+	public Map<Long, Servicio> getListaServicios() {
 		return listaServicios;
 	}
 
-	public void setListaServicios(Set<Servicio> listaServicios) {
+	public void setListaServicios(Map<Long, Servicio> listaServicios) {
 		this.listaServicios = listaServicios;
 	}
 
@@ -264,79 +262,75 @@ public class Cliente {
 
 	
 	
-	// ------------------ Metodos ---------------------------------
+	// ------------------ METODOS  ---------------------------------
 	
 	
-		// ------ Servicios -----
+		// ------ SERVICIOS -----
 	public void pagarServicio(String tipo, long numeroCuenta){
 		boolean eServicio = false;
 		
 		
-		if(getListaServicios() == null){
+		if( this.listaServicios.isEmpty() ){
 			System.out.println("No hay servicios a pagar.");
 			return;
 		}
-		if(this.cuentasMonetarias == null){
+		if( this.cuentasMonetarias.isEmpty() ){
 			System.out.println("No registra cuentas a su nombre.");
 			return;
 		}
 		
-		Iterator<Servicio> itS = this.listaServicios.iterator();
-		while (itS.hasNext() && !eServicio ) {
-			Servicio s = (Servicio) itS.next();
-			if ( s.getTipo().equals(tipo) ) {
-				if ( this.cuentasMonetarias.containsKey(numeroCuenta) ){
-					double impuesto = 0.0;
-					LocalDate fecha = new LocalDate();
-					if( s.getFechaVencimiento().before(fecha.toDate())){
-						impuesto = s.getImpuesto();
-						System.out.println("Por pago fuera de termino, se aplicara un impuesto de " + impuesto);
-					}
-					double saldoViejo = this.cuentasMonetarias.get(numeroCuenta).getSaldoActual();
-					this.cuentasMonetarias.get(numeroCuenta).setSaldoActual(saldoViejo - s.getMonto() - impuesto);
-					s.setPago(true);
-				} 
-				else{ 
-					System.out.println("No existe esa cuenta.");
-					return;
-				}
-				eServicio = true;
-			}
-		}
+		// hagamos un foreach con el mapa que creee
+//		Iterator<Servicio> itS = this.listaServicios.iterator();
+		//		while (itS.hasNext() && !eServicio ) {
+		//Servicio s = (Servicio) itS.next();
+		//if ( s.getTipo().equals(tipo) ) {
+		//	if ( this.cuentasMonetarias.containsKey(numeroCuenta) ){
+		//		double impuesto = 0.0;
+		//		LocalDate fecha = new LocalDate();
+		//		if( s.getFechaVencimiento().before(fecha.toDate())){
+		//			impuesto = s.getImpuesto();
+		//			System.out.println("Por pago fuera de termino, se aplicara un impuesto de " + impuesto);
+		//		}
+		//		double saldoViejo = this.cuentasMonetarias.get(numeroCuenta).getSaldoActual();
+		//		this.cuentasMonetarias.get(numeroCuenta).setSaldoActual(saldoViejo - s.getMonto() - impuesto);
+		//		s.setPago(true);
+		//	} 
+		//	else{ 
+		//		System.out.println("No existe esa cuenta.");
+		//		return;
+		//	}
+		//	eServicio = true;
+		//}
+		//}
 		if (eServicio)
 			System.out.println("No existe el servicio que quiere pagar.");
 				
 		  
 	}
 	
-	public void agregarServicio(String tipo, double monto, Date fechaPago, Date fechaVencimiento, long numeroPagoElectronico){
-		if( this.listaServicios == null ){
-			Set<Servicio> listaServicio = new HashSet<>();
-			this.listaServicios = listaServicio;
-		}
+	public void agregarServicio(String tipo, double monto, LocalDate fechaPago, LocalDate fechaVencimiento, long numeroPagoElectronico){
 		Servicio servicioNuevo = new Servicio( tipo, monto, fechaPago, fechaVencimiento, numeroPagoElectronico);
-		
-		this.listaServicios.add(servicioNuevo);
+		this.listaServicios.put(numeroPagoElectronico, servicioNuevo);
 	}
 
 	public void listaServicios(){
-		if(this.listaServicios == null)
+		if(this.listaServicios .isEmpty() )
 			System.out.println("No registra servicios a su nombre.");
 		else{
-			for (Servicio s : this.listaServicios) {
-				System.out.println(s.getTipo()); 
-				if (!s.isPago()) {
-					System.out.println("SERVICIO NO PAGO");
-					System.out.println("Vence " + s.getFechaVencimiento());
-				}
+			for (Long numeroPago : this.listaServicios.keySet()) {
+				if ( ! this.listaServicios.get(numeroPago).isPago() ){
+					System.out.println("--Su servicio no esta pago--");
+					System.out.println("Fecha de Vencimiento:"+ this.listaServicios.get(numeroPago).getFechaPago());
+					System.out.println("Monto a pagar"+this.listaServicios.get(numeroPago).getMonto());
+			}
 				 
 			}  
 		}  
 	} 
 
-		// ----- Cuentas -------
+		// ----- CUENTAS -------
 	
-	asdf
+
 	
 }
 
