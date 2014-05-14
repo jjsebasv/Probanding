@@ -5,6 +5,7 @@ public class Prueba {
 
 	public static void main(String[] args) {
 		
+		
 		Banco bancoFrances = new Banco( "Banco Frances", 17);
 		bancoFrances.nuevoCliente(37905934L, "Lopez", "Pedro Goyena", "Noelia", "4444-4444", new LocalDate());
 		bancoFrances.nuevoCliente(16599403L, "Fontana", "Matheu 234", "Nancy", "6666-8888", new LocalDate());
