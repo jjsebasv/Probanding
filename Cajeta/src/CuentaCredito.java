@@ -13,13 +13,14 @@ public class CuentaCredito {
 		private final long nroCuenta;
 		private final LocalDate fechaAlta;
 		private final String marca;
+		private double limiteFinanciacion;
+		private boolean debitoAutomatico;
+		private final double TEM = 1.0407;
+		
 		private Set<TarjetaDeCredito> adicionales;
 		private Tarjeta tarTitular;
 		private Map<Integer,Resumen> resumenes;
 		private ArrayList<Consumo> consumosDelPeriodo;
-		private double limiteFinanciacion;
-		private boolean debitoAutomatico;
-		private final double TEM = 1.0407;
 				
 		public CuentaCredito ( Cliente titular, long nroCuenta, String marca, Tarjeta tarTitular, double limiteFinanciacion ){
 			this.titular = titular;
@@ -34,16 +35,32 @@ public class CuentaCredito {
 			
 		}
 		
-		// verificar que el resumen no tenga saldo a favor al aplicar TEM
-		public void cierreLiquidacion ( long nroResumen, String fechaCierre, String fechaVencimiento ){
+		public void removerConsumos(){
+			for (Consumo consumo : this.consumosDelPeriodo) {
+				this.consumosDelPeriodo.remove(consumo);
+			}
+		}
+		
+		
+		public void cierreLiquidacion ( long nroResumen ){
 			double monto = 0;
+			double saldoAnterior = 0;
+			
+			if ( this.resumenes.size() > 0 )
+				saldoAnterior = this.resumenes.get(this.resumenes.size()).getMonto() - this.resumenes.get(this.resumenes.size()).getMontoAbonado();
+			
 			for (Consumo consumo : consumosDelPeriodo) {
 				monto += consumo.getMonto();
 			}
-			monto += (this.resumenes.get(this.resumenes.size()).getMonto() - this.resumenes.get(this.resumenes.size()).getMontoAbonado())*TEM;
+			if ( saldoAnterior >= 0 ){
+				monto += saldoAnterior * TEM; // debia plata
+			}
+			else
+				monto += saldoAnterior; // tenia saldo a favor
 			
 			Resumen resumen = new Resumen(nroResumen , monto);
 			this.resumenes.put(this.resumenes.size(), resumen);
+			removerConsumos();
 		}
 		
 		public void abonarResumen ( double monto ){

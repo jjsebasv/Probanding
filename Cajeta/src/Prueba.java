@@ -26,7 +26,14 @@ public class Prueba {
 		System.out.println("CUENTAS CREDITO NOELIA: "+ bancoFrances.verCliente(37905934L).getCuentasCredito());
 			
 		
-		//Consumo consumo = new Consumo("Starbucks", 100.00, bancoFrances.verCliente(37905934L).getTarjetasCredito().get(key)
+		Consumo consumo1 = new Consumo("Compra", 100.00, bancoFrances.verCliente(37905934L).getTarjetasCredito().get(1L), "Starbucks", "Bouchard");
+		Consumo consumo2 = new Consumo("Compra", 50.00, bancoFrances.verCliente(37905934L).getTarjetasCredito().get(1L), "Mc donalds", "Corrientes");
+		bancoFrances.verCliente(37905934L).getCuentasCredito().get(1L).getConsumosDelPeriodo().add(consumo1);
+		bancoFrances.verCliente(37905934L).getCuentasCredito().get(1L).getConsumosDelPeriodo().add(consumo2);
+		bancoFrances.cierreDeTarjeta();
+		//	bancoFrances.verCliente(37905934L).getCuentasCredito().get(1L).getResumenes().get(1L).impresionResumen();
+		
+		
 	
 	}
 	

@@ -1,3 +1,8 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.joda.time.LocalDate;
 
 public class Resumen {
@@ -19,6 +24,39 @@ public class Resumen {
 		
 	}
 
+	public void impresionResumen() throws IOException{
+		File c;
+		FileWriter w;
+		
+		try {
+			c = new File("Resumen 1");
+			w = new FileWriter(c);
+			BufferedWriter bw = new BufferedWriter(w);
+			bw.write("************************"+"RESUMEN"+"***************************");
+			bw.newLine();
+			bw.append("*****************************************************************");
+			bw.newLine();
+			bw.append("FECHA CIERRE: "+this.fechaCierre);
+			bw.newLine();
+			bw.append("FECHA VENCIMIENTO: "+this.fechaVencimiento);
+			bw.newLine();
+			bw.append("PAGO MINIMO: "+this.pagoMinimo);
+			bw.newLine();
+			bw.append("MONTO: "+this.monto);
+			bw.newLine();
+			bw.append("*****************************************************************");
+			bw.newLine();
+			bw.append("*****************************************************************");
+			bw.close();
+			w.close();
+			
+		} catch(IOException e){
+			System.out.println("ERROR: "+e.getMessage());
+		};
+		
+	}
+	
+	
 	public double getMontoAbonado() {
 		return montoAbonado;
 	}
@@ -46,6 +84,7 @@ public class Resumen {
 	public LocalDate getFechaVencimiento() {
 		return fechaVencimiento;
 	}
+	
 	
 	
 	

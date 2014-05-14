@@ -66,6 +66,10 @@ public class Cliente {
 	}
 
 
+	public Map<Long, Tarjeta> getTarjetasCredito() {
+		return tarjetasCredito;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

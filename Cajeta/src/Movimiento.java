@@ -2,19 +2,20 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
+
+import org.joda.time.LocalDate;
 
 public class Movimiento {
 
 	private final String tipo;
-	private final String fecha;
+	private final LocalDate fecha;
 	private final double monto;
 	private final Tarjeta tarjeta;
 	private final int codigoDeTransaccion = this.hashCode();
  
-	public Movimiento ( String tipo, String fecha, double monto, Tarjeta tarjeta){
+	public Movimiento ( String tipo, double monto, Tarjeta tarjeta){
 		this.tipo = tipo;
-		this.fecha = fecha;
+		this.fecha = new LocalDate();
 		this.monto = monto;
 		this.tarjeta = tarjeta;  
 	}
@@ -28,7 +29,7 @@ public class Movimiento {
 			BufferedWriter bw = new BufferedWriter(w);
 			bw.write("*****************************************************************");
 			bw.append("*****************************************************************");
-			bw.append(" FECHA: "+fecha.toString());
+			bw.append(" FECHA: "+this.fecha);
 			bw.append(" TIPO: "+tipo);
 			bw.append("MONTO: "+monto);
 			bw.append("NUMERO DE TARJETA: "+ tarjeta);
@@ -107,7 +108,7 @@ public class Movimiento {
 	}
 
 
-	public String getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 

@@ -1,14 +1,11 @@
-import java.util.Date;
-
-
 public class Consumo extends Movimiento {
 	
 	private final String comercio;
 	private final String domicilio;
 	
 
-	public Consumo(String tipo, String fecha, double monto, Tarjeta tarjeta, String comercio, String domicilio) {
-		super(tipo, fecha, monto, tarjeta);
+	public Consumo(String tipo, double monto, Tarjeta tarjeta, String comercio, String domicilio) {
+		super(tipo, monto, tarjeta);
 		this.comercio = comercio;
 		this.domicilio = domicilio;
 	}

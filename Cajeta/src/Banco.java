@@ -11,12 +11,16 @@ public class Banco {
 
 	private final int CUOTA_MENSUAL_SEGURO = 5;
 	private final int numeroEntidad;
-	private Map<Usuario,Cliente> listaClientes;
+	
 	private Set<CajaDeAhorro> listaCajasDeAhorro;
 	private Set<CuentaCorriente> listaCuentasCorriente;
-	private Set<CuentaCredito> listaCuentasCredito;
 	private Set<Tarjeta> listaTarjetas;
 	private Set<Seguro> listaSeguros;
+	
+	private Map<Long,CuentaCredito> listaCuentasCredito;
+	private Map<Long,Resumen> listaResumenes;
+	private Map<Usuario,Cliente> listaClientes;
+
 	private final String nombre;
 
 	public Banco ( String nombre, int numeroEntidad ){
@@ -25,9 +29,10 @@ public class Banco {
 		listaClientes = new HashMap<Usuario,Cliente>();
 		listaCajasDeAhorro = new HashSet<CajaDeAhorro>();
 		listaCuentasCorriente = new HashSet<CuentaCorriente>();
-		listaCuentasCredito = new HashSet<CuentaCredito>();
+		listaCuentasCredito = new HashMap<Long,CuentaCredito>();
 		listaTarjetas = new HashSet<Tarjeta>();
 		listaSeguros = new HashSet<Seguro>();
+		listaResumenes = new HashMap<Long,Resumen>();
 	}
 
 	public void nuevoCliente ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento ){
@@ -107,7 +112,7 @@ public class Banco {
 	public void altaCuentaCredito( long DNI, String marca, double limiteCompra ){
 		TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito(this.listaTarjetas.size()+1L, limiteCompra,1);
 		CuentaCredito cuentaCredito = new CuentaCredito( this.verCliente(DNI), this.listaCuentasCredito.size()+1L, marca, tarjetaDeCredito, limiteCompra );
-		this.listaCuentasCredito.add(cuentaCredito);
+		this.listaCuentasCredito.put(cuentaCredito.getNroCuenta(), cuentaCredito);
 		verCliente(DNI).getCuentasCredito().put(cuentaCredito.getNroCuenta(), cuentaCredito);
 	}
 	
@@ -159,6 +164,22 @@ public class Banco {
 	}
 	
 	// --------------------------- GETTERS -----------------------------------
+
+	public Map<Long, CuentaCredito> getListaCuentasCredito() {
+		return listaCuentasCredito;
+	}
+
+	public void setListaCuentasCredito(Map<Long, CuentaCredito> listaCuentasCredito) {
+		this.listaCuentasCredito = listaCuentasCredito;
+	}
+
+	public void cierreDeTarjeta (){
+		for (Long nroCuentaCredito : this.listaCuentasCredito.keySet()) {
+			this.listaCuentasCredito.get(nroCuentaCredito).cierreLiquidacion(this.listaResumenes.size()+1L);
+		}
+	}
+	
+	// --------------------------- GETTERS -----------------------------------
 	
 	public int getNumeroEntidad() {
 		return numeroEntidad;
@@ -190,14 +211,6 @@ public class Banco {
 
 	public void setListaCuentasCorriente(Set<CuentaCorriente> listaCuentasCorriente) {
 		this.listaCuentasCorriente = listaCuentasCorriente;
-	}
-
-	public Set<CuentaCredito> getListaCuentasCredito() {
-		return listaCuentasCredito;
-	}
-
-	public void setListaCuentasCredito(Set<CuentaCredito> listaCuentasCredito) {
-		this.listaCuentasCredito = listaCuentasCredito;
 	}
 
 	public Set<Tarjeta> getListaTarjetas() {
