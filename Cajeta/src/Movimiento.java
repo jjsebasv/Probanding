@@ -19,7 +19,7 @@ public class Movimiento {
 		this.tarjeta = tarjeta;  
 	}
 	
-	
+	 
 	public void impresionComprobante () throws IOException{
 		File c = new File(""); 
 		

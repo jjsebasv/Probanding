@@ -1,19 +1,11 @@
- import java.util.Date;
-
-
 public class TarjetaDeCredito extends Tarjeta {
 
 	private double disponibleUnPago;
 	private double disponibleCuotas;
 	private double porcentajeLimite;
 	
-	public TarjetaDeCredito(long numeroTarjeta, String fechaEmision,
-			String fechaVencimiento, double limiteCompra, int codigoDeSeguridad,
-			double disponibleUnPago, double disponibleCuotas, double porcentajeLimite) {
-		super(numeroTarjeta, fechaEmision, fechaVencimiento, limiteCompra,
-				codigoDeSeguridad);
-		this.disponibleUnPago = disponibleUnPago;
-		this.disponibleCuotas = disponibleCuotas;
+	public TarjetaDeCredito(long numeroTarjeta, double limiteCompra, double porcentajeLimite) {
+		super(numeroTarjeta, limiteCompra);
 		this.porcentajeLimite = porcentajeLimite;
 	}
 	

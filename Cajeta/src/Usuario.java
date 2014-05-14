@@ -1,3 +1,5 @@
+import org.joda.time.LocalDate;
+
  
 public class Usuario {
 
@@ -7,10 +9,10 @@ public class Usuario {
 	private String domicilio;
 	private final String nombre;
 	private String telefono;
-	private final String fechaDeNacimiento;	
+	private final LocalDate fechaDeNacimiento;	
 
 
-	public Usuario ( long dni, String apellido, String domicilio, String nombre, String telefono, String fechaNacimiento){
+	public Usuario ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento){
 		this.dni = dni;
 		this.apellido = apellido;
 		this.domicilio = domicilio;
@@ -124,7 +126,7 @@ public class Usuario {
 	}
 
 
-	public String getFechaDeNacimiento() {
+	public LocalDate getFechaDeNacimiento() {
 		return fechaDeNacimiento;
 	}
 

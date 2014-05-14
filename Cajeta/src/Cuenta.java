@@ -1,25 +1,23 @@
-
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+
+import org.joda.time.LocalDate;
 
 
 public abstract class Cuenta {
 
 	private final long CBU;
-	private final String fechaAlta;
+	private final LocalDate fechaAlta;
 	private double saldoActual;
 	private final long numeroCuenta;
 	private Map<String,Movimiento> ultimosMovimientos; 
 	// que sean 10, el key es la fecha. 
 	
-	public Cuenta ( long CBU, long numeroCuenta, String fechaAlta){
+	public Cuenta ( long CBU, long numeroCuenta){
 		this.saldoActual = 0;
 		this.CBU = CBU;
 		this.numeroCuenta = numeroCuenta;
-		this.fechaAlta = fechaAlta;
+		this.fechaAlta = new LocalDate();
 		ultimosMovimientos = new HashMap<String,Movimiento>();
 	}
 
@@ -44,7 +42,7 @@ public abstract class Cuenta {
 		return CBU;
 	}
 
-	public String getFechaAlta() {
+	public LocalDate getFechaAlta() {
 		return fechaAlta;
 	}
 

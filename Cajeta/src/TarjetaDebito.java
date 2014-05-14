@@ -1,20 +1,16 @@
- import java.util.Date;
-
-
 public class TarjetaDebito extends Tarjeta {
 
 	private double limiteExtraccion;
 	private TarjetaDeCoordenadas tarjetaCoordVinculada;
+	private final static double LIMITE_COMPRA_DEBITO = 10000.00;
+	private final static double LIMITE_EXTRACCION_DEBITO = 5000.00;
+	
 	
 
-
-	public TarjetaDebito(long numeroTarjeta, String fechaEmision,
-			String fechaVencimiento, double limiteCompra, int codigoDeSeguridad,
-			double limiteExtraccion) {
+	public TarjetaDebito(long numeroTarjeta) {
 		
-		super(numeroTarjeta, fechaEmision, fechaVencimiento, limiteCompra,
-				codigoDeSeguridad);
-		this.limiteExtraccion = limiteExtraccion;
+		super(numeroTarjeta, LIMITE_COMPRA_DEBITO );
+		this.limiteExtraccion = LIMITE_EXTRACCION_DEBITO;
 		
 	}
 	
@@ -49,6 +45,7 @@ public class TarjetaDebito extends Tarjeta {
 	// --------------------------- HASHCODE, EQUALS -----------------------------------
 
 	
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
@@ -81,7 +78,6 @@ public class TarjetaDebito extends Tarjeta {
 			return false;
 		return true;
 	}
-
 
 
 	
