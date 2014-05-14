@@ -42,7 +42,7 @@ public class CuentaCredito {
 			}
 			monto += (this.resumenes.get(this.resumenes.size()).getMonto() - this.resumenes.get(this.resumenes.size()).getMontoAbonado())*TEM;
 			
-			Resumen resumen = new Resumen(nroResumen , monto, monto*0.3 , fechaCierre,  fechaVencimiento );
+			Resumen resumen = new Resumen(nroResumen , monto);
 			this.resumenes.put(this.resumenes.size(), resumen);
 		}
 		
