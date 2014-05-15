@@ -18,7 +18,7 @@ public class CuentaCredito {
 		
 		private Set<TarjetaDeCredito> adicionales;
 		private Tarjeta tarTitular;
-		private Map<Integer,Resumen> resumenes;
+		private Map<Long,Resumen> resumenes;
 		private ArrayList<Consumo> consumosDelPeriodo;
 				
 		public CuentaCredito ( Cliente titular, long nroCuenta, String marca, Tarjeta tarTitular, double limiteFinanciacion ){
@@ -29,7 +29,7 @@ public class CuentaCredito {
 			this.tarTitular = tarTitular;
 			this.limiteFinanciacion = limiteFinanciacion;
 			adicionales = new HashSet<TarjetaDeCredito>();
-			resumenes = new HashMap<Integer,Resumen>();
+			resumenes = new HashMap<Long,Resumen>();
 			consumosDelPeriodo = new ArrayList<Consumo>();
 			
 		}
@@ -58,7 +58,7 @@ public class CuentaCredito {
 				monto += saldoAnterior; // tenia saldo a favor
 			
 			Resumen resumen = new Resumen(nroResumen , monto);
-			this.resumenes.put(this.resumenes.size(), resumen);
+			this.resumenes.put(this.resumenes.size()+1L, resumen);
 			removerConsumos();
 		}
 		
@@ -85,11 +85,11 @@ public class CuentaCredito {
 			this.tarTitular = tarTitular;
 		}
 
-		public Map<Integer, Resumen> getResumenes() {
+		public Map<Long, Resumen> getResumenes() {
 			return resumenes;
 		}
 
-		public void setResumenes(Map<Integer, Resumen> resumenes) {
+		public void setResumenes(Map<Long, Resumen> resumenes) {
 			this.resumenes = resumenes;
 		}
 
