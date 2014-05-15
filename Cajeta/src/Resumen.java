@@ -2,12 +2,14 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 
 import org.joda.time.LocalDate;
 
 
 public class Resumen {
-
+	
+	private Cliente duenio;
 	private final double PORCENTAJE = 0.3;
 	private final long numeroResumen;
 	private final double monto;
@@ -16,12 +18,13 @@ public class Resumen {
 	private final LocalDate fechaVencimiento;
 	private double montoAbonado;
 	
-	public Resumen ( long numeroResumen, double monto ){
+	public Resumen ( long numeroResumen, double monto, Cliente duenio ){
 		this.numeroResumen = numeroResumen;
 		this.monto = monto;
 		this.pagoMinimo = monto * PORCENTAJE;
 		this.fechaCierre = new LocalDate();
 		this.fechaVencimiento = this.fechaCierre.plusWeeks(2);
+		this.duenio = duenio;
 		
 	}
 
@@ -30,7 +33,9 @@ public class Resumen {
 		FileWriter w;
 		
 		try {
-			c = new File("Resumen 2");
+			long time = new Date().getTime();
+			
+			c = new File(this.duenio.getUsuario() + time + ".txt");
 			w = new FileWriter(c);
 			BufferedWriter bw = new BufferedWriter(w);
 			bw.write("***************************"+" RESUMEN "+"******************************");
@@ -60,6 +65,18 @@ public class Resumen {
 	}
 	
 	
+	public Cliente getDuenio() {
+		return duenio;
+	}
+
+	public void setDuenio(Cliente duenio) {
+		this.duenio = duenio;
+	}
+
+	public double getPORCENTAJE() {
+		return PORCENTAJE;
+	}
+
 	public double getMontoAbonado() {
 		return montoAbonado;
 	}

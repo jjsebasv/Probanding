@@ -57,7 +57,7 @@ public class CuentaCredito {
 			else
 				monto += saldoAnterior; // tenia saldo a favor
 			
-			Resumen resumen = new Resumen(nroResumen , monto);
+			Resumen resumen = new Resumen(nroResumen , monto, this.titular);
 			this.resumenes.put(this.resumenes.size()+1L, resumen);
 			removerConsumos();
 		}
