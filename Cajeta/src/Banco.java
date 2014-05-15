@@ -60,11 +60,24 @@ public class Banco {
 		return null;
 	}
 	
+	// --------------------------- CLIENTE -----------------------------------
+	
+	public void generacionClavePin( int clavePin, long dni ){
+		this.verCliente(dni).setClavePin(clavePin);
+	}
+	
+	public void generacionClaveHome ( int claveHome, long dni){
+		this.verCliente(dni).setClaveHomeBanking(claveHome);
+	}
+	
+	public void generacionUsuario ( String usuario, long dni){
+		this.verCliente(dni).setUsuario(usuario);
+	}
+	
 	
 	
 	// --------------------------- ALTA CUENTAS MONETARIAS -----------------------------------
 	// 1. VALIDAR QUE EL DOCUMENTO EXISTA O NO. VER EXCEPCIONES.
-	// 2. COMO HAGO LA FECHA DE HOY?
 	
 
 	
@@ -256,6 +269,7 @@ public class Banco {
 	public void cierreDeTarjeta (){
 		for (Long nroCuentaCredito : this.listaCuentasCredito.keySet()) {
 			this.listaCuentasCredito.get(nroCuentaCredito).cierreLiquidacion(this.listaResumenes.size()+1L);
+			
 		}
 	}
 	

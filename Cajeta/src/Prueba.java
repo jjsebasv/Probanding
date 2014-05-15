@@ -1,10 +1,12 @@
+import java.io.IOException;
+
 import org.joda.time.LocalDate;
 
 
 
 public class Prueba {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		
 		Banco bancoFrances = new Banco( "Banco Frances", 17);
@@ -32,7 +34,19 @@ public class Prueba {
 		bancoFrances.verCliente(37905934L).getCuentasCredito().get(1L).getConsumosDelPeriodo().add(consumo1);
 		bancoFrances.verCliente(37905934L).getCuentasCredito().get(1L).getConsumosDelPeriodo().add(consumo2);
 		bancoFrances.cierreDeTarjeta();
-		//	bancoFrances.verCliente(37905934L).getCuentasCredito().get(1L).getResumenes().get(1L).impresionResumen();
+		
+		
+		System.out.println("-----------------------");
+		// 	bancoFrances.verCliente(37905934L).getCuentasCredito().get(1L).getResumenes().get(1L).impresionResumen();
+		Cliente clienteResumen = bancoFrances.verCliente(37905934L);
+		System.out.println(clienteResumen);
+		CuentaCredito cuentaCreditoResumen = clienteResumen.getCuentasCredito().get(1L);
+		System.out.println(cuentaCreditoResumen);
+		Resumen resumen = cuentaCreditoResumen.getResumenes().get(1L);
+		System.out.println(cuentaCreditoResumen.getResumenes().size());
+		resumen.impresionResumen();
+		
+		
 		
 		
 	

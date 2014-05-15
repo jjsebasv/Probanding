@@ -244,21 +244,6 @@ public class Cliente {
 	public void setTajetaDeDebito(TarjetaDebito tajetaDeDebito) {
 		this.tajetaDeDebito = tajetaDeDebito;
 	}
-
-
-
-	public void generacionClavePIN( int clavePIN){
-		this.clavePin = clavePIN;
-	}
-	
-	public void generacionClaveHomeBanking( int claveHomeBanking){
-		this.claveHomeBanking = claveHomeBanking;
-	}
-	
-	public void generacionDeUsuario( String usuario ){
-		this.usuario = usuario;
-	}
-
 	
 	
 	// ------------------ METODOS  ---------------------------------

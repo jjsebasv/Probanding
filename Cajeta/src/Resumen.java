@@ -30,12 +30,13 @@ public class Resumen {
 		FileWriter w;
 		
 		try {
-			c = new File("Resumen 1");
+			c = new File("Resumen 2");
 			w = new FileWriter(c);
 			BufferedWriter bw = new BufferedWriter(w);
-			bw.write("************************"+"RESUMEN"+"***************************");
+			bw.write("***************************"+" RESUMEN "+"******************************");
 			bw.newLine();
-			bw.append("*****************************************************************");
+			bw.append("******************************************************************");
+			bw.newLine();
 			bw.newLine();
 			bw.append("FECHA CIERRE: "+this.fechaCierre);
 			bw.newLine();
@@ -45,9 +46,10 @@ public class Resumen {
 			bw.newLine();
 			bw.append("MONTO: "+this.monto);
 			bw.newLine();
-			bw.append("*****************************************************************");
 			bw.newLine();
-			bw.append("*****************************************************************");
+			bw.append("******************************************************************");
+			bw.newLine();
+			bw.append("******************************************************************");
 			bw.close();
 			w.close();
 			
