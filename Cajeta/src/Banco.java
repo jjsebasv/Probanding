@@ -8,9 +8,11 @@ import org.joda.time.LocalDate;
 
 
 public class Banco {
+	
+	private static Banco bancoFrances = null;
 
 	private final int CUOTA_MENSUAL_SEGURO = 5;
-	private final int numeroEntidad;
+	private final int numeroEntidad = 17;
 	
 	private Set<CajaDeAhorro> listaCajasDeAhorro;
 	private Set<CuentaCorriente> listaCuentasCorriente;
@@ -21,11 +23,9 @@ public class Banco {
 	private Map<Long,Resumen> listaResumenes;
 	private Map<Usuario,Cliente> listaClientes;
 
-	private final String nombre;
+	private final String nombre = "Banco Frances";
 
-	public Banco ( String nombre, int numeroEntidad ){
-		this.nombre = nombre;
-		this.numeroEntidad = numeroEntidad;
+	private Banco (){
 		listaClientes = new HashMap<Usuario,Cliente>();
 		listaCajasDeAhorro = new HashSet<CajaDeAhorro>();
 		listaCuentasCorriente = new HashSet<CuentaCorriente>();
@@ -234,6 +234,9 @@ public class Banco {
 		}
 	}
 	
+	public void deposito ( double monto, Cuenta cuenta){
+		cuenta.depositar(monto);
+	}
 	
 	
 	
@@ -325,6 +328,13 @@ public class Banco {
 
 	public int getCUOTA_MENSUAL_SEGURO() {
 		return CUOTA_MENSUAL_SEGURO;
+	}
+	
+	public static Banco recuperarMiBanco() {
+		  if(bancoFrances == null) {
+			  bancoFrances = new Banco();
+		  }
+		  return bancoFrances;
 	}
 	
 }

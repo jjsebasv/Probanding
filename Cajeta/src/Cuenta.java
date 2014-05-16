@@ -54,13 +54,6 @@ public abstract class Cuenta {
 		return numeroCuenta;
 	}
 
-	// IMPRIME EJ: CUENTA: 123/4. 
-	public String toString(){
-		int cuenta = (int) (this.numeroCuenta / 10);
-		int dv = (int) (this.numeroCuenta % 10);
-		return "CUENTA: "+cuenta+"/"+dv;
-	}
-	
 	
 	
 }

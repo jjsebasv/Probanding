@@ -82,6 +82,11 @@ public class CuentaCorriente extends Cuenta {
 	public void setGiroEnDescubierto(double giroEnDescubierto) {
 		this.giroEnDescubierto = giroEnDescubierto;
 	}
-
+	
+	public String toString(){
+			int cuenta = (int) (this.getNumeroCuenta() / 10);
+			int dv = (int) (this.getNumeroCuenta() % 10);
+			return "CUENTA CORRIENTE: "+cuenta+"/"+dv;
+		}
 
 }

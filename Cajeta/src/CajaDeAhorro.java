@@ -29,5 +29,11 @@ public class CajaDeAhorro extends Cuenta {
 		this.setSaldoActual(this.getSaldoActual()+cheque.getMonto());
 		this.cobrarImpuestoCheque(cheque.getMonto());
 	}
+	
+	public String toString(){
+		int cuenta = (int) (this.getNumeroCuenta() / 10);
+		int dv = (int) (this.getNumeroCuenta() % 10);
+		return "CAJA DE AHORRO: "+cuenta+"/"+dv;
+	}
 
 }

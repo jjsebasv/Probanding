@@ -35,7 +35,7 @@ public class Resumen {
 		try {
 			long time = new Date().getTime();
 			
-			c = new File(this.duenio.getUsuario() + time + ".txt");
+			c = new File(this.duenio.getNumeroCliente() + time + ".txt");
 			w = new FileWriter(c);
 			BufferedWriter bw = new BufferedWriter(w);
 			bw.write("***************************"+" RESUMEN "+"******************************");
