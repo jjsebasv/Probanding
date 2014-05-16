@@ -7,8 +7,6 @@ import java.util.Set;
 
 import org.joda.time.LocalDate;
 
-// CHAU SEBAS
-//Hola NoWWW
 
 public class Cliente {
 
