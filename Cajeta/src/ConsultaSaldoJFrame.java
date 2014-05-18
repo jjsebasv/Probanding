@@ -17,18 +17,37 @@ import javax.swing.JComboBox;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
 
 
 public class ConsultaSaldoJFrame extends JFrame {
 
 	private JPanel contentPane;
+	private final long dni;
+	private String msjDefault = "No registra mas Cuentas.";
+	private Long CBU;
+	
+	
 
+	public long getDni() {
+		return dni;
+	}
+
+	public Long getCBU(){
+		return CBU;
+	}
+	
+	public void setCBU(Long CBU){
+		this.CBU = CBU;
+	}
 
 
 	/**
 	 * Create the frame.
 	 */
-	public ConsultaSaldoJFrame() {
+	public ConsultaSaldoJFrame(final long dni) {
+		this.dni = dni;
+		
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -49,9 +68,30 @@ public class ConsultaSaldoJFrame extends JFrame {
 		button_1.setBounds(396, 228, 48, 44);
 		contentPane.add(button_1);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(168, 119, 166, 50);
-		contentPane.add(comboBox);
+		final JButton cbuElegido = new JButton("New button");
+		cbuElegido.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				SaldoDisponibleJFrame saldos = new SaldoDisponibleJFrame(getDni(), getCBU());
+				saldos.setVisible(true);
+								
+			}
+		});
+		
+		cbuElegido.setBounds(168, 189, 166, 34);
+		contentPane.add(cbuElegido);
+		
+		final JComboBox cuentas = new JComboBox();
+		cuentas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				String mensaje = cuentas.getSelectedItem().toString();
+				cbuElegido.setText(mensaje);
+				setCBU(Long.valueOf(mensaje));
+			}
+		});
+		
+		cuentas.setBounds(168, 119, 166, 50);
+		contentPane.add(cuentas);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
@@ -67,5 +107,20 @@ public class ConsultaSaldoJFrame extends JFrame {
 		lblNewLabel.setForeground(new Color(30, 144, 255));
 		lblNewLabel.setBounds(168, 92, 200, 34);
 		contentPane.add(lblNewLabel);
+		
+		
+				
+		Cliente cliente = Banco.recuperarMiBanco().verCliente(this.dni);
+		for (Cuenta c : cliente.getCuentasMonetarias().values()) {
+			cuentas.addItem(c.getCBU());	
+		}
+		
+		cuentas.addItem(msjDefault);
+		
+		
+		
+		
+		
+		
 	}
 }

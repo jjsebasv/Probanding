@@ -22,7 +22,7 @@ public class ConsultasJFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ConsultasJFrame(long dni) {
+	public ConsultasJFrame(final long dni) {
 		this.dni = dni;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -43,7 +43,7 @@ public class ConsultasJFrame extends JFrame {
 		JButton btnConsultaDeSaldo = new JButton("CONSULTA DE SALDO");
 		btnConsultaDeSaldo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame();
+				ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame(dni);
 				consultaSaldo.setVisible(true);
 			}
 		});

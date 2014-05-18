@@ -36,6 +36,7 @@ public class AutenticacionJFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("deprecation")
 	public AutenticacionJFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -163,7 +164,7 @@ public class AutenticacionJFrame extends JFrame {
 	@SuppressWarnings("deprecation")
 	public void eventoClickOperaciones(){
 		long dniIng = Long.valueOf(dni.getText());
-		boolean existeDni = Banco.recuperarMiBanco().getListaClientes().containsKey(dniIng);
+		boolean existeDni = Banco.recuperarMiBanco().getListaUsuarios().containsKey(dniIng);
 				
 		if ( Banco.recuperarMiBanco().verCliente(dniIng) != null && existeDni && isNumeric(pin.getText())){
 			int pinIng = Integer.valueOf(pin.getText());
