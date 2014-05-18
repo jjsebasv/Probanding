@@ -22,6 +22,9 @@ public class Banco {
 	private Map<Long,CuentaCredito> listaCuentasCredito;
 	private Map<Long,Resumen> listaResumenes;
 	private Map<Usuario,Cliente> listaClientes;
+	private Map<Long, Usuario> listaUsuarios;
+
+	
 
 	private final String nombre = "Banco Frances";
 
@@ -33,12 +36,14 @@ public class Banco {
 		listaTarjetas = new HashSet<Tarjeta>();
 		listaSeguros = new HashSet<Seguro>();
 		listaResumenes = new HashMap<Long,Resumen>();
+		listaUsuarios = new HashMap<Long, Usuario>();
 	}
 
 	public void nuevoCliente ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento ){
 		Usuario usuario = new Usuario(dni,apellido, domicilio, nombre, telefono, fechaNacimiento);
 		Cliente cliente = new Cliente(this.listaClientes.size()+1L);
 		this.listaClientes.put(usuario, cliente);
+		this.listaUsuarios.put(dni, usuario);
 	}
 	
 	
@@ -335,6 +340,14 @@ public class Banco {
 			  bancoFrances = new Banco();
 		  }
 		  return bancoFrances;
+	}
+	
+	public Map<Long, Usuario> getListaUsuarios() {
+		return listaUsuarios;
+	}
+
+	public void setListaUsuarios(Map<Long, Usuario> listaUsuarios) {
+		this.listaUsuarios = listaUsuarios;
 	}
 	
 }
