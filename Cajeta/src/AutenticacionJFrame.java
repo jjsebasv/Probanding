@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,8 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-// VALIDAR TODO LO QUE ES EL INICIO DE SESION!!!!!!
-//hay problemas si meto string de pin
+// VALIDAR TODO LO QUE ES EL INICIO DE SESION!!!!!! --> Listanga!
+//hay problemas si meto string de pin -- Listanga! 
 
 public class AutenticacionJFrame extends JFrame {
 
@@ -35,6 +36,7 @@ public class AutenticacionJFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("deprecation")
 	public AutenticacionJFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -151,11 +153,21 @@ public class AutenticacionJFrame extends JFrame {
 		contentPane.add(botonSalir, gbc_botonSalir);
 		datosErroneos.setVisible(false);
 	}
-	
+	private static boolean isNumeric(String cadena){
+			try {
+				Integer.parseInt(cadena);
+				return true;
+			} catch (NumberFormatException nfe){
+				return false;
+			}
+		}
+	@SuppressWarnings("deprecation")
 	public void eventoClickOperaciones(){
 		long dniIng = Long.valueOf(dni.getText());
-		int pinIng = Integer.valueOf(pin.getText());
-		if ( Banco.recuperarMiBanco().verCliente(dniIng) != null){
+		boolean existeDni = Banco.recuperarMiBanco().getListaUsuarios().containsKey(dniIng);
+				
+		if ( Banco.recuperarMiBanco().verCliente(dniIng) != null && existeDni && isNumeric(pin.getText())){
+			int pinIng = Integer.valueOf(pin.getText());
 			if ( Banco.recuperarMiBanco().verCliente(dniIng).getClavePin() == pinIng){
 				OperacionJFrame operacion = new OperacionJFrame(dniIng);
 				operacion.setVisible(true);
