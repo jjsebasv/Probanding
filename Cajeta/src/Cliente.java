@@ -16,8 +16,17 @@ public class Cliente {
 	private final long numeroCliente;
 	private String usuario;
 	private TarjetaDebito tajetaDeDebito;
+	private Celular celular;
 	
 	
+	public Celular getCelular() {
+		return celular;
+	}
+
+	public void setCelular(Celular celular) {
+		this.celular = celular;
+	}
+
 	private Map<Long,CuentaCredito> cuentasCredito;
 	private Map<Long, Cuenta> cuentasMonetarias;
 	private Set<Movimiento> movimientos;
@@ -59,11 +68,6 @@ public class Cliente {
 				+ ((tarjetasCredito == null) ? 0 : tarjetasCredito.hashCode());
 		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
-	}
-
-
-	public Map<Long, Tarjeta> getTarjetasCredito() {
-		return tarjetasCredito;
 	}
 
 	@Override
@@ -112,7 +116,7 @@ public class Cliente {
 		return true;
 	}
 	
-		// long a String??
+		
 		public String toString(){
 			return "Numero cliente: "+this.getNumeroCliente();
 		}
@@ -122,7 +126,9 @@ public class Cliente {
 	// --------------------------- GETTERS Y SETTERS   -----------------------------------
 
 
-		
+	public Map<Long, Tarjeta> getTarjetasCredito() {
+		return tarjetasCredito;
+	}	
 		
 		
 	public int getClaveHomeBanking() {
@@ -244,74 +250,41 @@ public class Cliente {
 	}
 	
 	
-	// ------------------ METODOS  ---------------------------------
+	// --------------------------- SERVICIOS  -----------------------------------
 	
 	
-		// ------ SERVICIOS -----
-	public void pagarServicio(String tipo, long numeroCuenta){
-		boolean eServicio = false;
 		
+	public void pagarServicio(String tipo, long nroCuenta){
 		
 		if( this.listaServicios.isEmpty() ){
-			System.out.println("No hay servicios a pagar.");
-			return;
+			throw new NoHayServicios();
 		}
-		if( this.cuentasMonetarias.isEmpty() ){
-			System.out.println("No registra cuentas a su nombre.");
-			return;
+		else if( !this.getCuentasMonetarias().containsKey(nroCuenta) ){
+			throw new NoExisteLaCuentaExcepcion();
 		}
-		
-		// hagamos un foreach con el mapa que creee
-//		Iterator<Servicio> itS = this.listaServicios.iterator();
-		//		while (itS.hasNext() && !eServicio ) {
-		//Servicio s = (Servicio) itS.next();
-		//if ( s.getTipo().equals(tipo) ) {
-		//	if ( this.cuentasMonetarias.containsKey(numeroCuenta) ){
-		//		double impuesto = 0.0;
-		//		LocalDate fecha = new LocalDate();
-		//		if( s.getFechaVencimiento().before(fecha.toDate())){
-		//			impuesto = s.getImpuesto();
-		//			System.out.println("Por pago fuera de termino, se aplicara un impuesto de " + impuesto);
-		//		}
-		//		double saldoViejo = this.cuentasMonetarias.get(numeroCuenta).getSaldoActual();
-		//		this.cuentasMonetarias.get(numeroCuenta).setSaldoActual(saldoViejo - s.getMonto() - impuesto);
-		//		s.setPago(true);
-		//	} 
-		//	else{ 
-		//		System.out.println("No existe esa cuenta.");
-		//		return;
-		//	}
-		//	eServicio = true;
-		//}
-		//}
-		if (eServicio)
-			System.out.println("No existe el servicio que quiere pagar.");
-				
-		  
+		else {
+			double impuesto = 0.0;
+			double monto = this.getListaServicios().get(tipo).getMonto();
+			LocalDate fecha = new LocalDate();
+			if( this.getListaServicios().get(tipo).getFechaVencimiento().isBefore(fecha)){
+				impuesto = this.getListaServicios().get(tipo).getImpuesto();
+			}
+			// diferencias ca y cc
+			if ( monto <= this.getCuentasMonetarias().get(nroCuenta).getSaldoActual() )
+			{
+				this.cuentasMonetarias.get(nroCuenta).setSaldoActual(this.getCuentasMonetarias().get(nroCuenta).getSaldoActual()-monto-impuesto);
+				this.listaServicios.get(tipo).setPago(true);
+			} 
+			else{
+				throw new NoPoseeSaldoExcepcion();
+			}
+		}
 	}
 	
 	public void agregarServicio(String tipo, double monto, LocalDate fechaPago, LocalDate fechaVencimiento, long numeroPagoElectronico){
 		Servicio servicioNuevo = new Servicio( tipo, monto, fechaPago, fechaVencimiento, numeroPagoElectronico);
 		this.listaServicios.put(numeroPagoElectronico, servicioNuevo);
 	}
-
-	public void listaServicios(){
-		if(this.listaServicios .isEmpty() )
-			System.out.println("No registra servicios a su nombre.");
-		else{
-			for (Long numeroPago : this.listaServicios.keySet()) {
-				if ( ! this.listaServicios.get(numeroPago).isPago() ){
-					System.out.println("--Su servicio no esta pago--");
-					System.out.println("Fecha de Vencimiento:"+ this.listaServicios.get(numeroPago).getFechaPago());
-					System.out.println("Monto a pagar"+this.listaServicios.get(numeroPago).getMonto());
-			}
-				 
-			}  
-		}  
-	} 
-
-		// ----- CUENTAS -------
-	
 
 	
 }

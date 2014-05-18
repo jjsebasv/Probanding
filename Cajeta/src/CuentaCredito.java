@@ -222,7 +222,7 @@ public class CuentaCredito {
 	}
 	
 	public String toString(){
-		return "CUENTA CREDITO: "+ this.marca +" "+this.nroCuenta ;
+		return this.marca +" "+this.nroCuenta ;
 	}
 	
 }

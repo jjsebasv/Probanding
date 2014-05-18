@@ -36,15 +36,14 @@ public class ConsultasJFrame extends JFrame {
 		label.setBounds(5, 5, 440, 54);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(new Color(0, 191, 255));
-		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 5f));
+		label.setFont(new Font("Lucida Grande", Font.BOLD | Font.ITALIC, 20));
 		label.setBackground(Color.WHITE);
 		contentPane.add(label);
 		
 		JButton btnConsultaDeSaldo = new JButton("CONSULTA DE SALDO");
 		btnConsultaDeSaldo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame();
-				consultaSaldo.setVisible(true);
+				eventoClickSaldo();
 			}
 		});
 		btnConsultaDeSaldo.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
@@ -66,8 +65,7 @@ public class ConsultasJFrame extends JFrame {
 		JButton btnLimitesDisponibles = new JButton("LIMITES DISPONIBLES");
 		btnLimitesDisponibles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimitesDisponiblesJFrame limites = new LimitesDisponiblesJFrame();
-				limites.setVisible(true);
+				eventoClickLimites();
 			}
 		});
 		btnLimitesDisponibles.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
@@ -90,8 +88,7 @@ public class ConsultasJFrame extends JFrame {
 		JButton btnImpresionDeResumen = new JButton("IMPRESION DE RESUMEN");
 		btnImpresionDeResumen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//ImpresionResumenJFrame impresion = new ImpresionResumenJFrame();
-				//impresion.setVisible(true);
+				eventoClickImpresion();
 			}
 		});
 		btnImpresionDeResumen.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
@@ -109,10 +106,41 @@ public class ConsultasJFrame extends JFrame {
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBounds(397, 228, 48, 44);
 		contentPane.add(button);
+		
+		JButton button_1 = new JButton("");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eventoClickAtras();
+			}
+		});
+		button_1.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
+		button_1.setHorizontalAlignment(SwingConstants.LEFT);
+		button_1.setBounds(5, 228, 48, 44);
+		contentPane.add(button_1);
 	}
 
 	public void eventoClickCbu(){
 		CbuJFrame consulta = new CbuJFrame(dni);
 		consulta.setVisible(true);
+	}
+	
+	public void eventoClickImpresion(){
+		ImpresionResumenJFrame impresion = new ImpresionResumenJFrame(dni);
+		impresion.setVisible(true);
+	}
+	
+	public void eventoClickLimites(){
+		LimitesDisponiblesJFrame limites = new LimitesDisponiblesJFrame(dni);
+		limites.setVisible(true);
+	}
+	
+	public void eventoClickAtras(){
+		OperacionJFrame operacion = new OperacionJFrame(dni);
+		operacion.setVisible(true);
+	}
+	
+	public void eventoClickSaldo(){
+		ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame(dni);
+		consultaSaldo.setVisible(true);
 	}
 }

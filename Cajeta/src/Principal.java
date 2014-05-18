@@ -11,7 +11,7 @@ public class Principal {
 		
 		// CLIENTE 1: NOELIA
 		bancoFrances.nuevoCliente(37905934L, "Lopez", "Pedro Goyena", "Noelia", "4444-4444", new LocalDate());
-		bancoFrances.altaCuentaCredito(37905934L,"VISA", 14000.00);
+		bancoFrances.altaCuentaCredito(37905934L,"Visa", 14000.00);
 		bancoFrances.verCliente(37905934L).setClavePin(709);
 		bancoFrances.altaCajaAhorro(37905934L);
 		bancoFrances.altaCajaAhorro(37905934L);
@@ -26,7 +26,6 @@ public class Principal {
 		bancoFrances.nuevoCliente(16599403L, "Fontana", "Matheu 234", "Nancy", "6666-8888", new LocalDate());
 		bancoFrances.altaCuentaCorriente(16599403L);
 		bancoFrances.verCliente(16599403L).setClavePin(2011);
-		System.out.println(bancoFrances.getNumeroEntidad());
 		
 		// CLIENTE 3: CARLOS
 		bancoFrances.altaCuentaCredito(14908728L, "Lopez", "Mastercard", "LN Alem", "Carlos", "2342-2342", new LocalDate(),  30000.00);

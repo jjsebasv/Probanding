@@ -79,8 +79,7 @@ public class OperacionJFrame extends JFrame {
 		JButton btnTransferencias = new JButton("TRANSFERENCIAS");
 		btnTransferencias.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TransferenciasJFrame transferencias = new TransferenciasJFrame();
-				transferencias.setVisible(true);
+				eventoClickTransferencias();
 			}
 		});
 		btnTransferencias.setHorizontalAlignment(SwingConstants.LEFT);
@@ -135,10 +134,21 @@ public class OperacionJFrame extends JFrame {
 		btnNewButton.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
 		btnNewButton.setBounds(396, 228, 48, 44);
 		contentPane.add(btnNewButton);
+		
+		JButton btnClaves = new JButton("CLAVES");
+		btnClaves.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnClaves.setHorizontalAlignment(SwingConstants.LEFT);
+		btnClaves.setBounds(272, 173, 178, 29);
+		contentPane.add(btnClaves);
 	}
 	
 	private void eventoClickConsultas(){
 		ConsultasJFrame consultas = new ConsultasJFrame(dni);
 		consultas.setVisible(true);
+	}
+	
+	public void eventoClickTransferencias(){
+		TransferenciasJFrame transferencias = new TransferenciasJFrame(dni);
+		transferencias.setVisible(true);
 	}
 }

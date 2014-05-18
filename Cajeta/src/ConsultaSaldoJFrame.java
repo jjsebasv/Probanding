@@ -22,13 +22,13 @@ import java.awt.event.ActionEvent;
 public class ConsultaSaldoJFrame extends JFrame {
 
 	private JPanel contentPane;
-
-
+	private final long dni;
 
 	/**
 	 * Create the frame.
 	 */
-	public ConsultaSaldoJFrame() {
+	public ConsultaSaldoJFrame(long dni) {
+		this.dni = dni;
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -67,5 +67,25 @@ public class ConsultaSaldoJFrame extends JFrame {
 		lblNewLabel.setForeground(new Color(30, 144, 255));
 		lblNewLabel.setBounds(168, 92, 200, 34);
 		contentPane.add(lblNewLabel);
+		
+		JButton button = new JButton("");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eventoClickAtras();
+			}
+		});
+		button.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
+		button.setHorizontalAlignment(SwingConstants.LEFT);
+		button.setBounds(6, 228, 48, 44);
+		contentPane.add(button);
+		
+		JLabel saldoNumero = new JLabel("");
+		saldoNumero.setBounds(91, 171, 243, 16);
+		contentPane.add(saldoNumero);
+	}
+	
+	public void eventoClickAtras(){
+		OperacionJFrame operacion = new OperacionJFrame(dni);
+		operacion.setVisible(true);
 	}
 }

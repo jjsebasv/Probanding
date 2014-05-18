@@ -70,5 +70,12 @@ public class UltimosMovimientosJFrame extends JFrame {
 		progressBar.setBounds(6, 252, 378, 20);
 		contentPane.add(progressBar);
 		progressBar.setVisible(false);
+		
+		JLabel lblNewLabel = new JLabel("Imprimiendo Resumen...");
+		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
+		lblNewLabel.setForeground(Color.RED);
+		lblNewLabel.setBounds(6, 224, 142, 16);
+		contentPane.add(lblNewLabel);
+		lblNewLabel.setVisible(false);
 	}
 }

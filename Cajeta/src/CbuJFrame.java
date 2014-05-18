@@ -9,25 +9,28 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.ImageIcon;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JTextField;
 
 
 public class CbuJFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField CbuField;
 	public final long dni;
+	private JTextField cbuResultado;
 
 
-	/**
-	 * Create the frame.
-	 */
-	public CbuJFrame(long dni) {
+	public CbuJFrame(final long dni) {
 		this.dni = dni;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -48,19 +51,26 @@ public class CbuJFrame extends JFrame {
 		button.setBounds(396, 228, 48, 44);
 		contentPane.add(button);
 		
-		JComboBox Cuentas = new JComboBox();
+		int i=0;
+		int cantCuentas = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().size();
+		final String[] nombreCuentas = new String[cantCuentas];
+		
+		for (Long nroCuenta : Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().keySet()) {
+			nombreCuentas[i] = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuenta).toString();
+			i++;
+			System.out.println(i);
+		}
+		
+		// no se porque aca me tira que tengo que agregarle un final
+		final JComboBox Cuentas = new JComboBox(nombreCuentas);
 		Cuentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//eventoClickSeleccion((Cuenta) this.getSelectedItem());
+				eventoClickCombo(Cuentas.getSelectedItem().toString());
 			}
 		});
 		Cuentas.setBounds(128, 119, 240, 50);
 		contentPane.add(Cuentas);
-		
-		for (Long nroCuenta : Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().keySet()) {
-			Cuentas.addItem(Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuenta));
-		}
-		
+
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -76,16 +86,41 @@ public class CbuJFrame extends JFrame {
 		label_1.setBounds(168, 92, 200, 34);
 		contentPane.add(label_1);
 		
-		CbuField = new JTextField();
-		CbuField.setFont(CbuField.getFont().deriveFont(CbuField.getFont().getStyle() | Font.ITALIC));
-		CbuField.setForeground(new Color(30, 144, 255));
-		CbuField.setText("Su CBU es:");
-		CbuField.setBounds(129, 168, 240, 28);
-		contentPane.add(CbuField);
-		CbuField.setColumns(10);
+		JLabel cbuNumero = new JLabel("Su CBU es:");
+		cbuNumero.setFont(cbuNumero.getFont().deriveFont(cbuNumero.getFont().getStyle() | Font.ITALIC));
+		cbuNumero.setForeground(new Color(30, 144, 255));
+		cbuNumero.setBounds(128, 181, 77, 34);
+		contentPane.add(cbuNumero);
+		
+		JButton button_1 = new JButton("");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eventoClickAtras();
+			}
+		});
+		button_1.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
+		button_1.setHorizontalAlignment(SwingConstants.LEFT);
+		button_1.setBounds(6, 228, 48, 44);
+		contentPane.add(button_1);
+		
+		cbuResultado = new JTextField();
+		cbuResultado.setBounds(210, 184, 134, 28);
+		contentPane.add(cbuResultado);
+		cbuResultado.setColumns(10);
+		cbuResultado.setVisible(false);
+		
 	}
 	
-	public void eventoClickSeleccion(Cuenta cuenta){
-		CbuField.setText(String.valueOf(cuenta.getCBU()));
+	public void eventoClickCombo( String nroCuenta ){
+		Long nroCuentaSeleccionada = Long.valueOf(nroCuenta);
+		long cbu = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuentaSeleccionada).getCBU();
+		cbuResultado.setText(String.valueOf(cbu));
+		cbuResultado.setVisible(true);
+		
+	}
+
+	public void eventoClickAtras(){
+		OperacionJFrame operacion = new OperacionJFrame(dni);
+		operacion.setVisible(true);
 	}
 }

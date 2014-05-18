@@ -160,6 +160,10 @@ public class AutenticacionJFrame extends JFrame {
 				OperacionJFrame operacion = new OperacionJFrame(dniIng);
 				operacion.setVisible(true);
 			}
+			//	else if ( dni.getText().equals("admin") && pin.getText().equals("admin")){
+			//	ManagerJFrame manager = new ManagerJFrame();
+			//	manager.setVisible(true);
+			//}
 			else{
 				datosErroneos.setVisible(true);
 			}

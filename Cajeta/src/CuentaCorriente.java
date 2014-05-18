@@ -86,7 +86,7 @@ public class CuentaCorriente extends Cuenta {
 	public String toString(){
 			int cuenta = (int) (this.getNumeroCuenta() / 10);
 			int dv = (int) (this.getNumeroCuenta() % 10);
-			return "CUENTA CORRIENTE: "+cuenta+"/"+dv;
+			return "Cuenta Corriente: "+cuenta+"/"+dv;
 		}
 
 }

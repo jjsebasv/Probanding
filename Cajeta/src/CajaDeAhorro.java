@@ -33,7 +33,7 @@ public class CajaDeAhorro extends Cuenta {
 	public String toString(){
 		int cuenta = (int) (this.getNumeroCuenta() / 10);
 		int dv = (int) (this.getNumeroCuenta() % 10);
-		return "CAJA DE AHORRO: "+cuenta+"/"+dv;
+		return "Caja de Ahorro: "+cuenta+"/"+dv;
 	}
 
 }
