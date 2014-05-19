@@ -37,11 +37,9 @@ public class Banco {
 		listaTarjetas = new HashSet<Tarjeta>();
 		listaSeguros = new HashSet<Seguro>();
 		listaResumenes = new HashMap<Long,Resumen>();
-<<<<<<< HEAD
 		listaTarjetasCoord = new HashSet<TarjetaDeCoordenadas>();
-=======
 		listaUsuarios = new HashMap<Long, Usuario>();
->>>>>>> 6ee9fd411c7334ca4867e5331446dc120c498f6c
+
 	}
 
 	public void nuevoCliente ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento ){
