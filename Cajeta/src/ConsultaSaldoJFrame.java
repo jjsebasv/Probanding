@@ -42,13 +42,20 @@ public class ConsultaSaldoJFrame extends JFrame {
 		this.CBU = CBU;
 	}
 
+<<<<<<< HEAD
 
 	
+=======
+>>>>>>> 0f8f7bdca0318977a10e000e61dd1c868ff3f121
 	/**
 	 * Create the frame.
 	 */
 	public ConsultaSaldoJFrame(final long dni) {
 		this.dni = dni;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0f8f7bdca0318977a10e000e61dd1c868ff3f121
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -88,6 +95,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 		cuentas.setBounds(154, 62, 352, 50);
 		contentPane.add(cuentas);
 
+<<<<<<< HEAD
 		Cliente cliente = Banco.recuperarMiBanco().verCliente(this.dni);
 		for (Cuenta c : cliente.getCuentasMonetarias().values()) {
 			cuentas.addItem(c.getCBU());	
@@ -95,6 +103,8 @@ public class ConsultaSaldoJFrame extends JFrame {
 		
 		cuentas.addItem(msjDefault);
 	
+=======
+>>>>>>> 0f8f7bdca0318977a10e000e61dd1c868ff3f121
 		
 		cuentas.setBounds(168, 119, 166, 50);
 		contentPane.add(cuentas);			
@@ -113,6 +123,10 @@ public class ConsultaSaldoJFrame extends JFrame {
 		lblNewLabel.setForeground(new Color(30, 144, 255));
 		lblNewLabel.setBounds(168, 92, 200, 34);
 		contentPane.add(lblNewLabel);
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 0f8f7bdca0318977a10e000e61dd1c868ff3f121
 		JLabel lblNewLabel_1 = new JLabel("Su saldo es:");
 		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.ITALIC, 13));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -132,7 +146,10 @@ public class ConsultaSaldoJFrame extends JFrame {
 	public void eventoClickAtras(){
 		OperacionJFrame operacion = new OperacionJFrame(dni);
 		operacion.setVisible(true);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0f8f7bdca0318977a10e000e61dd1c868ff3f121
 		
 		
 	}
@@ -159,5 +176,8 @@ public class ConsultaSaldoJFrame extends JFrame {
 		saldoResultado.setVisible(true);
 		
 	}
+<<<<<<< HEAD
 		
+=======
+>>>>>>> 0f8f7bdca0318977a10e000e61dd1c868ff3f121
 }
