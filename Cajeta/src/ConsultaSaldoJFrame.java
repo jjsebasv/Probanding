@@ -122,7 +122,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 		JButton home = new JButton("");
 		home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ClickAtras();
+				clickAtras();
 			}
 		});
 		home.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
@@ -156,14 +156,14 @@ public class ConsultaSaldoJFrame extends JFrame {
 		saldoResultado.setVisible(true);
 	}
 	
-	public void ClickAtras(){
+	public void clickAtras(){
+		this.padre.clickAtras();
 		this.dispose();
-		padre.show();
 	}
-	
 
 	public void cerrarSesion(){
-		this.dispose();
 		this.padre.cerrarSesion();
+		this.dispose();
+		
 	}
 }

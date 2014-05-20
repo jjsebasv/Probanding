@@ -60,7 +60,7 @@ public class OperacionJFrame extends JFrame {
 		btnConsultas.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
 		btnConsultas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Consultas();
+				consultas();
 			}
 		});
 		btnConsultas.setBounds(46, 75, 178, 29);
@@ -144,7 +144,7 @@ public class OperacionJFrame extends JFrame {
 		contentPane.add(btnClaves);
 	}
 	
-	private void Consultas(){
+	private void consultas(){
 		ConsultasJFrame consultas = new ConsultasJFrame(dni, this);
 		consultas.setVisible(true);
 		this.hide();
@@ -156,8 +156,11 @@ public class OperacionJFrame extends JFrame {
 		this.hide();
 	}
 	
+	public void clickAtras(){
+		this.show();
+	}
+
 	public void cerrarSesion(){
-		this.dispose();
 		padre.show();
 	}
 }

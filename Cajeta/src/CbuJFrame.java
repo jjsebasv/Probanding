@@ -48,7 +48,7 @@ public class CbuJFrame extends JFrame {
 		button.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				cerrarSesion();
 			}
 		});
 		button.setHorizontalAlignment(SwingConstants.LEFT);
@@ -98,7 +98,7 @@ public class CbuJFrame extends JFrame {
 		JButton button_1 = new JButton("");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoClickAtras();
+				clickAtras();
 			}
 		});
 		button_1.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
@@ -138,13 +138,16 @@ public class CbuJFrame extends JFrame {
 		
 	}
 
-	public void eventoClickAtras(){
+	
+	public void clickAtras(){
+		this.padre.clickAtras();
 		this.dispose();
-		padre.enable();
+	}
+
+	public void cerrarSesion(){
+		this.padre.cerrarSesion();
+		this.dispose();
+		
 	}
 	
-	public void cerrarSesion(){
-		this.dispose();
-		this.padre.cerrarSesion();
-	}
 }
