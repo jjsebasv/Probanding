@@ -112,7 +112,7 @@ public class ConsultasJFrame extends JFrame {
 		JButton button_1 = new JButton("");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoClickAtras();
+				clickAtras();
 			}
 		});
 		button_1.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
@@ -144,13 +144,13 @@ public class ConsultasJFrame extends JFrame {
 		this.hide();
 	}
 	
-	public void eventoClickAtras(){
+	public void clickAtras(){
+		this.padre.clickAtras();
 		this.dispose();
-		padre.show();
 	}
 
 	public void cerrarSesion(){
-		this.dispose();
 		this.padre.cerrarSesion();
+		this.dispose();
 	}
 }
