@@ -14,12 +14,15 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class ImpresionResumenJFrame extends JFrame {
 
 	private JPanel contentPane;
-	private final long dni;
+	public final long dni;
+	private long nroCuenta = 0L ;
 
 
 	public ImpresionResumenJFrame(long dni) {
@@ -33,17 +36,34 @@ public class ImpresionResumenJFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton button = new JButton("");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		button.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBounds(396, 228, 48, 44);
 		contentPane.add(button);
 		
-		JComboBox cuentasBox = new JComboBox();
+		int i=0;
+		int cantCuentas = Banco.recuperarMiBanco().verCliente(dni).getCuentasCredito().size();
+		String[] nombreCuentas = new String[cantCuentas];
+		
+		for (Long nroCuenta : Banco.recuperarMiBanco().verCliente(dni).getCuentasCredito().keySet() ) {
+			nombreCuentas[i] = Banco.recuperarMiBanco().verCliente(dni).getCuentasCredito().get(nroCuenta).toString();
+			i++;
+		}
+		
+		final JComboBox cuentasBox = new JComboBox(nombreCuentas);
+		cuentasBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eventoClickComboCuentas(cuentasBox.getSelectedItem().toString());
+			}
+		});
 		cuentasBox.setBounds(133, 111, 218, 50);
 		contentPane.add(cuentasBox);
-		for (Long nroCuenta : Banco.recuperarMiBanco().getListaCuentasCredito().keySet()) {
-			cuentasBox.addItem(Banco.recuperarMiBanco().getListaCuentasCredito().get(nroCuenta));
-		}
+		
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
@@ -68,9 +88,6 @@ public class ImpresionResumenJFrame extends JFrame {
 		lblSeleccionePeriodoLa.setBounds(143, 156, 200, 34);
 		contentPane.add(lblSeleccionePeriodoLa);
 		
-		JComboBox periodosBox = new JComboBox();
-		periodosBox.setBounds(133, 187, 218, 50);
-		contentPane.add(periodosBox);
 
 		
 		JProgressBar progressBar = new JProgressBar();
@@ -87,4 +104,38 @@ public class ImpresionResumenJFrame extends JFrame {
 		
 	}
 
+	public void eventoClickComboCuentas( String nroCuenta ){
+		Long nroC = 0L;
+		int j=0;
+		int cantR = Banco.recuperarMiBanco().verCliente(dni).getCuentasCredito().get(this.nroCuenta).getResumenes().size();
+		String[]  nombreResumenes = new String[cantR];
+		
+		for (CuentaCredito cuenta : Banco.recuperarMiBanco().getListaCuentasCredito().values()) {
+			if ( cuenta.toString().equals(nroCuenta)){
+				nroC = cuenta.getNroCuenta();
+			}
+		}
+		this.nroCuenta = nroC;
+	
+	
+	
+	
+		for (Resumen resumen : Banco.recuperarMiBanco().verCliente(dni).getCuentasCredito().get(this.nroCuenta).getResumenes().values() ) {
+			nombreResumenes[j] = resumen.getFechaCierre().toString();
+		}
+	
+		final JComboBox periodosBox = new JComboBox(nombreResumenes);
+		periodosBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eventoClickComboPeriodos(periodosBox.getSelectedItem().toString());
+			}
+		});
+		periodosBox.setBounds(133, 187, 218, 50);
+		contentPane.add(periodosBox);
+		periodosBox.setVisible(true);
+}
+	public void eventoClickComboPeriodos( String nroResumen ){
+		
+	}
+	
 }

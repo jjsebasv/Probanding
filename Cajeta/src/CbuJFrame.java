@@ -58,7 +58,6 @@ public class CbuJFrame extends JFrame {
 		for (Long nroCuenta : Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().keySet()) {
 			nombreCuentas[i] = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuenta).toString();
 			i++;
-			System.out.println(i);
 		}
 		
 		// no se porque aca me tira que tengo que agregarle un final
@@ -104,6 +103,7 @@ public class CbuJFrame extends JFrame {
 		contentPane.add(button_1);
 		
 		cbuResultado = new JTextField();
+		cbuResultado.setHorizontalAlignment(SwingConstants.CENTER);
 		cbuResultado.setBounds(210, 184, 134, 28);
 		contentPane.add(cbuResultado);
 		cbuResultado.setColumns(10);
@@ -112,7 +112,22 @@ public class CbuJFrame extends JFrame {
 	}
 	
 	public void eventoClickCombo( String nroCuenta ){
-		Long nroCuentaSeleccionada = Long.valueOf(nroCuenta);
+		Long nroCuentaSeleccionada = 0L;
+		
+		for (Cuenta cuenta : Banco.recuperarMiBanco().getListaCajasDeAhorro().values()) {
+			if ( cuenta.toString().equals(nroCuenta) ){
+				nroCuentaSeleccionada = cuenta.getNumeroCuenta();
+			}
+		}
+		
+		if ( nroCuentaSeleccionada == 0 ){
+			for (Cuenta cuenta : Banco.recuperarMiBanco().getListaCuentasCorriente().values()) {
+				if ( cuenta.toString().equals(nroCuenta) ){
+					nroCuentaSeleccionada = cuenta.getNumeroCuenta();
+				}
+			}
+		}
+
 		long cbu = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuentaSeleccionada).getCBU();
 		cbuResultado.setText(String.valueOf(cbu));
 		cbuResultado.setVisible(true);

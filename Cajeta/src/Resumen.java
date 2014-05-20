@@ -64,6 +64,10 @@ public class Resumen {
 		
 	}
 	
+	public String toString(){
+		return String.valueOf(numeroResumen);
+	}
+	
 	
 	public Cliente getDuenio() {
 		return duenio;

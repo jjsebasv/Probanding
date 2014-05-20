@@ -14,8 +14,6 @@ public class Banco {
 	private final int CUOTA_MENSUAL_SEGURO = 5;
 	private final int numeroEntidad = 17;
 	
-	private Set<CajaDeAhorro> listaCajasDeAhorro;
-	private Set<CuentaCorriente> listaCuentasCorriente;
 	private Set<Tarjeta> listaTarjetas;
 	private Set<TarjetaDeCoordenadas> listaTarjetasCoord;
 	private Set<Seguro> listaSeguros;
@@ -24,6 +22,8 @@ public class Banco {
 	private Map<Long,Resumen> listaResumenes;
 	private Map<Usuario,Cliente> listaClientes;
 	private Map<Long, Usuario> listaUsuarios;
+	private Map<Long,CajaDeAhorro> listaCajasDeAhorro;
+	private Map<Long,CuentaCorriente> listaCuentasCorriente;
 
 	
 
@@ -31,17 +31,14 @@ public class Banco {
 
 	private Banco (){
 		listaClientes = new HashMap<Usuario,Cliente>();
-		listaCajasDeAhorro = new HashSet<CajaDeAhorro>();
-		listaCuentasCorriente = new HashSet<CuentaCorriente>();
+		listaCajasDeAhorro = new HashMap<Long,CajaDeAhorro>();
+		listaCuentasCorriente = new HashMap<Long,CuentaCorriente>();
 		listaCuentasCredito = new HashMap<Long,CuentaCredito>();
 		listaTarjetas = new HashSet<Tarjeta>();
 		listaSeguros = new HashSet<Seguro>();
 		listaResumenes = new HashMap<Long,Resumen>();
-<<<<<<< HEAD
 		listaTarjetasCoord = new HashSet<TarjetaDeCoordenadas>();
-=======
 		listaUsuarios = new HashMap<Long, Usuario>();
->>>>>>> 6ee9fd411c7334ca4867e5331446dc120c498f6c
 	}
 
 	public void nuevoCliente ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento ){
@@ -101,8 +98,8 @@ public class Banco {
 			throw new NoExisteClienteExcepcion();
 		}
 		else{
-			CajaDeAhorro cajaDeAhorro = new CajaDeAhorro(this.getNumeroEntidad()*10000+this.listaCajasDeAhorro.size()+1L, this.listaCajasDeAhorro.size()+1L);
-			this.listaCajasDeAhorro.add(cajaDeAhorro);
+			CajaDeAhorro cajaDeAhorro = new CajaDeAhorro(this.listaCajasDeAhorro.size()+1L);
+			this.listaCajasDeAhorro.put(cajaDeAhorro.getNumeroCuenta(), cajaDeAhorro);
 			verCliente(DNI).getCuentasMonetarias().put(cajaDeAhorro.getNumeroCuenta(), cajaDeAhorro);
 			
 			if ( verCliente(DNI).getTajetaDeDebito() == null ){
@@ -129,8 +126,8 @@ public class Banco {
 			throw new NoExisteClienteExcepcion();
 		}
 		else{
-			CuentaCorriente cuentaCorriente = new CuentaCorriente(this.getNumeroEntidad()*10000+this.listaCajasDeAhorro.size()+1L, this.listaCajasDeAhorro.size()+1L,  0 );
-			this.listaCuentasCorriente.add(cuentaCorriente);
+			CuentaCorriente cuentaCorriente = new CuentaCorriente(this.listaCajasDeAhorro.size()+1L,  0 );
+			this.listaCuentasCorriente.put(cuentaCorriente.getNumeroCuenta(), cuentaCorriente);
 			verCliente(DNI).getCuentasMonetarias().put(cuentaCorriente.getNumeroCuenta(), cuentaCorriente);
 			if ( verCliente(DNI).getTajetaDeDebito() == null ){
 				TarjetaDebito tarjetaDebito = new TarjetaDebito(this.listaTarjetas.size()+1L);
@@ -248,7 +245,7 @@ public class Banco {
 	
 	public void transferencia ( double monto, CajaDeAhorro emisora, Cuenta destino){
 		if ( emisora.getSaldoActual() >= monto ){
-			if ( this.listaCajasDeAhorro.contains(destino) || this.listaCuentasCorriente.contains(destino) ){
+			if ( this.listaCajasDeAhorro.values().contains(destino) || this.listaCuentasCorriente.values().contains(destino) ){
 				emisora.transferir(monto, destino);
 			}
 			else{
@@ -262,7 +259,7 @@ public class Banco {
 	
 	public void transferencia ( double monto, CuentaCorriente emisora, Cuenta destino){
 		if ( emisora.getSaldoActual()+emisora.getGiroEnDescubierto() >= monto ){
-			if ( this.listaCajasDeAhorro.contains(destino) || this.listaCuentasCorriente.contains(destino) ){
+			if ( this.listaCajasDeAhorro.values().contains(destino) || this.listaCuentasCorriente.values().contains(destino) ){
 				emisora.transferir(monto, destino);
 			}
 			else{
@@ -274,8 +271,41 @@ public class Banco {
 		}
 	}
 	
+	public Map<Long, CajaDeAhorro> getListaCajasDeAhorro() {
+		return listaCajasDeAhorro;
+	}
+
+	public void setListaCajasDeAhorro(Map<Long, CajaDeAhorro> listaCajasDeAhorro) {
+		this.listaCajasDeAhorro = listaCajasDeAhorro;
+	}
+
+	public Map<Long, CuentaCorriente> getListaCuentasCorriente() {
+		return listaCuentasCorriente;
+	}
+
+	public void setListaCuentasCorriente(
+			Map<Long, CuentaCorriente> listaCuentasCorriente) {
+		this.listaCuentasCorriente = listaCuentasCorriente;
+	}
+
+	public Set<TarjetaDeCoordenadas> getListaTarjetasCoord() {
+		return listaTarjetasCoord;
+	}
+
+	public void setListaTarjetasCoord(Set<TarjetaDeCoordenadas> listaTarjetasCoord) {
+		this.listaTarjetasCoord = listaTarjetasCoord;
+	}
+
+	public Map<Long, Resumen> getListaResumenes() {
+		return listaResumenes;
+	}
+
+	public void setListaResumenes(Map<Long, Resumen> listaResumenes) {
+		this.listaResumenes = listaResumenes;
+	}
+
 	public void deposito ( double monto, Cuenta cuenta){
-		if ( this.listaCajasDeAhorro.contains(cuenta) || this.listaCuentasCorriente.contains(cuenta) ){
+		if ( this.listaCajasDeAhorro.values().contains(cuenta) || this.listaCuentasCorriente.values().contains(cuenta) ){
 		cuenta.depositar(monto);
 		}
 		else
@@ -343,21 +373,6 @@ public class Banco {
 		this.listaClientes = listaClientes;
 	}
 
-	public Set<CajaDeAhorro> getListaCajasDeAhorro() {
-		return listaCajasDeAhorro;
-	}
-
-	public void setListaCajasDeAhorro(Set<CajaDeAhorro> listaCajasDeAhorro) {
-		this.listaCajasDeAhorro = listaCajasDeAhorro;
-	}
-
-	public Set<CuentaCorriente> getListaCuentasCorriente() {
-		return listaCuentasCorriente;
-	}
-
-	public void setListaCuentasCorriente(Set<CuentaCorriente> listaCuentasCorriente) {
-		this.listaCuentasCorriente = listaCuentasCorriente;
-	}
 
 	public Set<Tarjeta> getListaTarjetas() {
 		return listaTarjetas;

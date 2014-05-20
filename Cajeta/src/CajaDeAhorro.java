@@ -4,8 +4,8 @@ public class CajaDeAhorro extends Cuenta {
 
 	private final double IMP_AL_CHEQUE = 0.12;
 	
-	public CajaDeAhorro(long CBU, long numeroCuenta) {
-		super(CBU, numeroCuenta);
+	public CajaDeAhorro(long numeroCuenta) {
+		super(numeroCuenta);
 	}
 	
 	public void cobrarImpuestoCheque( double monto){
