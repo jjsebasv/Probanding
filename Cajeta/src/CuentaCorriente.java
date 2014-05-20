@@ -10,8 +10,8 @@ public class CuentaCorriente extends Cuenta {
 	private double giroEnDescubierto;
 	
 
-	public CuentaCorriente(long CBU, long numeroCuenta, double giroEnDescubierto) {
-		super(CBU, numeroCuenta);
+	public CuentaCorriente(long numeroCuenta, double giroEnDescubierto) {
+		super(numeroCuenta);
 		chequesEmitidos = new HashSet<Cheque>();
 		chequesRechazados = new HashSet<Cheque>();
 		this.giroEnDescubierto = giroEnDescubierto;

@@ -24,10 +24,9 @@ public class ConsultaSaldoJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private final long dni;
-<<<<<<< HEAD
-=======
 	private String msjDefault = "No registra mas Cuentas.";
 	private Long CBU;
+	private JTextField saldoResultado;
 	
 	
 
@@ -43,19 +42,9 @@ public class ConsultaSaldoJFrame extends JFrame {
 		this.CBU = CBU;
 	}
 
->>>>>>> 6ee9fd411c7334ca4867e5331446dc120c498f6c
 
-	/**
-	 * Create the frame.
-	 */
-<<<<<<< HEAD
 	public ConsultaSaldoJFrame(long dni) {
 		this.dni = dni;
-=======
-	public ConsultaSaldoJFrame(final long dni) {
-		this.dni = dni;
-		
->>>>>>> 6ee9fd411c7334ca4867e5331446dc120c498f6c
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -76,27 +65,32 @@ public class ConsultaSaldoJFrame extends JFrame {
 		button_1.setBounds(396, 228, 48, 44);
 		contentPane.add(button_1);
 		
-		final JButton cbuElegido = new JButton("New button");
-		cbuElegido.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				SaldoDisponibleJFrame saldos = new SaldoDisponibleJFrame(getDni(), getCBU());
-				saldos.setVisible(true);
-								
-			}
-		});
+		int i=0;
+		int cantCuentas = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().size();
+		final String[] nombreCuentas = new String[cantCuentas];
 		
-		cbuElegido.setBounds(168, 189, 166, 34);
-		contentPane.add(cbuElegido);
+		for (Long nroCuenta : Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().keySet()) {
+			nombreCuentas[i] = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuenta).toString();
+			i++;
+		}
 		
-		final JComboBox cuentas = new JComboBox();
+		// no se porque aca me tira que tengo que agregarle un final
+		final JComboBox cuentas = new JComboBox(nombreCuentas);
 		cuentas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-				String mensaje = cuentas.getSelectedItem().toString();
-				cbuElegido.setText(mensaje);
-				setCBU(Long.valueOf(mensaje));
+			public void actionPerformed(ActionEvent e) {
+				eventoClickCombo(cuentas.getSelectedItem().toString());
 			}
 		});
+		cuentas.setBounds(154, 62, 352, 50);
+		contentPane.add(cuentas);
+
+		Cliente cliente = Banco.recuperarMiBanco().verCliente(this.dni);
+		for (Cuenta c : cliente.getCuentasMonetarias().values()) {
+			cuentas.addItem(c.getCBU());	
+		}
+		
+		cuentas.addItem(msjDefault);
+		
 		
 		cuentas.setBounds(168, 119, 166, 50);
 		contentPane.add(cuentas);
@@ -116,41 +110,62 @@ public class ConsultaSaldoJFrame extends JFrame {
 		lblNewLabel.setBounds(168, 92, 200, 34);
 		contentPane.add(lblNewLabel);
 		
-<<<<<<< HEAD
-		JButton button = new JButton("");
-		button.addActionListener(new ActionListener() {
+		JButton homeButton = new JButton("");
+		homeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventoClickAtras();
 			}
 		});
-		button.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
-		button.setHorizontalAlignment(SwingConstants.LEFT);
-		button.setBounds(6, 228, 48, 44);
-		contentPane.add(button);
+		homeButton.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
+		homeButton.setHorizontalAlignment(SwingConstants.LEFT);
+		homeButton.setBounds(6, 228, 48, 44);
+		contentPane.add(homeButton);
 		
-		JLabel saldoNumero = new JLabel("");
-		saldoNumero.setBounds(91, 171, 243, 16);
-		contentPane.add(saldoNumero);
+		JLabel lblNewLabel_1 = new JLabel("Su saldo es:");
+		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.ITALIC, 13));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_1.setForeground(new Color(30, 144, 255));
+		lblNewLabel_1.setBounds(83, 167, 93, 16);
+		contentPane.add(lblNewLabel_1);
+		
+		saldoResultado = new JTextField();
+		saldoResultado.setBounds(188, 161, 179, 28);
+		contentPane.add(saldoResultado);
+		saldoResultado.setColumns(10);
+		saldoResultado.setVisible(false);
 	}
+	
+	
 	
 	public void eventoClickAtras(){
 		OperacionJFrame operacion = new OperacionJFrame(dni);
 		operacion.setVisible(true);
-=======
-		
+
 				
-		Cliente cliente = Banco.recuperarMiBanco().verCliente(this.dni);
-		for (Cuenta c : cliente.getCuentasMonetarias().values()) {
-			cuentas.addItem(c.getCBU());	
+		
+		
+	}
+	
+	public void eventoClickCombo( String nroCuenta ){
+		Long nroCuentaSeleccionada = 0L;
+		
+		for (Cuenta cuenta : Banco.recuperarMiBanco().getListaCajasDeAhorro().values()) {
+			if ( cuenta.toString().equals(nroCuenta) ){
+				nroCuentaSeleccionada = cuenta.getNumeroCuenta();
+			}
 		}
 		
-		cuentas.addItem(msjDefault);
+		if ( nroCuentaSeleccionada == 0 ){
+			for (Cuenta cuenta : Banco.recuperarMiBanco().getListaCuentasCorriente().values()) {
+				if ( cuenta.toString().equals(nroCuenta) ){
+					nroCuentaSeleccionada = cuenta.getNumeroCuenta();
+				}
+			}
+		}
+
+		double saldo = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuentaSeleccionada).getSaldoActual();
+		saldoResultado.setText(String.valueOf(saldo));
+		saldoResultado.setVisible(true);
 		
-		
-		
-		
-		
-		
->>>>>>> 6ee9fd411c7334ca4867e5331446dc120c498f6c
 	}
 }
