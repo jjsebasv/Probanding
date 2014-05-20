@@ -42,6 +42,8 @@ public class ConsultaSaldoJFrame extends JFrame {
 		this.CBU = CBU;
 	}
 
+
+	
 	/**
 	 * Create the frame.
 	 */
@@ -75,10 +77,9 @@ public class ConsultaSaldoJFrame extends JFrame {
 			nombreCuentas[i] = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuenta).toString();
 			i++;
 		}
-		
+
 		// no se porque aca me tira que tengo que agregarle un final
 		final JComboBox cuentas = new JComboBox(nombreCuentas);
-		
 		cuentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventoClickCombo(cuentas.getSelectedItem().toString());
@@ -93,6 +94,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 		}
 		
 		cuentas.addItem(msjDefault);
+	
 		
 		cuentas.setBounds(168, 119, 166, 50);
 		contentPane.add(cuentas);			
@@ -111,8 +113,6 @@ public class ConsultaSaldoJFrame extends JFrame {
 		lblNewLabel.setForeground(new Color(30, 144, 255));
 		lblNewLabel.setBounds(168, 92, 200, 34);
 		contentPane.add(lblNewLabel);
-		
-				
 		JLabel lblNewLabel_1 = new JLabel("Su saldo es:");
 		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.ITALIC, 13));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -133,7 +133,6 @@ public class ConsultaSaldoJFrame extends JFrame {
 		OperacionJFrame operacion = new OperacionJFrame(dni);
 		operacion.setVisible(true);
 
-				
 		
 		
 	}
@@ -159,6 +158,6 @@ public class ConsultaSaldoJFrame extends JFrame {
 		saldoResultado.setText(String.valueOf(saldo));
 		saldoResultado.setVisible(true);
 		
-	}		
+	}
 		
 }
