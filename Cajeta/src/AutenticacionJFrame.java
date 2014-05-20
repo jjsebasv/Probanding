@@ -52,7 +52,7 @@ public class AutenticacionJFrame extends JFrame {
 		contentPane.setLayout(gbl_contentPane);
 		
 		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
+		lblNewLabel_2.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
 		lblNewLabel_2.setFont(lblNewLabel_2.getFont().deriveFont(lblNewLabel_2.getFont().getStyle() | Font.BOLD | Font.ITALIC, lblNewLabel_2.getFont().getSize() + 9f));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setBackground(Color.LIGHT_GRAY);
@@ -144,7 +144,7 @@ public class AutenticacionJFrame extends JFrame {
 		gbc_datosErroneos.gridx = 1;
 		gbc_datosErroneos.gridy = 3;
 		contentPane.add(datosErroneos, gbc_datosErroneos);
-		botonSalir.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
+		botonSalir.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		GridBagConstraints gbc_botonSalir = new GridBagConstraints();
 		gbc_botonSalir.anchor = GridBagConstraints.WEST;
 		gbc_botonSalir.fill = GridBagConstraints.VERTICAL;

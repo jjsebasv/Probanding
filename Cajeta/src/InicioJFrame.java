@@ -1,18 +1,17 @@
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
+import java.awt.Image;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 
 public class InicioJFrame extends JFrame {
@@ -45,12 +44,14 @@ public class InicioJFrame extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("/Users/user/Pictures/Pictures/mzl.fgseuiha-001.jpg"));
+		ImageIcon imageIcon = new ImageIcon("./imagenes/mzl.fgseuiha.png");
+		Image image = imageIcon.getImage().getScaledInstance(320, 278, Image.SCALE_SMOOTH);
+		lblNewLabel.setIcon(new ImageIcon(image));
 		lblNewLabel.setBounds(70, 0, 320, 278);
 		contentPane.add(lblNewLabel);
 		
 		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
+		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);

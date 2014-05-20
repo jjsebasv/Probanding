@@ -44,7 +44,7 @@ public class OperacionRealizadaJFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("/Users/user/Pictures/symbol-check-icon.png"));
+		lblNewLabel.setIcon(new ImageIcon("./imagenes/symbol-check-icon.png"));
 		lblNewLabel.setBounds(160, 49, 141, 112);
 		contentPane.add(lblNewLabel);
 		

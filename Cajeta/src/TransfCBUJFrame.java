@@ -55,7 +55,7 @@ public class TransfCBUJFrame extends JFrame {
 		contentPane.add(panel);
 		
 		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
+		button.setIcon(new ImageIcon("shut-down.png"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -65,7 +65,7 @@ public class TransfCBUJFrame extends JFrame {
 		panel.add(button);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(new Color(0, 191, 255));
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));

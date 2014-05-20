@@ -57,7 +57,7 @@ public class OperacionJFrame extends JFrame {
 		
 		JButton btnConsultas = new JButton("CONSULTAS");
 		btnConsultas.setHorizontalAlignment(SwingConstants.LEFT);
-		btnConsultas.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnConsultas.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnConsultas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				consultas();
@@ -74,7 +74,7 @@ public class OperacionJFrame extends JFrame {
 			}
 		});
 		btnNewButton_1.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton_1.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnNewButton_1.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnNewButton_1.setBounds(46, 123, 178, 29);
 		contentPane.add(btnNewButton_1);
 		
@@ -85,7 +85,7 @@ public class OperacionJFrame extends JFrame {
 			}
 		});
 		btnTransferencias.setHorizontalAlignment(SwingConstants.LEFT);
-		btnTransferencias.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnTransferencias.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnTransferencias.setBounds(46, 173, 178, 29);
 		contentPane.add(btnTransferencias);
 		
@@ -97,7 +97,7 @@ public class OperacionJFrame extends JFrame {
 			}
 		});
 		btnDeposito.setHorizontalAlignment(SwingConstants.LEFT);
-		btnDeposito.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnDeposito.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnDeposito.setBounds(46, 223, 178, 29);
 		contentPane.add(btnDeposito);
 		
@@ -109,7 +109,7 @@ public class OperacionJFrame extends JFrame {
 			}
 		});
 		btnExtraccion.setHorizontalAlignment(SwingConstants.LEFT);
-		btnExtraccion.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnExtraccion.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnExtraccion.setBounds(272, 75, 178, 29);
 		contentPane.add(btnExtraccion);
 		
@@ -121,7 +121,7 @@ public class OperacionJFrame extends JFrame {
 			}
 		});
 		btnOtrasOperaciones.setHorizontalAlignment(SwingConstants.LEFT);
-		btnOtrasOperaciones.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnOtrasOperaciones.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnOtrasOperaciones.setBounds(272, 123, 178, 29);
 		contentPane.add(btnOtrasOperaciones);
 		
@@ -133,12 +133,12 @@ public class OperacionJFrame extends JFrame {
 		});
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.setVerticalAlignment(SwingConstants.TOP);
-		btnNewButton.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
+		btnNewButton.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		btnNewButton.setBounds(396, 228, 48, 44);
 		contentPane.add(btnNewButton);
 		
 		JButton btnClaves = new JButton("CLAVES");
-		btnClaves.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnClaves.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnClaves.setHorizontalAlignment(SwingConstants.LEFT);
 		btnClaves.setBounds(272, 173, 178, 29);
 		contentPane.add(btnClaves);

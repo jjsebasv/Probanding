@@ -20,12 +20,15 @@ import javax.swing.JProgressBar;
 public class UltimosMovimientosJFrame extends JFrame {
 
 	private JPanel contentPane;
-
+	private ConsultasJFrame padre;
+	private long dni;
 
 	/**
 	 * Create the frame.
 	 */
-	public UltimosMovimientosJFrame() {
+	public UltimosMovimientosJFrame(long dni, ConsultasJFrame consulta) {
+		this.dni = dni;
+		this.padre = consulta;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -36,7 +39,7 @@ public class UltimosMovimientosJFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
+		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -50,7 +53,7 @@ public class UltimosMovimientosJFrame extends JFrame {
 		contentPane.add(comboBox);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(new Color(0, 191, 255));
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));
