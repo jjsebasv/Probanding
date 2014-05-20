@@ -18,6 +18,10 @@ public class CajaDeAhorro extends Cuenta {
 		Movimiento mov = new Movimiento("TRANSFENCIA A "+cuentaDestino.getNumeroCuenta(), monto, null);
 		this.movimientos.put(new LocalDate(), mov);
 	}
+	
+	public void transferir(double monto, long CBUdestino) {
+		this.setSaldoActual(getSaldoActual()-monto);
+	}
 
 	public void extraccion(double monto) {
 		this.setSaldoActual(getSaldoActual()-monto);

@@ -47,11 +47,13 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+	
 		JButton button = new JButton("");
 		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		button.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
+				cerrarSesion();
 			}
 		});
 		button.setHorizontalAlignment(SwingConstants.LEFT);
@@ -121,7 +123,8 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		JButton button_1 = new JButton("");
 		button_1.setIcon(new ImageIcon("./imagenes/home.png"));
 		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) {
+				clickAtras();
 			}
 		});
 		button_1.setHorizontalAlignment(SwingConstants.LEFT);
@@ -129,8 +132,15 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		contentPane.add(button_1);
 	}
 	
-	public void eventoClickAtras(){
+	public void clickAtras(){
 		this.dispose();
 		padre.setVisible(true);
 	}
+	
+	public void cerrarSesion(){
+		this.padre.cerrarSesion();
+		this.dispose();
+	}
+	
+	
 }

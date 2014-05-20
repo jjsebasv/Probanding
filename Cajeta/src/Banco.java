@@ -269,6 +269,36 @@ public class Banco {
 		}
 	}
 	
+	public void transferencia ( double monto, CajaDeAhorro emisora, long CBUdestino){
+		if ( emisora.getSaldoActual() >= monto ){
+			emisora.transferir(monto, CBUdestino);
+		}
+		else{
+			throw new NoPoseeSaldoExcepcion();
+		}
+	}
+	
+	public void transferencia ( double monto, CuentaCorriente emisora, long CBUdestino){
+		if ( emisora.getSaldoActual()+emisora.getGiroEnDescubierto() >= monto ){
+			emisora.transferir(monto, CBUdestino);
+		}
+		else{
+			throw new NoPoseeSaldoExcepcion();
+		}
+	}
+	
+	public boolean disponeSaldo(double monto, long nroCuenta){
+		if ( this.listaCajasDeAhorro.containsKey(nroCuenta) || this.listaCuentasCorriente.containsKey(nroCuenta) ){
+			if(this.listaCajasDeAhorro.get(nroCuenta).getSaldoActual() > monto || (this.listaCuentasCorriente.get(nroCuenta).getSaldoActual()+this.listaCuentasCorriente.get(nroCuenta).getGiroEnDescubierto()) > monto )
+				return true;
+			else
+				return false;
+		}
+		else{
+			throw new NoExisteLaCuentaExcepcion();
+		}
+	}
+	
 	public Map<Long, CajaDeAhorro> getListaCajasDeAhorro() {
 		return listaCajasDeAhorro;
 	}

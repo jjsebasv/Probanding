@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -27,7 +26,12 @@ public class TransferenciasJFrame extends JFrame {
 	private JPanel contentPane;
 	private JTextField montoField;
 	private final long dni;
-
+	private JLabel lblMontoIncorrecto;
+	private String msjDefault = "No registra mas Cuentas.";
+	static Double montoS;
+	static Long seleccionado;
+	JLabel lblUdNoDispone;
+	
 
 	/**
 	 * Create the frame.
@@ -53,10 +57,23 @@ public class TransferenciasJFrame extends JFrame {
 		button.setBounds(396, 227, 48, 44);
 		contentPane.add(button);
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(19, 119, 240, 50);
 		contentPane.add(comboBox);
 		
+		for (Cuenta c : Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().values() ) {
+			Long aux = c.getNumeroCuenta();
+			comboBox.addItem(aux.toString());
+		}
+			comboBox.addItem(msjDefault);
+			
+		lblMontoIncorrecto = new JLabel("Monto Incorrecto");
+		lblMontoIncorrecto.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblMontoIncorrecto.setEnabled(false);
+		lblMontoIncorrecto.setForeground(Color.RED);
+		lblMontoIncorrecto.setBounds(125, 215, 134, 14);
+		contentPane.add(lblMontoIncorrecto);
+			
 		JLabel cuentas = new JLabel("");
 		cuentas.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
 		cuentas.setHorizontalAlignment(SwingConstants.CENTER);
@@ -73,23 +90,51 @@ public class TransferenciasJFrame extends JFrame {
 		lblCuentaDeOrigen.setBounds(19, 99, 237, 34);
 		contentPane.add(lblCuentaDeOrigen);
 		
+		montoField = new JTextField();
+		montoField.setBounds(125, 176, 134, 28);
+		contentPane.add(montoField);
+		montoField.setColumns(10);
+		
+		
+		// Valido que el monto ingresado sea un numero
+		
+		String montoSelec = montoField.getText();
+		if(isNumeric(montoSelec)){
+			this.montoS = Double.parseDouble(montoSelec);
+		}
+		else {
+			lblMontoIncorrecto.setVisible(true);
+		}
+		
+		
+		
 		JButton otroClienteBoton = new JButton("Otro Cliente BBVA");
 		otroClienteBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoClickOtroCliente();
+				if(comboBox.getSelectedItem().toString() != msjDefault && TransferenciasJFrame.montoS != null){
+					TransferenciasJFrame.seleccionado = Long.parseLong(comboBox.getSelectedItem().toString());
+					eventoClickMismoBanco( montoS ,seleccionado);
+				}
 			}
 		});
 		otroClienteBoton.setBounds(294, 130, 139, 29);
 		contentPane.add(otroClienteBoton);
 		
+		//@jsuarezb te haces cargo!
+		
 		JButton otroBancoBoton = new JButton("Otro Banco");
+		otroBancoBoton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboBox.getSelectedItem().toString() != msjDefault && TransferenciasJFrame.montoS != null){
+					TransferenciasJFrame.seleccionado = Long.parseLong(comboBox.getSelectedItem().toString());
+					eventoClickOtroBanco( montoS ,seleccionado);
+				}
+			}
+		});
 		otroBancoBoton.setBounds(294, 171, 139, 29);
 		contentPane.add(otroBancoBoton);
 		
-		montoField = new JTextField();
-		montoField.setBounds(125, 176, 134, 28);
-		contentPane.add(montoField);
-		montoField.setColumns(10);
+		
 		
 		JLabel lblNewLabel = new JLabel("Monto:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -97,11 +142,47 @@ public class TransferenciasJFrame extends JFrame {
 		lblNewLabel.setForeground(new Color(30, 144, 255));
 		lblNewLabel.setBounds(19, 181, 94, 19);
 		contentPane.add(lblNewLabel);
+		
+		lblUdNoDispone = new JLabel("Ud. No dispone de ese Dinero");
+		lblUdNoDispone.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblUdNoDispone.setForeground(Color.RED);
+		lblUdNoDispone.setEnabled(false);
+		lblUdNoDispone.setBounds(125, 237, 173, 14);
+		contentPane.add(lblUdNoDispone);
+		
+		
 	}
 	
-	public void eventoClickOtroCliente(){
+	private static boolean isNumeric(String cadena){
+		try {
+			Integer.parseInt(cadena);
+			return true;
+		} catch (NumberFormatException nfe){
+			return false;
+		}
+	}
+	
+	public void eventoClickOtroBanco(double monto, long miCuenta){
+		if( monto < 0.0 ){
+			lblMontoIncorrecto.setVisible(true);
+		}
+		else if (!Banco.recuperarMiBanco().disponeSaldo(monto, miCuenta)) {
+			lblUdNoDispone.setVisible(true);
+		}
 		// pasar cuenta
 		//TransfNroCuentaJFrame transf = new TransfNroCuentaJFrame(dni, Double.valueOf(montoField.getText()));
 	}
-
+	
+	public void eventoClickMismoBanco(double monto, long miCuenta){
+	
+		if( monto < 0.0 ){
+			lblMontoIncorrecto.setVisible(true);
+		}
+		else if (!Banco.recuperarMiBanco().disponeSaldo(monto, miCuenta)){
+			lblUdNoDispone.setVisible(true);
+		}
+		else {
+			//TransfNroCuentaJFrame trnsMismoBc = new TransfNroCuentaJFrame(monto, miCuenta);
+		}
+	}
 }

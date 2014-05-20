@@ -64,6 +64,11 @@ public class CuentaCorriente extends Cuenta {
 		this.movimientos.put(new LocalDate(), mov);
 	}
 	
+	public void transferir(double monto, long CBUdestino) {
+		this.setSaldoActual(getSaldoActual()-monto);
+		this.cobrarImpuesto(monto);
+	}
+	
 
 	// --------------------------- GETTERS Y SETTERS  -----------------------------------
 

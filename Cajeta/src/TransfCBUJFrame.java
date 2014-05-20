@@ -15,6 +15,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
+//Banco distinto -->> no validar
+
 public class TransfCBUJFrame extends JFrame {
 
 	private JPanel contentPane;
