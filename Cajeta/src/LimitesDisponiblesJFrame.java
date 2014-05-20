@@ -49,7 +49,7 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		contentPane.setLayout(null);
 	
 		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("shut-down.png"));
+		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		button.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
