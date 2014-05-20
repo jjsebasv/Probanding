@@ -5,15 +5,22 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+
 import java.awt.Color;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -24,11 +31,14 @@ public class LimitesDisponiblesJFrame extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private final long dni;
+	private ConsultasJFrame padre;
+	private String msjDefault = "No registra mas Cuentas.";
 
 	/**
 	 * Create the frame.
 	 */
-	public LimitesDisponiblesJFrame(long dni) {
+	public LimitesDisponiblesJFrame(long dni, ConsultasJFrame padre) {
+		this.padre = padre;
 		this.dni = dni;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -52,6 +62,17 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		comboBox.setBounds(115, 100, 240, 50);
 		contentPane.add(comboBox);
 		
+		Banco.recuperarMiBanco().verCliente(dni).getCuentasCredito().values();
+		Long nroCuenta;
+		for ( CuentaCredito c : Banco.recuperarMiBanco().verCliente(dni).getCuentasCredito().values() ) {
+			nroCuenta = c.getNroCuenta();
+			nroCuenta.toString();
+			comboBox.addItem(nroCuenta);
+		}
+		comboBox.addItem(msjDefault);
+		
+		String seleccionado = comboBox.getSelectedItem().toString();
+		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -73,11 +94,19 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		lblSuDisponibleEn.setBounds(33, 143, 158, 34);
 		contentPane.add(lblSuDisponibleEn);
 		
+		
+		
 		JLabel lblSuDisponibleEn_1 = new JLabel("Su disponible en un Pago:");
 		lblSuDisponibleEn_1.setForeground(new Color(30, 144, 255));
 		lblSuDisponibleEn_1.setFont(lblSuDisponibleEn_1.getFont().deriveFont(lblSuDisponibleEn_1.getFont().getStyle() | Font.ITALIC));
 		lblSuDisponibleEn_1.setBounds(22, 185, 169, 34);
 		contentPane.add(lblSuDisponibleEn_1);
+		
+		if(seleccionado != msjDefault ){
+			Double limite1 = Banco.recuperarMiBanco().verCliente(dni).getCuentasCredito().get(Long.parseLong(seleccionado)).getLimiteFinanciacion() ;
+			lblSuDisponibleEn.setText(limite1.toString());
+			lblSuDisponibleEn_1.setText(limite1.toString());
+		}
 		
 		textField = new JTextField();
 		textField.setBounds(203, 146, 225, 28);
@@ -101,7 +130,7 @@ public class LimitesDisponiblesJFrame extends JFrame {
 	}
 	
 	public void eventoClickAtras(){
-		OperacionJFrame operacion = new OperacionJFrame(dni);
-		operacion.setVisible(true);
+		this.dispose();
+		padre.show();
 	}
 }

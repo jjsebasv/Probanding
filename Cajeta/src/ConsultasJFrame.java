@@ -133,7 +133,7 @@ public class ConsultasJFrame extends JFrame {
 	}
 	
 	public void Limites(){
-		LimitesDisponiblesJFrame limites = new LimitesDisponiblesJFrame(dni);
+		LimitesDisponiblesJFrame limites = new LimitesDisponiblesJFrame(dni, this);
 		limites.setVisible(true);
 		this.hide();
 	}
