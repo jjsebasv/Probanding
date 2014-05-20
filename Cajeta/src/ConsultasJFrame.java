@@ -19,10 +19,12 @@ public class ConsultasJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private final long dni;
+	private OperacionJFrame padre;
 	/**
 	 * Create the frame.
 	 */
-	public ConsultasJFrame(final long dni) {
+	public ConsultasJFrame(final long dni, OperacionJFrame operacion) {
+		this.padre = operacion;
 		this.dni = dni;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -32,13 +34,13 @@ public class ConsultasJFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel label = new JLabel("SELECCIONE EL TIPO DE OPERACION");
-		label.setBounds(5, 5, 440, 54);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setForeground(new Color(0, 191, 255));
-		label.setFont(new Font("Lucida Grande", Font.BOLD | Font.ITALIC, 20));
-		label.setBackground(Color.WHITE);
-		contentPane.add(label);
+		JLabel lblSeleccioneElTipo = new JLabel("SELECCIONE EL TIPO DE CONSULTA");
+		lblSeleccioneElTipo.setBounds(5, 5, 440, 54);
+		lblSeleccioneElTipo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSeleccioneElTipo.setForeground(new Color(0, 191, 255));
+		lblSeleccioneElTipo.setFont(new Font("Lucida Grande", Font.BOLD | Font.ITALIC, 20));
+		lblSeleccioneElTipo.setBackground(Color.WHITE);
+		contentPane.add(lblSeleccioneElTipo);
 		
 		JButton btnConsultaDeSaldo = new JButton("CONSULTA DE SALDO");
 		btnConsultaDeSaldo.addActionListener(new ActionListener() {
@@ -101,7 +103,7 @@ public class ConsultasJFrame extends JFrame {
 		JButton button = new JButton("");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				cerrarSesion();
 			}
 		});
 		button.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
@@ -137,12 +139,16 @@ public class ConsultasJFrame extends JFrame {
 	}
 	
 	public void eventoClickAtras(){
-		OperacionJFrame operacion = new OperacionJFrame(dni);
-		operacion.setVisible(true);
+		this.dispose();
 	}
 	
 	public void eventoClickSaldo(){
 		ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame(dni);
 		consultaSaldo.setVisible(true);
+	}
+	
+	public void cerrarSesion(){
+		this.dispose();
+		this.padre.cerrarSesion();
 	}
 }

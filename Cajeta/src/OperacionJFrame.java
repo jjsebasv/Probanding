@@ -143,12 +143,16 @@ public class OperacionJFrame extends JFrame {
 	}
 	
 	private void eventoClickConsultas(){
-		ConsultasJFrame consultas = new ConsultasJFrame(dni);
+		ConsultasJFrame consultas = new ConsultasJFrame(dni, this);
 		consultas.setVisible(true);
 	}
 	
 	public void eventoClickTransferencias(){
 		TransferenciasJFrame transferencias = new TransferenciasJFrame(dni);
 		transferencias.setVisible(true);
+	}
+	
+	public void cerrarSesion(){
+		this.dispose();
 	}
 }

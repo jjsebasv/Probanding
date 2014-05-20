@@ -5,14 +5,19 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -38,6 +43,11 @@ public class TransferenciasJFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton button = new JButton("");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+			}
+		});
 		button.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBounds(396, 227, 48, 44);

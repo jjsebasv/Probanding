@@ -29,12 +29,15 @@ public class AutenticacionJFrame extends JFrame {
 	private JPasswordField pin;
 	private JLabel datosErroneos;
 	private long dniIngresado;
+	private InicioJFrame inicio;
 
+	
 	/**
 	 * Create the frame.
 	 */
 	@SuppressWarnings("deprecation")
-	public AutenticacionJFrame() {
+	public AutenticacionJFrame(InicioJFrame inicio) {
+		this.inicio = inicio;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -105,7 +108,7 @@ public class AutenticacionJFrame extends JFrame {
 		botonSalir.setHorizontalAlignment(SwingConstants.LEFT);
 		botonSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				eventoClickCerrarSesion();
 			}
 		});
 		
@@ -168,6 +171,7 @@ public class AutenticacionJFrame extends JFrame {
 			if ( Banco.recuperarMiBanco().verCliente(dniIng).getClavePin() == pinIng){
 				OperacionJFrame operacion = new OperacionJFrame(dniIng);
 				operacion.setVisible(true);
+				this.dispose();
 			}
 			//	else if ( dni.getText().equals("admin") && pin.getText().equals("admin")){
 			//	ManagerJFrame manager = new ManagerJFrame();
@@ -180,6 +184,14 @@ public class AutenticacionJFrame extends JFrame {
 		}
 		else{
 			datosErroneos.setVisible(true);
-		}
+		
 	}
+		
+	}
+	
+	public void eventoClickCerrarSesion(){
+		this.dispose();
+		inicio.enable();
+	}
+	
 }

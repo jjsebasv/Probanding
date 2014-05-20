@@ -37,8 +37,7 @@ public class InicioJFrame extends JFrame {
 	
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AutenticacionJFrame principal = new AutenticacionJFrame();
-				principal.setVisible(true);
+				eventoClickIngresar();
 			}
 		});
 		btnNewButton.setForeground(SystemColor.controlHighlight);
@@ -62,6 +61,12 @@ public class InicioJFrame extends JFrame {
 		contentPane.add(button);
 		
 		
+	}
+	
+	public void eventoClickIngresar(){
+		AutenticacionJFrame principal = new AutenticacionJFrame(this);
+		principal.setVisible(true);
+		this.disable();
 	}
 
 }
