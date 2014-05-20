@@ -14,6 +14,10 @@ public class CajaDeAhorro extends Cuenta {
 		this.setSaldoActual(getSaldoActual()-monto);
 		cuentaDestino.depositar(monto);
 	}
+	
+	public void transferir(double monto, long CBUdestino) {
+		this.setSaldoActual(getSaldoActual()-monto);
+	}
 
 	public void extraccion(double monto) {
 		this.setSaldoActual(getSaldoActual()-monto);

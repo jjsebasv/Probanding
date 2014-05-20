@@ -48,15 +48,16 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
-		button.addActionListener(new ActionListener() {
+		JButton btnOff = new JButton("");
+		btnOff.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
+		btnOff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cerrarSesion();
 			}
 		});
-		button.setHorizontalAlignment(SwingConstants.LEFT);
-		button.setBounds(396, 228, 48, 44);
-		contentPane.add(button);
+		btnOff.setHorizontalAlignment(SwingConstants.LEFT);
+		btnOff.setBounds(396, 228, 48, 44);
+		contentPane.add(btnOff);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(115, 100, 240, 50);
@@ -118,19 +119,27 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		textField_1.setBounds(203, 188, 225, 28);
 		contentPane.add(textField_1);
 		
-		JButton button_1 = new JButton("");
-		button_1.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
-		button_1.addActionListener(new ActionListener() {
+		JButton btnHome = new JButton("");
+		btnHome.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
+		btnHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				clickAtras();
 			}
 		});
-		button_1.setHorizontalAlignment(SwingConstants.LEFT);
-		button_1.setBounds(6, 228, 48, 44);
-		contentPane.add(button_1);
+		btnHome.setHorizontalAlignment(SwingConstants.LEFT);
+		btnHome.setBounds(6, 228, 48, 44);
+		contentPane.add(btnHome);
 	}
 	
-	public void eventoClickAtras(){
+	public void clickAtras(){
 		this.dispose();
 		padre.show();
 	}
+	
+	public void cerrarSesion(){
+		this.padre.cerrarSesion();
+		this.dispose();
+	}
+	
+	
 }

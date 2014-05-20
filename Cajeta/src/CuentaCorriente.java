@@ -54,6 +54,11 @@ public class CuentaCorriente extends Cuenta {
 		cuentaDestino.depositar(monto);
 	}
 	
+	public void transferir(double monto, long CBUdestino) {
+		this.setSaldoActual(getSaldoActual()-monto);
+		this.cobrarImpuesto(monto);
+	}
+	
 
 	// --------------------------- GETTERS Y SETTERS  -----------------------------------
 

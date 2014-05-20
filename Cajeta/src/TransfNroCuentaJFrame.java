@@ -12,6 +12,7 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 
+// mismo banco --->> Validar!
 
 public class TransfNroCuentaJFrame extends JFrame {
 
