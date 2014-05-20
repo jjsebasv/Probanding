@@ -78,17 +78,14 @@ public class ConsultaSaldoJFrame extends JFrame {
 		final JComboBox cuentas = new JComboBox(nombreCuentas);
 		cuentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoClickCombo(cuentas.getSelectedItem().toString());
+				String aux = cuentas.getSelectedItem().toString();
+				if ( aux != msjDefault)
+					eventoClickCombo(aux);
 			}
 		});
 		cuentas.setBounds(154, 62, 352, 50);
 		contentPane.add(cuentas);
 
-		Cliente cliente = Banco.recuperarMiBanco().verCliente(this.dni);
-		for (Cuenta c : cliente.getCuentasMonetarias().values()) {
-			cuentas.addItem(c.getCBU());	
-		}
-		
 		cuentas.addItem(msjDefault);
 		
 		cuentas.setBounds(168, 119, 166, 50);
@@ -116,6 +113,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		saldoResultado = new JTextField();
+		saldoResultado.setEditable(false);
 		saldoResultado.setBounds(188, 161, 179, 28);
 		contentPane.add(saldoResultado);
 		saldoResultado.setColumns(10);
@@ -145,10 +143,9 @@ public class ConsultaSaldoJFrame extends JFrame {
 				}
 			}
 		}
-
+		
 		double saldo = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuentaSeleccionada).getSaldoActual();
 		saldoResultado.setText(String.valueOf(saldo));
 		saldoResultado.setVisible(true);
-		
 	}
 }
