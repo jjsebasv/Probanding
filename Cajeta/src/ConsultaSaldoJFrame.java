@@ -84,7 +84,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 					eventoClickCombo(aux);
 			}
 		});
-		cuentas.setBounds(154, 62, 352, 50);
+		cuentas.setBounds(125, 119, 209, 50);
 		contentPane.add(cuentas);
 
 		cuentas.addItem(msjDefault);
