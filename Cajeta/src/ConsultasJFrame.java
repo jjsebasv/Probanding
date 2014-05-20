@@ -45,9 +45,7 @@ public class ConsultasJFrame extends JFrame {
 		JButton btnConsultaDeSaldo = new JButton("CONSULTA DE SALDO");
 		btnConsultaDeSaldo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoClickSaldo();
-				ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame(dni);
-				consultaSaldo.setVisible(true);
+				Saldo();
 			}
 		});
 		btnConsultaDeSaldo.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
@@ -58,7 +56,7 @@ public class ConsultasJFrame extends JFrame {
 		JButton btnConsultaDeCbu = new JButton("CONSULTA DE CBU");
 		btnConsultaDeCbu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoClickCbu();
+				Cbu();
 			}
 		});
 		btnConsultaDeCbu.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
@@ -69,7 +67,7 @@ public class ConsultasJFrame extends JFrame {
 		JButton btnLimitesDisponibles = new JButton("LIMITES DISPONIBLES");
 		btnLimitesDisponibles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoClickLimites();
+				Limites();
 			}
 		});
 		btnLimitesDisponibles.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
@@ -92,7 +90,7 @@ public class ConsultasJFrame extends JFrame {
 		JButton btnImpresionDeResumen = new JButton("IMPRESION DE RESUMEN");
 		btnImpresionDeResumen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoClickImpresion();
+				Impresion();
 			}
 		});
 		btnImpresionDeResumen.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
@@ -123,30 +121,34 @@ public class ConsultasJFrame extends JFrame {
 		contentPane.add(button_1);
 	}
 
-	public void eventoClickCbu(){
-		CbuJFrame consulta = new CbuJFrame(dni);
+	public void Cbu(){
+		CbuJFrame consulta = new CbuJFrame(dni, this);
 		consulta.setVisible(true);
 	}
 	
-	public void eventoClickImpresion(){
+	public void Impresion(){
 		ImpresionResumenJFrame impresion = new ImpresionResumenJFrame(dni);
 		impresion.setVisible(true);
+		this.hide();
 	}
 	
-	public void eventoClickLimites(){
+	public void Limites(){
 		LimitesDisponiblesJFrame limites = new LimitesDisponiblesJFrame(dni);
 		limites.setVisible(true);
+		this.hide();
+	}
+	
+	public void Saldo(){
+		ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame(dni, this);
+		consultaSaldo.setVisible(true);
+		this.hide();
 	}
 	
 	public void eventoClickAtras(){
 		this.dispose();
+		padre.show();
 	}
-	
-	public void eventoClickSaldo(){
-		ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame(dni);
-		consultaSaldo.setVisible(true);
-	}
-	
+
 	public void cerrarSesion(){
 		this.dispose();
 		this.padre.cerrarSesion();

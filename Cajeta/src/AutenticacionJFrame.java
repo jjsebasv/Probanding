@@ -29,7 +29,7 @@ public class AutenticacionJFrame extends JFrame {
 	private JPasswordField pin;
 	private JLabel datosErroneos;
 	private long dniIngresado;
-	private InicioJFrame inicio;
+	private InicioJFrame padre;
 
 	
 	/**
@@ -37,7 +37,7 @@ public class AutenticacionJFrame extends JFrame {
 	 */
 	@SuppressWarnings("deprecation")
 	public AutenticacionJFrame(InicioJFrame inicio) {
-		this.inicio = inicio;
+		this.padre = inicio;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -169,7 +169,7 @@ public class AutenticacionJFrame extends JFrame {
 		if ( Banco.recuperarMiBanco().verCliente(dniIng) != null && existeDni && isNumeric(pin.getText())){
 			int pinIng = Integer.valueOf(pin.getText());
 			if ( Banco.recuperarMiBanco().verCliente(dniIng).getClavePin() == pinIng){
-				OperacionJFrame operacion = new OperacionJFrame(dniIng);
+				OperacionJFrame operacion = new OperacionJFrame(dniIng, this.padre);
 				operacion.setVisible(true);
 				this.dispose();
 			}
@@ -191,7 +191,7 @@ public class AutenticacionJFrame extends JFrame {
 	
 	public void eventoClickCerrarSesion(){
 		this.dispose();
-		inicio.enable();
+		padre.enable();
 	}
 	
 }

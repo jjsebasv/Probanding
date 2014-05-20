@@ -30,9 +30,11 @@ public class CbuJFrame extends JFrame {
 	private JPanel contentPane;
 	public final long dni;
 	private JTextField cbuResultado;
+	private ConsultasJFrame padre;
 
 
-	public CbuJFrame(final long dni) {
+	public CbuJFrame(final long dni, ConsultasJFrame consulta) {
+		this.padre = consulta;
 		this.dni = dni;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -137,7 +139,12 @@ public class CbuJFrame extends JFrame {
 	}
 
 	public void eventoClickAtras(){
-		OperacionJFrame operacion = new OperacionJFrame(dni);
-		operacion.setVisible(true);
+		this.dispose();
+		padre.enable();
+	}
+	
+	public void cerrarSesion(){
+		this.dispose();
+		this.padre.cerrarSesion();
 	}
 }

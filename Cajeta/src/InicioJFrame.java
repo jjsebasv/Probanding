@@ -66,7 +66,7 @@ public class InicioJFrame extends JFrame {
 	public void eventoClickIngresar(){
 		AutenticacionJFrame principal = new AutenticacionJFrame(this);
 		principal.setVisible(true);
-		this.disable();
+		this.hide();
 	}
 
 }

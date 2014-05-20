@@ -27,7 +27,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 	private String msjDefault = "No registra mas Cuentas.";
 	private Long CBU;
 	private JTextField saldoResultado;
-	
+	private ConsultasJFrame padre;
 	
 
 	public long getDni() {
@@ -43,8 +43,9 @@ public class ConsultaSaldoJFrame extends JFrame {
 	}
 	
 	
-	public ConsultaSaldoJFrame(final long dni) {
+	public ConsultaSaldoJFrame(final long dni, ConsultasJFrame consulta) {
 		this.dni = dni;
+		this.padre = consulta;
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -54,16 +55,16 @@ public class ConsultaSaldoJFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton button_1 = new JButton("");
-		button_1.addActionListener(new ActionListener() {
+		JButton cerrar = new JButton("");
+		cerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				cerrarSesion();
 			}
 		});
-		button_1.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
-		button_1.setHorizontalAlignment(SwingConstants.LEFT);
-		button_1.setBounds(396, 228, 48, 44);
-		contentPane.add(button_1);
+		cerrar.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
+		cerrar.setHorizontalAlignment(SwingConstants.LEFT);
+		cerrar.setBounds(396, 228, 48, 44);
+		contentPane.add(cerrar);
 		
 		int i=0;
 		int cantCuentas = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().size();
@@ -117,15 +118,21 @@ public class ConsultaSaldoJFrame extends JFrame {
 		saldoResultado.setBounds(188, 161, 179, 28);
 		contentPane.add(saldoResultado);
 		saldoResultado.setColumns(10);
+		
+		JButton home = new JButton("");
+		home.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClickAtras();
+			}
+		});
+		home.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
+		home.setHorizontalAlignment(SwingConstants.LEFT);
+		home.setBounds(6, 228, 48, 44);
+		contentPane.add(home);
 		saldoResultado.setVisible(false);
 	}
 	
 	
-	
-	public void eventoClickAtras(){
-		OperacionJFrame operacion = new OperacionJFrame(dni);
-		operacion.setVisible(true);
-	}
 	
 	public void eventoClickCombo( String nroCuenta ){
 		Long nroCuentaSeleccionada = 0L;
@@ -147,5 +154,16 @@ public class ConsultaSaldoJFrame extends JFrame {
 		double saldo = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuentaSeleccionada).getSaldoActual();
 		saldoResultado.setText(String.valueOf(saldo));
 		saldoResultado.setVisible(true);
+	}
+	
+	public void ClickAtras(){
+		this.dispose();
+		padre.show();
+	}
+	
+
+	public void cerrarSesion(){
+		this.dispose();
+		this.padre.cerrarSesion();
 	}
 }

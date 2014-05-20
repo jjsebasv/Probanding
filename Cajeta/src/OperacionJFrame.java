@@ -28,12 +28,14 @@ public class OperacionJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private final long dni;
+	private InicioJFrame padre;
 
 
 	/**
 	 * Create the frame.
 	 */
-	public OperacionJFrame(long dni) {
+	public OperacionJFrame(long dni, InicioJFrame inicio) {
+		this.padre = inicio;
 		this.dni = dni;
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,7 +60,7 @@ public class OperacionJFrame extends JFrame {
 		btnConsultas.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
 		btnConsultas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoClickConsultas();
+				Consultas();
 			}
 		});
 		btnConsultas.setBounds(46, 75, 178, 29);
@@ -79,7 +81,7 @@ public class OperacionJFrame extends JFrame {
 		JButton btnTransferencias = new JButton("TRANSFERENCIAS");
 		btnTransferencias.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoClickTransferencias();
+				Transferencias();
 			}
 		});
 		btnTransferencias.setHorizontalAlignment(SwingConstants.LEFT);
@@ -142,17 +144,20 @@ public class OperacionJFrame extends JFrame {
 		contentPane.add(btnClaves);
 	}
 	
-	private void eventoClickConsultas(){
+	private void Consultas(){
 		ConsultasJFrame consultas = new ConsultasJFrame(dni, this);
 		consultas.setVisible(true);
+		this.hide();
 	}
 	
-	public void eventoClickTransferencias(){
+	public void Transferencias(){
 		TransferenciasJFrame transferencias = new TransferenciasJFrame(dni);
 		transferencias.setVisible(true);
+		this.hide();
 	}
 	
 	public void cerrarSesion(){
 		this.dispose();
+		padre.show();
 	}
 }
