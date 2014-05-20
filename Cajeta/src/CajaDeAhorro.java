@@ -1,5 +1,3 @@
-
-
 public class CajaDeAhorro extends Cuenta {
 
 	private final double IMP_AL_CHEQUE = 0.12;

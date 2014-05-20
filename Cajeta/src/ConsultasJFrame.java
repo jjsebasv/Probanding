@@ -46,7 +46,8 @@ public class ConsultasJFrame extends JFrame {
 				eventoClickSaldo();
 				ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame(dni);
 				consultaSaldo.setVisible(true);
-			}
+
+			}   
 		});
 		btnConsultaDeSaldo.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
 		btnConsultaDeSaldo.setHorizontalAlignment(SwingConstants.LEFT);

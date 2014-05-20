@@ -1,7 +1,7 @@
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
+       
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -42,8 +42,10 @@ public class ConsultaSaldoJFrame extends JFrame {
 		this.CBU = CBU;
 	}
 
-
-	public ConsultaSaldoJFrame(long dni) {
+	/**
+	 * Create the frame.
+	 */
+	public ConsultaSaldoJFrame(final long dni) {
 		this.dni = dni;
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,6 +78,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 		
 		// no se porque aca me tira que tengo que agregarle un final
 		final JComboBox cuentas = new JComboBox(nombreCuentas);
+		
 		cuentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventoClickCombo(cuentas.getSelectedItem().toString());
@@ -91,9 +94,8 @@ public class ConsultaSaldoJFrame extends JFrame {
 		
 		cuentas.addItem(msjDefault);
 		
-		
 		cuentas.setBounds(168, 119, 166, 50);
-		contentPane.add(cuentas);
+		contentPane.add(cuentas);			
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
@@ -110,17 +112,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 		lblNewLabel.setBounds(168, 92, 200, 34);
 		contentPane.add(lblNewLabel);
 		
-		JButton homeButton = new JButton("");
-		homeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				eventoClickAtras();
-			}
-		});
-		homeButton.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
-		homeButton.setHorizontalAlignment(SwingConstants.LEFT);
-		homeButton.setBounds(6, 228, 48, 44);
-		contentPane.add(homeButton);
-		
+				
 		JLabel lblNewLabel_1 = new JLabel("Su saldo es:");
 		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.ITALIC, 13));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -167,5 +159,6 @@ public class ConsultaSaldoJFrame extends JFrame {
 		saldoResultado.setText(String.valueOf(saldo));
 		saldoResultado.setVisible(true);
 		
-	}
+	}		
+		
 }

@@ -5,8 +5,6 @@ import java.util.Map;
 import java.util.Set;
 import org.joda.time.LocalDate;
 
-
-
 public class Banco {
 	
 	private static Banco bancoFrances = null;
@@ -392,7 +390,7 @@ public class Banco {
 
 	public int getCUOTA_MENSUAL_SEGURO() {
 		return CUOTA_MENSUAL_SEGURO;
-	}
+	}   
 	
 	public static Banco recuperarMiBanco() {
 		  if(bancoFrances == null) {

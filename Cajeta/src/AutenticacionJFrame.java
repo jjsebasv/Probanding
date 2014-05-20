@@ -20,9 +20,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-// VALIDAR TODO LO QUE ES EL INICIO DE SESION!!!!!! --> Listanga!
-//hay problemas si meto string de pin -- Listanga! 
-
 public class AutenticacionJFrame extends JFrame {
 
 	private JPanel contentPane;
