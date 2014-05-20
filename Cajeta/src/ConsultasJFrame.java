@@ -43,9 +43,17 @@ public class ConsultasJFrame extends JFrame {
 		JButton btnConsultaDeSaldo = new JButton("CONSULTA DE SALDO");
 		btnConsultaDeSaldo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 				eventoClickSaldo();
 				ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame(dni);
 				consultaSaldo.setVisible(true);
+=======
+
+				eventoClickSaldo();
+				ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame(dni);
+				consultaSaldo.setVisible(true);
+
+>>>>>>> e67fdcd2de2a7cbc1be956bf19b804e9e2d16b46
 			}
 		});
 		btnConsultaDeSaldo.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));

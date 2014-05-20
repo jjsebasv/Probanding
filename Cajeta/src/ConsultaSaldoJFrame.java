@@ -24,6 +24,10 @@ public class ConsultaSaldoJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private final long dni;
+<<<<<<< HEAD
+=======
+
+>>>>>>> e67fdcd2de2a7cbc1be956bf19b804e9e2d16b46
 	private String msjDefault = "No registra mas Cuentas.";
 	private Long CBU;
 	private JTextField saldoResultado;
@@ -42,9 +46,18 @@ public class ConsultaSaldoJFrame extends JFrame {
 		this.CBU = CBU;
 	}
 
+<<<<<<< HEAD
 
 	public ConsultaSaldoJFrame(long dni) {
 		this.dni = dni;
+=======
+	/**
+	 * Create the frame.
+	 */
+	public ConsultaSaldoJFrame(final long dni) {
+		this.dni = dni;
+		
+>>>>>>> e67fdcd2de2a7cbc1be956bf19b804e9e2d16b46
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -92,8 +105,18 @@ public class ConsultaSaldoJFrame extends JFrame {
 		cuentas.addItem(msjDefault);
 		
 		
+		
+		
 		cuentas.setBounds(168, 119, 166, 50);
 		contentPane.add(cuentas);
+		
+		
+		Cliente cliente = Banco.recuperarMiBanco().verCliente(this.dni);
+		for (Cuenta c : cliente.getCuentasMonetarias().values()) {
+			cuentas.addItem(c.getCBU());	
+		}
+		cuentas.addItem(msjDefault);
+			
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
@@ -110,8 +133,13 @@ public class ConsultaSaldoJFrame extends JFrame {
 		lblNewLabel.setBounds(168, 92, 200, 34);
 		contentPane.add(lblNewLabel);
 		
+<<<<<<< HEAD
 		JButton homeButton = new JButton("");
 		homeButton.addActionListener(new ActionListener() {
+=======
+		JButton button = new JButton("");
+		button.addActionListener(new ActionListener() {
+>>>>>>> e67fdcd2de2a7cbc1be956bf19b804e9e2d16b46
 			public void actionPerformed(ActionEvent e) {
 				eventoClickAtras();
 			}
@@ -140,6 +168,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 	public void eventoClickAtras(){
 		OperacionJFrame operacion = new OperacionJFrame(dni);
 		operacion.setVisible(true);
+<<<<<<< HEAD
 
 				
 		
@@ -168,4 +197,10 @@ public class ConsultaSaldoJFrame extends JFrame {
 		saldoResultado.setVisible(true);
 		
 	}
+=======
+		
+	}			
+	
+		
+>>>>>>> e67fdcd2de2a7cbc1be956bf19b804e9e2d16b46
 }
