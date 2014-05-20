@@ -1,5 +1,10 @@
-import java.util.HashMap;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.joda.time.LocalDate;
 
@@ -10,7 +15,7 @@ public abstract class Cuenta {
 	private final LocalDate fechaAlta;
 	private double saldoActual;
 	private final long numeroCuenta;
-	private Map<String,Movimiento> ultimosMovimientos; 
+	protected Map<LocalDate,Movimiento> movimientos; 
 	// que sean 10, el key es la fecha. 
 	
 	public Cuenta (long numeroCuenta){
@@ -18,7 +23,7 @@ public abstract class Cuenta {
 		this.CBU = Math.abs(this.hashCode()*10000000)+this.numeroCuenta;
 		this.numeroCuenta = numeroCuenta;
 		this.fechaAlta = new LocalDate();
-		ultimosMovimientos = new HashMap<String,Movimiento>();
+		movimientos = new TreeMap<LocalDate,Movimiento>();
 	}
 	
 	public abstract void transferir( double monto, Cuenta cuentaDestino);
@@ -34,13 +39,12 @@ public abstract class Cuenta {
 		this.saldoActual = saldoActual; 
 	}
 	
-	
-	public Map<String, Movimiento> getUltimosMovimientos() {
-		return ultimosMovimientos;
+	public Map<LocalDate, Movimiento> getUltimosMovimientos() {
+		return movimientos;
 	}
 
-	public void setUltimosMovimientos(Map<String, Movimiento> ultimosMovimientos) {
-		this.ultimosMovimientos = ultimosMovimientos;
+	public void setUltimosMovimientos(Map<LocalDate, Movimiento> ultimosMovimientos) {
+		this.movimientos = ultimosMovimientos;
 	}
 
 	public long getCBU() {
@@ -55,6 +59,30 @@ public abstract class Cuenta {
 		return numeroCuenta;
 	}
 
+	public void imprimirUltimosMovimientos(){
+			File c;
+			FileWriter w;
+			
+			try {
+				long time = new Date().getTime();
+				
+				c = new File(this.getNumeroCuenta() + time + ".txt");
+				w = new FileWriter(c);
+				BufferedWriter bw = new BufferedWriter(w);
+				bw.write("***************************"+" RESUMEN "+"******************************");
+				bw.newLine();
+				for (LocalDate fecha : this.movimientos.keySet()) {
+					bw.write(this.movimientos.get(fecha).toString());
+					bw.newLine();
+				}
+				bw.close();
+				w.close();
+				
+			} catch(IOException e){
+				System.out.println("ERROR: "+e.getMessage());
+			};
+			
+	}
 	
 	
 }

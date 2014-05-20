@@ -20,12 +20,15 @@ import javax.swing.JProgressBar;
 public class UltimosMovimientosJFrame extends JFrame {
 
 	private JPanel contentPane;
-
+	private ConsultasJFrame padre;
+	private long dni;
 
 	/**
 	 * Create the frame.
 	 */
-	public UltimosMovimientosJFrame() {
+	public UltimosMovimientosJFrame(long dni, ConsultasJFrame consulta) {
+		this.dni = dni;
+		this.padre = consulta;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -36,7 +39,7 @@ public class UltimosMovimientosJFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
+		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -45,12 +48,27 @@ public class UltimosMovimientosJFrame extends JFrame {
 		button.setBounds(396, 228, 48, 44);
 		contentPane.add(button);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(168, 119, 166, 50);
-		contentPane.add(comboBox);
+		int i=0;
+		int cantCuentas = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().size();
+		final String[] nombreCuentas = new String[cantCuentas];
+		
+		for (Long nroCuenta : Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().keySet()) {
+			nombreCuentas[i] = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuenta).toString();
+			i++;
+		}
+		
+		// no se porque aca me tira que tengo que agregarle un final
+		final JComboBox Cuentas = new JComboBox(nombreCuentas);
+		Cuentas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eventoClickCombo(Cuentas.getSelectedItem().toString());
+			}
+		});
+		Cuentas.setBounds(128, 119, 240, 50);
+		contentPane.add(Cuentas);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(new Color(0, 191, 255));
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));
@@ -77,5 +95,29 @@ public class UltimosMovimientosJFrame extends JFrame {
 		lblNewLabel.setBounds(6, 224, 142, 16);
 		contentPane.add(lblNewLabel);
 		lblNewLabel.setVisible(false);
+	}
+	
+	public void eventoClickCombo( String nroCuenta ){
+		Long nroCuentaSeleccionada = 0L;
+		Cuenta cuentaS = null ;
+		
+		for (Cuenta cuenta : Banco.recuperarMiBanco().getListaCajasDeAhorro().values()) {
+			if ( cuenta.toString().equals(nroCuenta) ){
+				nroCuentaSeleccionada = cuenta.getNumeroCuenta();
+				cuentaS = Banco.recuperarMiBanco().getListaCajasDeAhorro().get(nroCuentaSeleccionada);
+			}
+		}
+		
+		if ( nroCuentaSeleccionada == 0 ){
+			for (Cuenta cuenta : Banco.recuperarMiBanco().getListaCuentasCorriente().values()) {
+				if ( cuenta.toString().equals(nroCuenta) ){
+					nroCuentaSeleccionada = cuenta.getNumeroCuenta();
+					cuentaS = Banco.recuperarMiBanco().getListaCuentasCorriente().get(nroCuentaSeleccionada);
+				}
+			}
+		}
+
+		cuentaS.imprimirUltimosMovimientos();
+		
 	}
 }

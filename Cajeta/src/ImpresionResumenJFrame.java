@@ -23,9 +23,11 @@ public class ImpresionResumenJFrame extends JFrame {
 	private JPanel contentPane;
 	public final long dni;
 	private long nroCuenta = 0L ;
+	private ConsultasJFrame padre;
 
 
-	public ImpresionResumenJFrame(long dni) {
+	public ImpresionResumenJFrame(long dni, ConsultasJFrame consultas) {
+		this.padre = consultas;
 		this.dni = dni;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -41,7 +43,7 @@ public class ImpresionResumenJFrame extends JFrame {
 				System.exit(0);
 			}
 		});
-		button.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
+		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBounds(396, 228, 48, 44);
 		contentPane.add(button);
@@ -64,9 +66,11 @@ public class ImpresionResumenJFrame extends JFrame {
 		cuentasBox.setBounds(133, 111, 218, 50);
 		contentPane.add(cuentasBox);
 		
+	
+		
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(new Color(0, 191, 255));
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));
@@ -136,6 +140,16 @@ public class ImpresionResumenJFrame extends JFrame {
 }
 	public void eventoClickComboPeriodos( String nroResumen ){
 		
+	}
+	
+	public void clickAtras(){
+		this.padre.clickAtras();
+		this.dispose();
+	}
+
+	public void cerrarSesion(){
+		this.padre.cerrarSesion();
+		this.dispose();
 	}
 	
 }

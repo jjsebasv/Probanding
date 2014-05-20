@@ -48,7 +48,7 @@ public class ConsultasJFrame extends JFrame {
 				Saldo();
 			}
 		});
-		btnConsultaDeSaldo.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnConsultaDeSaldo.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnConsultaDeSaldo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultaDeSaldo.setBounds(28, 71, 178, 29);
 		contentPane.add(btnConsultaDeSaldo);
@@ -59,7 +59,7 @@ public class ConsultasJFrame extends JFrame {
 				Cbu();
 			}
 		});
-		btnConsultaDeCbu.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnConsultaDeCbu.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnConsultaDeCbu.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultaDeCbu.setBounds(28, 112, 178, 29);
 		contentPane.add(btnConsultaDeCbu);
@@ -70,7 +70,7 @@ public class ConsultasJFrame extends JFrame {
 				Limites();
 			}
 		});
-		btnLimitesDisponibles.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnLimitesDisponibles.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnLimitesDisponibles.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLimitesDisponibles.setBounds(28, 153, 178, 29);
 		contentPane.add(btnLimitesDisponibles);
@@ -78,11 +78,10 @@ public class ConsultasJFrame extends JFrame {
 		JButton btnUltimosMovimientos = new JButton("ULTIMOS MOVIMIENTOS");
 		btnUltimosMovimientos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UltimosMovimientosJFrame movimientos = new UltimosMovimientosJFrame();
-				movimientos.setVisible(true);
+				movimiento();
 			}
 		});
-		btnUltimosMovimientos.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnUltimosMovimientos.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnUltimosMovimientos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnUltimosMovimientos.setBounds(267, 112, 178, 29);
 		contentPane.add(btnUltimosMovimientos);
@@ -90,10 +89,10 @@ public class ConsultasJFrame extends JFrame {
 		JButton btnImpresionDeResumen = new JButton("IMPRESION DE RESUMEN");
 		btnImpresionDeResumen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Impresion();
+				impresion();
 			}
 		});
-		btnImpresionDeResumen.setIcon(new ImageIcon("/Users/user/Pictures/1307051141_737.png"));
+		btnImpresionDeResumen.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnImpresionDeResumen.setHorizontalAlignment(SwingConstants.LEFT);
 		btnImpresionDeResumen.setBounds(267, 71, 178, 29);
 		contentPane.add(btnImpresionDeResumen);
@@ -104,7 +103,7 @@ public class ConsultasJFrame extends JFrame {
 				cerrarSesion();
 			}
 		});
-		button.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
+		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBounds(397, 228, 48, 44);
 		contentPane.add(button);
@@ -115,7 +114,7 @@ public class ConsultasJFrame extends JFrame {
 				clickAtras();
 			}
 		});
-		button_1.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
+		button_1.setIcon(new ImageIcon("./imagenes/home.png"));
 		button_1.setHorizontalAlignment(SwingConstants.LEFT);
 		button_1.setBounds(5, 228, 48, 44);
 		contentPane.add(button_1);
@@ -126,8 +125,8 @@ public class ConsultasJFrame extends JFrame {
 		consulta.setVisible(true);
 	}
 	
-	public void Impresion(){
-		ImpresionResumenJFrame impresion = new ImpresionResumenJFrame(dni);
+	public void impresion(){
+		ImpresionResumenJFrame impresion = new ImpresionResumenJFrame(dni, this);
 		impresion.setVisible(true);
 		this.hide();
 	}
@@ -152,5 +151,11 @@ public class ConsultasJFrame extends JFrame {
 	public void cerrarSesion(){
 		this.padre.cerrarSesion();
 		this.dispose();
+	}
+	
+	public void movimiento(){
+		UltimosMovimientosJFrame movimientos = new UltimosMovimientosJFrame(dni, this);
+		movimientos.setVisible(true);
+		this.hide();
 	}
 }

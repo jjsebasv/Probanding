@@ -9,14 +9,14 @@ public class Movimiento {
 	private final String tipo;
 	private final LocalDate fecha;
 	private final double monto;
-	private final Tarjeta tarjeta;
 	private final int codigoDeTransaccion = this.hashCode();
+	private Tarjeta tarjeta;
  
 	public Movimiento ( String tipo, double monto, Tarjeta tarjeta){
 		this.tipo = tipo;
+		this.tarjeta = tarjeta;
 		this.fecha = new LocalDate();
 		this.monto = monto;
-		this.tarjeta = tarjeta;  
 	}
 	
 	 
@@ -31,7 +31,6 @@ public class Movimiento {
 			bw.append(" FECHA: "+this.fecha);
 			bw.append(" TIPO: "+tipo);
 			bw.append("MONTO: "+monto);
-			bw.append("NUMERO DE TARJETA: "+ tarjeta);
 			bw.append("NUMERO DE TRANSACCION: "+ codigoDeTransaccion);
 			bw.append("*****************************************************************");
 			bw.append("*****************************************************************");
@@ -59,44 +58,11 @@ public class Movimiento {
 		long temp;
 		temp = Double.doubleToLongBits(monto);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((tarjeta == null) ? 0 : tarjeta.hashCode());
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		return result;
 	}
 
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Movimiento other = (Movimiento) obj;
-		if (codigoDeTransaccion != other.codigoDeTransaccion)
-			return false;
-		if (fecha == null) {
-			if (other.fecha != null)
-				return false;
-		} else if (!fecha.equals(other.fecha))
-			return false;
-		if (Double.doubleToLongBits(monto) != Double
-				.doubleToLongBits(other.monto))
-			return false;
-		if (tarjeta == null) {
-			if (other.tarjeta != null)
-				return false;
-		} else if (!tarjeta.equals(other.tarjeta))
-			return false;
-		if (tipo == null) {
-			if (other.tipo != null)
-				return false;
-		} else if (!tipo.equals(other.tipo))
-			return false;
-		return true;
-	}
-	
 	
 	// --------------------------- GETTERS  -----------------------------------
 	
@@ -117,9 +83,6 @@ public class Movimiento {
 	}
 
 
-	public Tarjeta getTarjeta() {
-		return tarjeta;
-	}
 
 
 	public int getCodigoDeTransaccion() {

@@ -61,7 +61,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 				cerrarSesion();
 			}
 		});
-		cerrar.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
+		cerrar.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		cerrar.setHorizontalAlignment(SwingConstants.LEFT);
 		cerrar.setBounds(396, 228, 48, 44);
 		contentPane.add(cerrar);
@@ -84,7 +84,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 					eventoClickCombo(aux);
 			}
 		});
-		cuentas.setBounds(154, 62, 352, 50);
+		cuentas.setBounds(125, 119, 209, 50);
 		contentPane.add(cuentas);
 
 		cuentas.addItem(msjDefault);
@@ -93,7 +93,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 		contentPane.add(cuentas);			
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(new Color(0, 191, 255));
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));
@@ -125,7 +125,7 @@ public class ConsultaSaldoJFrame extends JFrame {
 				clickAtras();
 			}
 		});
-		home.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
+		home.setIcon(new ImageIcon("./imagenes/home.png"));
 		home.setHorizontalAlignment(SwingConstants.LEFT);
 		home.setBounds(6, 228, 48, 44);
 		contentPane.add(home);

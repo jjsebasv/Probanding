@@ -47,17 +47,18 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JButton btnOff = new JButton("");
-		btnOff.setIcon(new ImageIcon("/Users/user/Pictures/shut-down.png"));
-		btnOff.addActionListener(new ActionListener() {
+	
+		JButton button = new JButton("");
+		button.setIcon(new ImageIcon("shut-down.png"));
+		button.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				cerrarSesion();
 			}
 		});
-		btnOff.setHorizontalAlignment(SwingConstants.LEFT);
-		btnOff.setBounds(396, 228, 48, 44);
-		contentPane.add(btnOff);
+		button.setHorizontalAlignment(SwingConstants.LEFT);
+		button.setBounds(396, 228, 48, 44);
+		contentPane.add(button);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(115, 100, 240, 50);
@@ -75,7 +76,7 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		String seleccionado = comboBox.getSelectedItem().toString();
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("/Users/user/Pictures/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(new Color(0, 191, 255));
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));
@@ -119,21 +120,21 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		textField_1.setBounds(203, 188, 225, 28);
 		contentPane.add(textField_1);
 		
-		JButton btnHome = new JButton("");
-		btnHome.setIcon(new ImageIcon("/Users/user/Pictures/home.png"));
-		btnHome.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JButton button_1 = new JButton("");
+		button_1.setIcon(new ImageIcon("./imagenes/home.png"));
+		button_1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
 				clickAtras();
 			}
 		});
-		btnHome.setHorizontalAlignment(SwingConstants.LEFT);
-		btnHome.setBounds(6, 228, 48, 44);
-		contentPane.add(btnHome);
+		button_1.setHorizontalAlignment(SwingConstants.LEFT);
+		button_1.setBounds(6, 228, 48, 44);
+		contentPane.add(button_1);
 	}
 	
 	public void clickAtras(){
 		this.dispose();
-		padre.show();
+		padre.setVisible(true);
 	}
 	
 	public void cerrarSesion(){

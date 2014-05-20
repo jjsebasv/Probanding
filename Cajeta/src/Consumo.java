@@ -5,7 +5,7 @@ public class Consumo extends Movimiento {
 	private final String domicilio;
 	
 
-	public Consumo(String tipo, double monto, Tarjeta tarjeta, String comercio, String domicilio) {
+	public Consumo(String tipo, double monto, Tarjeta tarjeta,String comercio, String domicilio) {
 		super(tipo, monto, tarjeta);
 		this.comercio = comercio;
 		this.domicilio = domicilio;
