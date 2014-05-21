@@ -1,4 +1,6 @@
+
 import java.io.IOException;
+import java.util.Date;
 
 import org.joda.time.LocalDate;
 
@@ -17,14 +19,15 @@ public class Principal {
 		bancoFrances.altaCajaAhorro(1L);
 		bancoFrances.altaCajaAhorro(1L);
 		bancoFrances.altaCuentaCredito(1L,"Visa", 14000.00);
-		nowi.getCuentasMonetarias().get(1L).depositar(1500.00);
+		bancoFrances.altaCuentaCredito(1L,"Master", 18000.00);		nowi.getCuentasMonetarias().get(1L).depositar(1500.00);
 		Consumo consumo1 = new Consumo("Compra", 100.00, bancoFrances.verCliente(1L).getTarjetasCredito().get(1L), "Starbucks", "Bouchard");
 		Consumo consumo2 = new Consumo("Compra", 50.00, bancoFrances.verCliente(1L).getTarjetasCredito().get(1L), "Mc donalds", "Corrientes");
 		nowi.getCuentasCredito().get(1L).getConsumosDelPeriodo().add(consumo1);
 		// ver la fecha del consumo
 		nowi.getCuentasCredito().get(1L).getConsumosDelPeriodo().add(consumo2);
 		nowi.getCuentasMonetarias().get(1L).depositar(1000);
-		System.out.println("size"+nowi.getCuentasMonetarias().get(1L).getUltimosMovimientos().size());
+		
+		System.out.println("size"+nowi.getCuentasMonetarias().get(1L).getMovimientos().size() );
 		
 		// CLIENTE 2: NANCY
 		bancoFrances.nuevoCliente(16599403L, "Fontana", "Matheu 234", "Nancy", "6666-8888", new LocalDate());
@@ -39,6 +42,7 @@ public class Principal {
 		bancoFrances.cierreDeTarjeta();
 
 		//	---------------------------------------------------------------------------------------------------- //
+		
 		
 		InicioJFrame inicio = new InicioJFrame();
 		inicio.setVisible(true);

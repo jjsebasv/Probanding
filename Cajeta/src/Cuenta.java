@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -15,7 +16,7 @@ public abstract class Cuenta {
 	private final LocalDate fechaAlta;
 	private double saldoActual;
 	private final long numeroCuenta;
-	protected Map<LocalDate,Movimiento> movimientos; 
+	protected LinkedList<Movimiento> movimientos; 
 	// que sean 10, el key es la fecha. 
 	
 	public Cuenta (long numeroCuenta){
@@ -23,7 +24,7 @@ public abstract class Cuenta {
 		this.CBU = Math.abs(this.hashCode()*10000000)+this.numeroCuenta;
 		this.numeroCuenta = numeroCuenta;
 		this.fechaAlta = new LocalDate();
-		movimientos = new TreeMap<LocalDate,Movimiento>();
+		movimientos = new LinkedList<Movimiento>();
 	}
 	
 	public abstract void transferir( double monto, Cuenta cuentaDestino);
@@ -37,14 +38,6 @@ public abstract class Cuenta {
 
 	public void setSaldoActual(double saldoActual) {
 		this.saldoActual = saldoActual; 
-	}
-	
-	public Map<LocalDate, Movimiento> getUltimosMovimientos() {
-		return movimientos;
-	}
-
-	public void setUltimosMovimientos(Map<LocalDate, Movimiento> ultimosMovimientos) {
-		this.movimientos = ultimosMovimientos;
 	}
 
 	public long getCBU() {
@@ -71,8 +64,11 @@ public abstract class Cuenta {
 				BufferedWriter bw = new BufferedWriter(w);
 				bw.write("***************************"+" RESUMEN "+"******************************");
 				bw.newLine();
-				for (LocalDate fecha : this.movimientos.keySet()) {
-					bw.write(this.movimientos.get(fecha).toString());
+
+				int j =( this.movimientos.size() >  20 )? 20 : this.movimientos.size() ;
+				for (int i = 0; i < j ; i++) {
+					Movimiento mov = this.movimientos.get(i);
+					bw.write(mov.toString());
 					bw.newLine();
 				}
 				bw.close();
@@ -82,6 +78,14 @@ public abstract class Cuenta {
 				System.out.println("ERROR: "+e.getMessage());
 			};
 			
+	}
+
+	public LinkedList<Movimiento> getMovimientos() {
+		return movimientos;
+	}
+
+	public void setMovimientos(LinkedList<Movimiento> movimientos) {
+		this.movimientos = movimientos;
 	}
 	
 	

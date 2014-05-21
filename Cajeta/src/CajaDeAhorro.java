@@ -1,4 +1,5 @@
-import org.joda.time.LocalDate;
+import java.util.Date;
+
 
 public class CajaDeAhorro extends Cuenta {
 
@@ -16,7 +17,7 @@ public class CajaDeAhorro extends Cuenta {
 		this.setSaldoActual(getSaldoActual()-monto);
 		cuentaDestino.depositar(monto);
 		Movimiento mov = new Movimiento("TRANSFENCIA A "+cuentaDestino.getNumeroCuenta(), monto, null);
-		this.movimientos.put(new LocalDate(), mov);
+		this.movimientos.push(mov);
 	}
 	
 	public void transferir(double monto, long CBUdestino) {
@@ -26,20 +27,20 @@ public class CajaDeAhorro extends Cuenta {
 	public void extraccion(double monto) {
 		this.setSaldoActual(getSaldoActual()-monto);
 		Movimiento mov = new Movimiento("EXTRACCION", monto, null);
-		this.movimientos.put(new LocalDate(), mov);
+		this.movimientos.push(mov);
 	}
 
 	public void depositar(double monto) {
 		this.setSaldoActual(getSaldoActual()+monto);
 		Movimiento mov = new Movimiento("DEPOSITO EFECTIVO", monto, null);
-		this.movimientos.put(new LocalDate(), mov);
+		this.movimientos.push(mov);
 	}
 
 	public void depositar(Cheque cheque) {
 		this.setSaldoActual(this.getSaldoActual()+cheque.getMonto());
 		this.cobrarImpuestoCheque(cheque.getMonto());
 		Movimiento mov = new Movimiento("DEPOSITO CHEQUE", cheque.getMonto(), null);
-		this.movimientos.put(new LocalDate(), mov);
+		this.movimientos.push(mov);
 	}
 	
 	public String toString(){

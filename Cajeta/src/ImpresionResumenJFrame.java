@@ -63,7 +63,7 @@ public class ImpresionResumenJFrame extends JFrame {
 				eventoClickComboCuentas(cuentasBox.getSelectedItem().toString());
 			}
 		});
-		cuentasBox.setBounds(133, 111, 218, 50);
+		cuentasBox.setBounds(126, 80, 218, 50);
 		contentPane.add(cuentasBox);
 		
 	
@@ -82,14 +82,14 @@ public class ImpresionResumenJFrame extends JFrame {
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(new Color(30, 144, 255));
 		label_1.setFont(label_1.getFont().deriveFont(label_1.getFont().getStyle() | Font.BOLD | Font.ITALIC));
-		label_1.setBounds(133, 80, 211, 34);
+		label_1.setBounds(133, 54, 211, 34);
 		contentPane.add(label_1);
 		
 		JLabel lblSeleccionePeriodoLa = new JLabel("SELECCIONE PERIODO");
 		lblSeleccionePeriodoLa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSeleccionePeriodoLa.setForeground(new Color(30, 144, 255));
 		lblSeleccionePeriodoLa.setFont(lblSeleccionePeriodoLa.getFont().deriveFont(lblSeleccionePeriodoLa.getFont().getStyle() | Font.BOLD | Font.ITALIC));
-		lblSeleccionePeriodoLa.setBounds(143, 156, 200, 34);
+		lblSeleccionePeriodoLa.setBounds(136, 126, 200, 34);
 		contentPane.add(lblSeleccionePeriodoLa);
 		
 
@@ -104,9 +104,19 @@ public class ImpresionResumenJFrame extends JFrame {
 		lblImprimiendoResumen.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		lblImprimiendoResumen.setBounds(0, 221, 131, 16);
 		contentPane.add(lblImprimiendoResumen);
+		
+		JComboBox periodoBox = new JComboBox();
+		periodoBox.setBounds(126, 163, 218, 27);
+		contentPane.add(periodoBox);
+		periodoBox.setVisible(false);
+		
 		lblImprimiendoResumen.setVisible(false);
 		
+	
 	}
+	
+	
+	// ---------------------- evento combo 1 ----------------------  //
 
 	public void eventoClickComboCuentas( String nroCuenta ){
 		Long nroC = 0L;
@@ -115,13 +125,15 @@ public class ImpresionResumenJFrame extends JFrame {
 		String[]  nombreResumenes = new String[cantR];
 		
 		for (CuentaCredito cuenta : Banco.recuperarMiBanco().getListaCuentasCredito().values()) {
-			if ( cuenta.toString().equals(nroCuenta)){
+			System.out.println(nroCuenta);
+			System.out.println(cuenta.getNroCuenta());
+			
+			if ( cuenta.getNroCuenta() == Long.valueOf(nroCuenta) ){
+				System.out.println("hola");
 				nroC = cuenta.getNroCuenta();
 			}
 		}
 		this.nroCuenta = nroC;
-	
-	
 	
 	
 		for (Resumen resumen : Banco.recuperarMiBanco().verCliente(dni).getCuentasCredito().get(this.nroCuenta).getResumenes().values() ) {
@@ -138,6 +150,9 @@ public class ImpresionResumenJFrame extends JFrame {
 		contentPane.add(periodosBox);
 		periodosBox.setVisible(true);
 }
+	
+	// ---------------------- evento combo 2 ----------------------  //
+
 	public void eventoClickComboPeriodos( String nroResumen ){
 		
 	}
@@ -151,5 +166,4 @@ public class ImpresionResumenJFrame extends JFrame {
 		this.padre.cerrarSesion();
 		this.dispose();
 	}
-	
 }
