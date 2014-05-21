@@ -11,6 +11,8 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 // mismo banco --->> Validar!
 
@@ -19,13 +21,13 @@ public class TransfNroCuentaJFrame extends JFrame {
 	private JPanel contentPane;
 	private final double monto;
 	private final Cuenta cuenta;
-	private JTextField textField;
+	private JTextField destino;
 
 	/**
 	 * Create the frame.
 	 */
-	public TransfNroCuentaJFrame(Cuenta cuenta, double monto) {
-		this.cuenta = cuenta;
+	public TransfNroCuentaJFrame(Cuenta miCuenta, double monto) {
+		this.cuenta = miCuenta;
 		this.monto = monto;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -57,10 +59,10 @@ public class TransfNroCuentaJFrame extends JFrame {
 		lblNewLabel.setBounds(38, 116, 213, 16);
 		contentPane.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(255, 110, 134, 28);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		destino = new JTextField();
+		destino.setBounds(255, 110, 134, 28);
+		contentPane.add(destino);
+		destino.setColumns(10);
 		
 		JLabel montoLabel = new JLabel("");
 		montoLabel.setForeground(new Color(255, 0, 0));
@@ -74,11 +76,46 @@ public class TransfNroCuentaJFrame extends JFrame {
 		cuentaLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		cuentaLabel.setBounds(255, 178, 125, 16);
 		contentPane.add(cuentaLabel);
-		cuentaLabel.setText(cuenta.toString());
+		cuentaLabel.setText(miCuenta.toString());
 		
 		JButton confirmarBoton = new JButton("Confirmar");
+		confirmarBoton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if( destino.getText()!= null && isNumeric( destino.getText() ) ) {
+					if( Banco.recuperarMiBanco().getListaCuentasCorriente().containsKey(Long.valueOf(destino.getText() ) ) ) {
+		
+						Banco.recuperarMiBanco().transferencia(getMonto(), getCuenta(), Banco.recuperarMiBanco().getListaCuentasCorriente().get(Long.valueOf(destino.getText() ) ));
+					}
+					if( Banco.recuperarMiBanco().getListaCajasDeAhorro().containsKey(Long.valueOf(destino.getText() ) ) ) {
+						Banco.recuperarMiBanco().transferencia(getMonto(), getCuenta(), Banco.recuperarMiBanco().getListaCajasDeAhorro().get(Long.valueOf(destino.getText() ) ));
+					}
+					
+				}
+			}
+		});
 		confirmarBoton.setBounds(66, 210, 117, 29);
 		contentPane.add(confirmarBoton);
+		
+		
+		
+		
 	}
 
+	public double getMonto() {
+		return monto;
+	}
+
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+
+	private static boolean isNumeric(String cadena){
+		try {
+			Integer.parseInt(cadena);
+			return true;
+		} catch (NumberFormatException nfe){
+			return false;
+		}
+	}
+	
 }

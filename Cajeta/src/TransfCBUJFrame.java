@@ -4,13 +4,18 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -20,28 +25,17 @@ import java.awt.event.ActionEvent;
 public class TransfCBUJFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField destino;
+	private double monto;
+	private Cuenta cuenta;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TransfCBUJFrame frame = new TransfCBUJFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public TransfCBUJFrame() {
+	public TransfCBUJFrame(Cuenta cuenta, double monto) {
+		this.monto = monto;
+		this.cuenta = cuenta;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -82,10 +76,10 @@ public class TransfCBUJFrame extends JFrame {
 		lblNumeroDeCbu.setBounds(38, 116, 213, 16);
 		panel.add(lblNumeroDeCbu);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(255, 110, 134, 28);
-		panel.add(textField);
+		destino = new JTextField();
+		destino.setColumns(10);
+		destino.setBounds(255, 110, 134, 28);
+		panel.add(destino);
 		
 		JLabel label_2 = new JLabel("Monto: 0.0");
 		label_2.setForeground(Color.RED);
@@ -102,10 +96,39 @@ public class TransfCBUJFrame extends JFrame {
 		JButton button_1 = new JButton("Confirmar");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// transferir sin validar nada
+				if( destino.getText()!= null && isNumeric( destino.getText() ) ){
+					Banco.recuperarMiBanco().transferencia(getMonto(), getCuenta(), Long.valueOf(destino.getText()));
+				}
+				// mostrar mensaje de mal CBU
 			}
 		});
 		button_1.setBounds(66, 210, 117, 29);
 		panel.add(button_1);
 	}
+	
+	public double getMonto() {
+		return monto;
+	}
+
+	public void setMonto(double monto) {
+		this.monto = monto;
+	}
+
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
+	}
+
+	private static boolean isNumeric(String cadena){
+		try {
+			Integer.parseInt(cadena);
+			return true;
+		} catch (NumberFormatException nfe){
+			return false;
+		}
+	}
+	
 }

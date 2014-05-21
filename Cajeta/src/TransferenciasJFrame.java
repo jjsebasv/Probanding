@@ -155,7 +155,7 @@ public class TransferenciasJFrame extends JFrame {
 	
 	private static boolean isNumeric(String cadena){
 		try {
-			Integer.parseInt(cadena);
+			Double.parseDouble(cadena);
 			return true;
 		} catch (NumberFormatException nfe){
 			return false;
@@ -169,8 +169,10 @@ public class TransferenciasJFrame extends JFrame {
 		else if (!Banco.recuperarMiBanco().disponeSaldo(monto, miCuenta)) {
 			lblUdNoDispone.setVisible(true);
 		}
-		// pasar cuenta
-		//TransfNroCuentaJFrame transf = new TransfNroCuentaJFrame(dni, Double.valueOf(montoField.getText()));
+		else{
+			Cuenta aux = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(miCuenta);
+			TransfCBUJFrame trnsMismoBc = new TransfCBUJFrame(aux, monto);
+		}
 	}
 	
 	public void eventoClickMismoBanco(double monto, long miCuenta){
@@ -182,7 +184,8 @@ public class TransferenciasJFrame extends JFrame {
 			lblUdNoDispone.setVisible(true);
 		}
 		else {
-			//TransfNroCuentaJFrame trnsMismoBc = new TransfNroCuentaJFrame(monto, miCuenta);
+			Cuenta aux = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(miCuenta);
+			TransfNroCuentaJFrame trnsMismoBc = new TransfNroCuentaJFrame(aux, monto);
 		}
 	}
 }
