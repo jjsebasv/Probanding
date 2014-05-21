@@ -269,6 +269,31 @@ public class Banco {
 		}
 	}
 	
+	
+	public void transferencia (double monto, Cuenta emisora, Cuenta destino){
+		if ( this.listaCajasDeAhorro.values().contains(destino) ){
+			transferencia ( monto, this.listaCajasDeAhorro.get(emisora.getNumeroCuenta()),destino);
+		}
+		else if ( this.listaCuentasCorriente.values().contains(destino) ){
+			transferencia ( monto, this.listaCuentasCorriente.get(emisora.getNumeroCuenta()),destino);
+		}
+		else{
+			throw new NoExisteLaCuentaExcepcion();
+		}
+	}
+	
+	public void transferencia (double monto, Cuenta emisora, long destino){
+		if ( this.listaCajasDeAhorro.values().contains(destino) ){
+			transferencia ( monto, this.listaCajasDeAhorro.get(emisora.getNumeroCuenta()),destino);
+		}
+		else if ( this.listaCuentasCorriente.values().contains(destino) ){
+			transferencia ( monto, this.listaCuentasCorriente.get(emisora.getNumeroCuenta()),destino);
+		}
+		else{
+			throw new NoExisteLaCuentaExcepcion();
+		}
+	}
+	
 	public void transferencia ( double monto, CajaDeAhorro emisora, long CBUdestino){
 		if ( emisora.getSaldoActual() >= monto ){
 			emisora.transferir(monto, CBUdestino);
