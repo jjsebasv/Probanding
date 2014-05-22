@@ -1,4 +1,4 @@
-
+// FUNCIONA BIEN, NO TOCAR!
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -44,16 +44,16 @@ public class CbuJFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
-		button.addActionListener(new ActionListener() {
+		JButton cerrarSesion = new JButton("");
+		cerrarSesion.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		cerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cerrarSesion();
 			}
 		});
-		button.setHorizontalAlignment(SwingConstants.LEFT);
-		button.setBounds(396, 228, 48, 44);
-		contentPane.add(button);
+		cerrarSesion.setHorizontalAlignment(SwingConstants.LEFT);
+		cerrarSesion.setBounds(396, 228, 48, 44);
+		contentPane.add(cerrarSesion);
 		
 		int i=0;
 		int cantCuentas = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().size();
@@ -83,11 +83,11 @@ public class CbuJFrame extends JFrame {
 		label.setBounds(6, 6, 440, 62);
 		contentPane.add(label);
 		
-		JLabel label_1 = new JLabel("SELECCIONE \nLA CUENTA");
-		label_1.setForeground(new Color(30, 144, 255));
-		label_1.setFont(label_1.getFont().deriveFont(label_1.getFont().getStyle() | Font.BOLD | Font.ITALIC));
-		label_1.setBounds(168, 92, 200, 34);
-		contentPane.add(label_1);
+		JLabel seleccione = new JLabel("SELECCIONE \nLA CUENTA");
+		seleccione.setForeground(new Color(30, 144, 255));
+		seleccione.setFont(seleccione.getFont().deriveFont(seleccione.getFont().getStyle() | Font.BOLD | Font.ITALIC));
+		seleccione.setBounds(168, 92, 200, 34);
+		contentPane.add(seleccione);
 		
 		JLabel cbuNumero = new JLabel("Su CBU es:");
 		cbuNumero.setFont(cbuNumero.getFont().deriveFont(cbuNumero.getFont().getStyle() | Font.ITALIC));
@@ -95,16 +95,16 @@ public class CbuJFrame extends JFrame {
 		cbuNumero.setBounds(128, 181, 77, 34);
 		contentPane.add(cbuNumero);
 		
-		JButton button_1 = new JButton("");
-		button_1.addActionListener(new ActionListener() {
+		JButton home = new JButton("");
+		home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clickAtras();
 			}
 		});
-		button_1.setIcon(new ImageIcon("./imagenes/home.png"));
-		button_1.setHorizontalAlignment(SwingConstants.LEFT);
-		button_1.setBounds(6, 228, 48, 44);
-		contentPane.add(button_1);
+		home.setIcon(new ImageIcon("./imagenes/home.png"));
+		home.setHorizontalAlignment(SwingConstants.LEFT);
+		home.setBounds(6, 228, 48, 44);
+		contentPane.add(home);
 		
 		cbuResultado = new JTextField();
 		cbuResultado.setHorizontalAlignment(SwingConstants.CENTER);

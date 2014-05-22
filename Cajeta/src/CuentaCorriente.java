@@ -1,6 +1,7 @@
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.joda.time.LocalDate;
 
 public class CuentaCorriente extends Cuenta {
 
@@ -11,8 +12,9 @@ public class CuentaCorriente extends Cuenta {
 	private double giroEnDescubierto;
 	
 
-	public CuentaCorriente(long numeroCuenta, double giroEnDescubierto) {
-		super(numeroCuenta);
+
+	public CuentaCorriente(double giroEnDescubierto) {
+		super();
 		chequesEmitidos = new HashSet<Cheque>();
 		chequesRechazados = new HashSet<Cheque>();
 		this.giroEnDescubierto = giroEnDescubierto;
@@ -22,49 +24,68 @@ public class CuentaCorriente extends Cuenta {
 	// --------------------------- OTROS  -----------------------------------
 
 	
+
+
+	public double getIMP_DEBITOS_Y_CREDITOS() {
+		return IMP_DEBITOS_Y_CREDITOS;
+	}
+
+	
 	public void cobrarImpuesto (double monto){
 		this.setSaldoActual(getSaldoActual()-monto*IMP_DEBITOS_Y_CREDITOS);
 	}
 	
 	public void cobrarCheque ( Cheque cheque ){
-		this.setSaldoActual(getSaldoActual()-cheque.getMonto());
+		Banco.recuperarMiBanco().cobrarCheque(cheque, this);
 		this.cobrarImpuesto(cheque.getMonto());
-		cheque.setCobrado(true);
+		Movimiento mov = new Movimiento("COBRO DE CHEQUE: "+cheque.getNumeroCheque(), cheque.getMonto()*(-1), null);
+		this.movimientos.push(mov);
+	}
+	
+	public void emitirCheque(Cliente destinatario, double monto, LocalDate fechaCobro){
+		Cheque cheque = new Cheque(destinatario, monto, fechaCobro, this);
+		this.chequesEmitidos.add(cheque);
 	}
 	
 	// --------------------------- DEPOSITAR, EXTRAER, TRANSFERIR  -----------------------------------
 
+		// EXTRACCION //
+	
 	public void extraccion(double monto) {
-		this.setSaldoActual(getSaldoActual()-monto);
+		Banco.recuperarMiBanco().extraccion(this, monto);
 		this.cobrarImpuesto(monto);
-		Movimiento mov = new Movimiento("EXTRACCION", monto, null);
+		Movimiento mov = new Movimiento("EXTRACCION", monto*(-1), null);
 		this.movimientos.push(mov);
 	}
+	
+		// DEPOSITO //
 
 	public void depositar(double monto) {
-		this.setSaldoActual(getSaldoActual()+monto);
+		Banco.recuperarMiBanco().deposito(this, monto);
 		this.cobrarImpuesto(monto);
 		Movimiento mov = new Movimiento("DEPOSITO EFECTIVO", monto, null);
 		this.movimientos.push(mov);
 	}
 
 	public void depositar(Cheque cheque) {
-		this.setSaldoActual(getSaldoActual()+cheque.getMonto());
+		
 		this.cobrarImpuesto(cheque.getMonto());
 		Movimiento mov = new Movimiento("DEPOSITO CHEQUE", cheque.getMonto(), null);
 		this.movimientos.push(mov);
 	}
 	
+	
+			// TRANSFERENCIA //
+	
 	public void transferir(double monto, Cuenta cuentaDestino) {
-		this.setSaldoActual(getSaldoActual()-monto);
+		Banco.recuperarMiBanco().transferencia(monto, this, cuentaDestino);
 		this.cobrarImpuesto(monto);
-		cuentaDestino.depositar(monto);
-		Movimiento mov = new Movimiento("TRANSFENCIA A "+cuentaDestino.getNumeroCuenta(), monto, null);
+		Movimiento mov = new Movimiento("TRANSFENCIA A "+cuentaDestino.getNumeroCuenta(), monto*(-1), null);
 		this.movimientos.push(mov);
 	}
 	
 	public void transferir(double monto, long CBUdestino) {
-		this.setSaldoActual(getSaldoActual()-monto);
+		Banco.recuperarMiBanco().transferenciaPorCbu(monto, this, CBUdestino);
 		this.cobrarImpuesto(monto);
 	}
 	
@@ -102,5 +123,60 @@ public class CuentaCorriente extends Cuenta {
 			int dv = (int) (this.getNumeroCuenta() % 10);
 			return "Cuenta Corriente: "+cuenta+"/"+dv;
 		}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(IMP_DEBITOS_Y_CREDITOS);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result
+				+ ((chequesEmitidos == null) ? 0 : chequesEmitidos.hashCode());
+		result = prime
+				* result
+				+ ((chequesRechazados == null) ? 0 : chequesRechazados
+						.hashCode());
+		temp = Double.doubleToLongBits(giroEnDescubierto);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CuentaCorriente other = (CuentaCorriente) obj;
+		if (Double.doubleToLongBits(IMP_DEBITOS_Y_CREDITOS) != Double
+				.doubleToLongBits(other.IMP_DEBITOS_Y_CREDITOS))
+			return false;
+		if (chequesEmitidos == null) {
+			if (other.chequesEmitidos != null)
+				return false;
+		} else if (!chequesEmitidos.equals(other.chequesEmitidos))
+			return false;
+		if (chequesRechazados == null) {
+			if (other.chequesRechazados != null)
+				return false;
+		} else if (!chequesRechazados.equals(other.chequesRechazados))
+			return false;
+		if (Double.doubleToLongBits(giroEnDescubierto) != Double
+				.doubleToLongBits(other.giroEnDescubierto))
+			return false;
+		return true;
+	}
+
+
+	@Override
+	public void cobrarConsumo(Consumo consumo) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

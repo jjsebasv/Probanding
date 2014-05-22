@@ -285,9 +285,34 @@ public class Cliente {
 		Servicio servicioNuevo = new Servicio( tipo, monto, fechaPago, fechaVencimiento, numeroPagoElectronico);
 		this.listaServicios.put(numeroPagoElectronico, servicioNuevo);
 	}
-
+	
+	public double disponibleDebitoExtraccion(){
+		double aux = 0;
+		if ( this.tajetaDeDebito != null ){
+			for (Cuenta cuenta : this.getCuentasMonetarias().values()) {
+				aux += cuenta.montoExtHoy();
+			}
+			aux = this.tajetaDeDebito.getLimiteExtraccionDebito() - aux;
+		}
+		return aux;
+	}
+	
+	public double disponibleDebitoCompra(){
+		double aux = 0;
+		if ( this.tajetaDeDebito != null ){
+			for (Cuenta cuenta : this.getCuentasMonetarias().values()) {
+				aux += cuenta.montoCompHoy();
+			}
+			aux = this.tajetaDeDebito.getLimiteCompra() - aux;
+		}
+		return aux;
+	}
+	
+	
 	
 }
+
+	
 
 
 

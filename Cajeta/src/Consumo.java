@@ -3,12 +3,14 @@ public class Consumo extends Movimiento {
 	
 	private final String comercio;
 	private final String domicilio;
+	private final boolean cuotas;
 	
 
-	public Consumo(String tipo, double monto, Tarjeta tarjeta,String comercio, String domicilio) {
+	public Consumo(String tipo, double monto, Tarjeta tarjeta,String comercio, String domicilio, boolean cuotas) {
 		super(tipo, monto, tarjeta);
 		this.comercio = comercio;
 		this.domicilio = domicilio;
+		this.cuotas = cuotas;
 	}
  
 
@@ -63,6 +65,11 @@ public class Consumo extends Movimiento {
 
 	public String getDomicilio() {
 		return domicilio;
+	}
+
+
+	public boolean getCuotas() {
+		return cuotas;
 	}
 	
 	

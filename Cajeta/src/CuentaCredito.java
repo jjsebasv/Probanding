@@ -40,6 +40,25 @@ public class CuentaCredito {
 			}
 		}
 		
+		public double montoConsumosCuotas(){
+			double cuotas = 0;
+			for (Consumo consumo : this.consumosDelPeriodo) {
+				if ( consumo.getCuotas() ){
+					cuotas += consumo.getMonto();
+				}
+			}
+			return cuotas;
+		}
+		
+		public double montoConsumosUnPago(){
+			double cuotas = 0;
+			for (Consumo consumo : this.consumosDelPeriodo) {
+				if ( !consumo.getCuotas() ){
+					cuotas += consumo.getMonto();
+				}
+			}
+			return cuotas;
+		}
 		
 		public void cierreLiquidacion ( long nroResumen ){
 			double monto = 0;
@@ -225,4 +244,14 @@ public class CuentaCredito {
 		return this.marca +" "+this.nroCuenta ;
 	}
 	
+	public double disponibleUnPago() {
+		return this.getLimiteFinanciacion()-this.montoConsumosUnPago();
+	}
+
+
+	public double disponibleCuotas() {
+		return this.getLimiteFinanciacion()-this.montoConsumosUnPago();
+	}
+
+
 }

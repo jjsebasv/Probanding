@@ -1,41 +1,32 @@
 
 public class TarjetaDeCredito extends Tarjeta {
 
-	private double disponibleUnPago;
-	private double disponibleCuotas;
 	private double porcentajeLimite;
+	private CuentaCredito cuentaCredito;
 	
-	public TarjetaDeCredito(long numeroTarjeta, double limiteCompra, double porcentajeLimite) {
-		super(numeroTarjeta, limiteCompra);
+	public TarjetaDeCredito(double limiteCompra, double porcentajeLimite, String marca, CuentaCredito cuenta) {
+		super(limiteCompra,marca);
 		this.porcentajeLimite = porcentajeLimite;
+		this.cuentaCredito = cuenta;
 	}
 	
 	// TIRAR UNA EXCEPCION SI YA ESTA HABILITADA Y NO HACER NADA.
 	public void habilitarTarjeta (){
 		this.setStatus(true);
-		this.setDisponibleCuotas(this.getLimiteCompra()*this.porcentajeLimite);
-		this.setDisponibleUnPago(this.getLimiteCompra()*this.porcentajeLimite);
 	}
 
 	
 	// --------------------------- GETTER Y SETTERS  -----------------------------------
 
 
-	public double getDisponibleUnPago() {
-		return disponibleUnPago;
+	public double disponibleUnPago() {
+		return this.cuentaCredito.disponibleUnPago()*this.porcentajeLimite;
 	}
 
-	public void setDisponibleUnPago(double disponibleUnPago) {
-		this.disponibleUnPago = disponibleUnPago;
+
+	public double disponibleCuotas() {
+		return this.cuentaCredito.disponibleCuotas()*this.porcentajeLimite;
 	}
 
-	public double getDisponibleCuotas() {
-		return disponibleCuotas;
-	}
 
-	public void setDisponibleCuotas(double disponibleCuotas) {
-		this.disponibleCuotas = disponibleCuotas;
-	}
-
-	
 }

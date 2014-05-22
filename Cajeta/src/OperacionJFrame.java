@@ -92,8 +92,7 @@ public class OperacionJFrame extends JFrame {
 		JButton btnDeposito = new JButton("DEPOSITOS");
 		btnDeposito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DepositosJFrame depositos = new DepositosJFrame();
-				depositos.setVisible(true);
+				depositos();
 			}
 		});
 		btnDeposito.setHorizontalAlignment(SwingConstants.LEFT);
@@ -128,7 +127,7 @@ public class OperacionJFrame extends JFrame {
 		JButton btnNewButton = new JButton("");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				cerrarSesion();
 			}
 		});
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -144,23 +143,30 @@ public class OperacionJFrame extends JFrame {
 		contentPane.add(btnClaves);
 	}
 	
-	private void consultas(){
+	public void depositos(){
+		DepositosJFrame depositos = new DepositosJFrame(dni,this);
+		depositos.setVisible(true);
+		this.setVisible(false);
+	}
+	
+	public void consultas(){
 		ConsultasJFrame consultas = new ConsultasJFrame(dni, this);
 		consultas.setVisible(true);
-		this.hide();
+		this.setVisible(false);
 	}
 	
 	public void Transferencias(){
 		TransferenciasJFrame transferencias = new TransferenciasJFrame(dni);
 		transferencias.setVisible(true);
-		this.hide();
+		this.setVisible(false);
 	}
 	
 	public void clickAtras(){
-		this.show();
+		this.setVisible(true);
 	}
 
 	public void cerrarSesion(){
-		padre.show();
+		padre.setVisible(true);
+		this.dispose();
 	}
 }

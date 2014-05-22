@@ -1,3 +1,6 @@
+// ARREGLAR:
+// CUANDO SE ENTRA CON LOS USUARIOS NAN Y NOWI FUNCIONA. PRIMERO LOS AGREGE Y DSP LES AGREGUE PRODUCTOS.
+// CUANDO SE ENTRA CON CAR NO ME TOMA EL DOCUMENTO, ES COMO SI NO EXISTIERA. LOQUISIMO
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -163,9 +166,13 @@ public class AutenticacionJFrame extends JFrame {
 		}
 	@SuppressWarnings("deprecation")
 	public void eventoClickOperaciones(){
-		long dniIng = Long.valueOf(dni.getText());
+		Long dniIng = Long.valueOf(dni.getText());
 		boolean existeDni = Banco.recuperarMiBanco().getListaUsuarios().containsKey(dniIng);
 				
+		System.out.println(dniIng);
+		System.out.println(existeDni);
+		
+		
 		if ( Banco.recuperarMiBanco().verCliente(dniIng) != null && existeDni && isNumeric(pin.getText())){
 			int pinIng = Integer.valueOf(pin.getText());
 			if ( Banco.recuperarMiBanco().verCliente(dniIng).getClavePin() == pinIng){

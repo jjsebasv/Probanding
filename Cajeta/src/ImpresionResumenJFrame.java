@@ -1,4 +1,5 @@
-
+// PREGUNTAR DOBLE COMBO BOX
+// AGREGAR BOTON HOME
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -63,7 +64,7 @@ public class ImpresionResumenJFrame extends JFrame {
 				eventoClickComboCuentas(cuentasBox.getSelectedItem().toString());
 			}
 		});
-		cuentasBox.setBounds(126, 80, 218, 50);
+		cuentasBox.setBounds(126, 108, 218, 50);
 		contentPane.add(cuentasBox);
 		
 	
@@ -82,32 +83,44 @@ public class ImpresionResumenJFrame extends JFrame {
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(new Color(30, 144, 255));
 		label_1.setFont(label_1.getFont().deriveFont(label_1.getFont().getStyle() | Font.BOLD | Font.ITALIC));
-		label_1.setBounds(133, 54, 211, 34);
+		label_1.setBounds(126, 80, 211, 34);
 		contentPane.add(label_1);
 		
 		JLabel lblSeleccionePeriodoLa = new JLabel("SELECCIONE PERIODO");
 		lblSeleccionePeriodoLa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSeleccionePeriodoLa.setForeground(new Color(30, 144, 255));
 		lblSeleccionePeriodoLa.setFont(lblSeleccionePeriodoLa.getFont().deriveFont(lblSeleccionePeriodoLa.getFont().getStyle() | Font.BOLD | Font.ITALIC));
-		lblSeleccionePeriodoLa.setBounds(136, 126, 200, 34);
+		lblSeleccionePeriodoLa.setBounds(136, 146, 200, 34);
 		contentPane.add(lblSeleccionePeriodoLa);
 		
 
 		
 		JProgressBar progressBar = new JProgressBar();
-		progressBar.setBounds(0, 249, 384, 20);
+		progressBar.setBounds(10, 249, 434, 20);
 		contentPane.add(progressBar);
 		progressBar.setVisible(false);
 		
 		JLabel lblImprimiendoResumen = new JLabel("Imprimiendo Resumen");
 		lblImprimiendoResumen.setForeground(Color.RED);
 		lblImprimiendoResumen.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
-		lblImprimiendoResumen.setBounds(0, 221, 131, 16);
+		lblImprimiendoResumen.setBounds(6, 221, 131, 16);
 		contentPane.add(lblImprimiendoResumen);
 		
 		JComboBox periodoBox = new JComboBox();
-		periodoBox.setBounds(126, 163, 218, 27);
+		periodoBox.setBounds(126, 182, 218, 27);
 		contentPane.add(periodoBox);
+		
+		JButton home = new JButton("");
+		home.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clickAtras();
+			}
+		});
+		home.setHorizontalAlignment(SwingConstants.LEFT);
+		home.setBounds(6, 228, 48, 44);
+		contentPane.add(home);
+		home.setIcon(new ImageIcon("./imagenes/home.png"));
+		home.setVisible(true);
 		periodoBox.setVisible(false);
 		
 		lblImprimiendoResumen.setVisible(false);

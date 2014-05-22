@@ -1,5 +1,4 @@
 
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -128,19 +127,19 @@ public class ConsultasJFrame extends JFrame {
 	public void impresion(){
 		ImpresionResumenJFrame impresion = new ImpresionResumenJFrame(dni, this);
 		impresion.setVisible(true);
-		this.hide();
+		this.setVisible(false);
 	}
 	
 	public void Limites(){
 		LimitesDisponiblesJFrame limites = new LimitesDisponiblesJFrame(dni, this);
 		limites.setVisible(true);
-		this.hide();
+		this.setVisible(false);
 	}
 	
 	public void Saldo(){
 		ConsultaSaldoJFrame consultaSaldo = new ConsultaSaldoJFrame(dni, this);
 		consultaSaldo.setVisible(true);
-		this.hide();
+		this.setVisible(false);
 	}
 	
 	public void clickAtras(){

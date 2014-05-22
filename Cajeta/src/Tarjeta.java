@@ -4,6 +4,7 @@ import org.joda.time.LocalDate;
 
 public abstract class Tarjeta {
 
+	private final String marca;
 	private final long numeroTarjeta;
 	private final LocalDate fechaEmision;
 	private final LocalDate fechaVencimiento;
@@ -13,9 +14,10 @@ public abstract class Tarjeta {
 
 	
 
-	public Tarjeta(long numeroTarjeta, double limiteCompra) {
+	public Tarjeta(double limiteCompra, String marca) {
 		
-		this.numeroTarjeta = numeroTarjeta;
+		this.marca = marca;
+		this.numeroTarjeta = Banco.recuperarMiBanco().getListaTarjetas().size() + Banco.recuperarMiBanco().getListaTarjetasCoord().size()+ 1L;
 		this.fechaEmision = new LocalDate();
 		this.fechaVencimiento = this.fechaEmision.plusYears(4);
 		this.status = false;
@@ -29,9 +31,15 @@ public abstract class Tarjeta {
 	
 
 	public String toString(){
-		return "XXXX-XXXX-XXXX-"+this.getNumeroTarjeta()%10000;
+		return this.getMarca()+" XXXX-XXXX-XXXX-"+this.getNumeroTarjeta()%10000;
 	}
 	
+	public String getMarca() {
+		return marca;
+	}
+
+
+
 	public abstract void habilitarTarjeta();
 	
 	// --------------------------- GETTERS -Y SETTERS ----------------------------------

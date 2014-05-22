@@ -1,4 +1,4 @@
-
+// PORQUE SOLO PUEDO HACER UN SOLO CLICK?
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -9,21 +9,30 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.ImageIcon;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JProgressBar;
 
+import javax.swing.JProgressBar;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class UltimosMovimientosJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private ConsultasJFrame padre;
 	private long dni;
-
-	
+	private JProgressBar progressBar;
+	private Timer timer;
+	private JLabel lblNewLabel;
+	private int j = 0;
+	private JButton home;
 	
 	/**
 	 * Create the frame.
@@ -44,6 +53,7 @@ public class UltimosMovimientosJFrame extends JFrame {
 		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cerrarSesion();
 			}
 		});
 		button.setHorizontalAlignment(SwingConstants.LEFT);
@@ -84,19 +94,39 @@ public class UltimosMovimientosJFrame extends JFrame {
 		label_1.setBounds(168, 92, 200, 34);
 		contentPane.add(label_1);
 		
-		JProgressBar progressBar = new JProgressBar();
+		progressBar = new JProgressBar();
 		progressBar.setToolTipText("Imprimiendo resumen\n");
 		progressBar.setBackground(Color.CYAN);
 		progressBar.setBounds(6, 252, 378, 20);
 		contentPane.add(progressBar);
-		progressBar.setVisible(true);
+		progressBar.setVisible(false);
+		progressBar.setMaximum(0);
+		progressBar.setMaximum(1000);
 		
-		JLabel lblNewLabel = new JLabel("Imprimiendo Resumen...");
+		lblNewLabel = new JLabel("Imprimiendo Resumen...");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		lblNewLabel.setForeground(Color.RED);
 		lblNewLabel.setBounds(6, 224, 142, 16);
 		contentPane.add(lblNewLabel);
-		lblNewLabel.setVisible(true);
+		
+		home = new JButton("");
+		home.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clickAtras();
+			}
+		});
+		home.setHorizontalAlignment(SwingConstants.LEFT);
+		home.setBounds(6, 228, 48, 44);
+		contentPane.add(home);
+		home.setIcon(new ImageIcon("./imagenes/home.png"));
+		home.setVisible(true);
+		lblNewLabel.setVisible(false);
+		
+		timer = new Timer(3,new ActionListener(){
+			  public void actionPerformed(ActionEvent ae){
+			  	llenarBarra();
+			  }
+			 });
 	}
 	
 	public void eventoClickCombo( String nroCuenta ){
@@ -121,7 +151,44 @@ public class UltimosMovimientosJFrame extends JFrame {
 
 		cuentaS.imprimirUltimosMovimientos();
 		
+		this.progressBar.setVisible(true);
+		this.lblNewLabel.setVisible(true);
+		this.home.setVisible(false);
+		llenarBarra();
+	}
+	
+	public void llenarBarra(){
+	{
+			timer.start();	
+			getContentPane().add(progressBar);
+			
+			  if(j>1000){
+				  timer.stop();
+				  progressBar.setVisible(false);
+				  this.home.setVisible(true);
+				  this.lblNewLabel.setVisible(false);
+			  }
+			  else{
+				  progressBar.setValue(j++);
+			  }
 	}
 	
 	
+	}
+	
+	
+	
+	
+	
+	public void clickAtras(){
+		this.padre.clickAtras();
+		this.dispose();
+	}
+
+	public void cerrarSesion(){
+		this.padre.cerrarSesion();
+		this.dispose();
+		
+	}
 }
+

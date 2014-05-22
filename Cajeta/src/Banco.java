@@ -96,12 +96,12 @@ public class Banco {
 			throw new NoExisteClienteExcepcion();
 		}
 		else{
-			CajaDeAhorro cajaDeAhorro = new CajaDeAhorro(this.listaCajasDeAhorro.size()+1L);
+			CajaDeAhorro cajaDeAhorro = new CajaDeAhorro();
 			this.listaCajasDeAhorro.put(cajaDeAhorro.getNumeroCuenta(), cajaDeAhorro);
 			verCliente(DNI).getCuentasMonetarias().put(cajaDeAhorro.getNumeroCuenta(), cajaDeAhorro);
 			
 			if ( verCliente(DNI).getTajetaDeDebito() == null ){
-				TarjetaDebito tarjetaDebito = new TarjetaDebito(this.listaTarjetas.size()+1L);
+				TarjetaDebito tarjetaDebito = nuevaTarjetaDebito();
 				verCliente(DNI).setTajetaDeDebito(tarjetaDebito);
 			} 
 		}
@@ -119,29 +119,29 @@ public class Banco {
 	}
 	
 	// EL CLIENTE EXISTE. 
-	public void altaCuentaCorriente ( long DNI ) throws NoExisteClienteExcepcion{
+	public void altaCuentaCorriente ( long DNI, double giroEnDescubierto ) throws NoExisteClienteExcepcion{
 		if ( this.verCliente(DNI) == null ){
 			throw new NoExisteClienteExcepcion();
 		}
 		else{
-			CuentaCorriente cuentaCorriente = new CuentaCorriente(this.listaCajasDeAhorro.size()+1L,  0 );
+			CuentaCorriente cuentaCorriente = new CuentaCorriente( giroEnDescubierto );
 			this.listaCuentasCorriente.put(cuentaCorriente.getNumeroCuenta(), cuentaCorriente);
 			verCliente(DNI).getCuentasMonetarias().put(cuentaCorriente.getNumeroCuenta(), cuentaCorriente);
 			if ( verCliente(DNI).getTajetaDeDebito() == null ){
-				TarjetaDebito tarjetaDebito = new TarjetaDebito(this.listaTarjetas.size()+1L);
+				TarjetaDebito tarjetaDebito = nuevaTarjetaDebito();
 				verCliente(DNI).setTajetaDeDebito(tarjetaDebito);
 			} 
 		}
 	}
 	
 	// EL CLIENTE ES NUEVO
-	public void altaCuentaCorriente ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento){
+	public void altaCuentaCorriente ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento, double giroEnDescubierto){
 		if ( this.verCliente(dni) == null ){
 			Usuario usuario = new Usuario(dni, apellido, domicilio, nombre, telefono, fechaNacimiento);
 			Cliente cliente = new Cliente(this.listaClientes.size()+1L);
 			this.listaClientes.put(usuario, cliente);
 		}
-		altaCuentaCorriente(dni);
+		altaCuentaCorriente(dni,giroEnDescubierto);
 	}
 	
 	// 	EL CLIENTE EXISTE
@@ -150,9 +150,10 @@ public class Banco {
 			throw new NoExisteClienteExcepcion();
 		}
 		else{
-			TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito(this.listaTarjetas.size()+1L, limiteCompra,1);
-			CuentaCredito cuentaCredito = new CuentaCredito( this.verCliente(DNI), this.listaCuentasCredito.size()+1L, marca, tarjetaDeCredito, limiteCompra );
-			this.listaCuentasCredito.put(cuentaCredito.getNroCuenta(), cuentaCredito);
+			CuentaCredito cuentaCredito = new CuentaCredito( this.verCliente(DNI), this.listaCuentasCredito.size()+1L, marca, null, limiteCompra );
+			TarjetaDeCredito tarjetaDeCredito = nuevaTarjetaDeCredito(cuentaCredito, limiteCompra,1,marca);
+			cuentaCredito.setTarTitular(tarjetaDeCredito);
+			Banco.recuperarMiBanco().verCliente(DNI).getTarjetasCredito().put(tarjetaDeCredito.getNumeroTarjeta(), tarjetaDeCredito);
 			verCliente(DNI).getCuentasCredito().put(cuentaCredito.getNroCuenta(), cuentaCredito);
 		}
 	}
@@ -172,14 +173,14 @@ public class Banco {
 	
 	// --------------------------- ALTA TARJETAS  -----------------------------------
 	
-	public TarjetaDebito nuevaTarjetaDebito ( String fechaEmision, String fechaVencimiento ){
-		TarjetaDebito tarjetaDebito = new TarjetaDebito(this.listaTarjetas.size()+1L);
+	public TarjetaDebito nuevaTarjetaDebito (){
+		TarjetaDebito tarjetaDebito = new TarjetaDebito();
 		this.listaTarjetas.add(tarjetaDebito);
 		return tarjetaDebito;
 	}
 	
-	public TarjetaDeCredito nuevaTarjetaDeCredito( double limiteCompra, double porcentajeLimite, String fechaEmision, String fechaVencimiento){
-		TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito(this.listaTarjetas.size()+1L, limiteCompra, porcentajeLimite );
+	public TarjetaDeCredito nuevaTarjetaDeCredito( CuentaCredito cuenta, double limiteCompra, double porcentajeLimite,String marca){
+		TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito(limiteCompra, porcentajeLimite, marca, cuenta );
 		this.listaTarjetas.add(tarjetaDeCredito);
 		return tarjetaDeCredito;
 	}
@@ -192,9 +193,17 @@ public class Banco {
 	
 	// --------------------------- EXTRACCION, DEPOSITO, TRASNFERENCIA -----------------------------------
 	
+	public void cobrarCheque(Cheque cheque, CuentaCorriente emisora){
+		emisora.setSaldoActual(emisora.getSaldoActual()-cheque.getMonto());
+		cheque.setCobrado(true);
+	}
+	
+	// EXTRACCION //
+
+	
 	public void extraccion ( CajaDeAhorro cuenta, double monto){
 		if ( cuenta.getSaldoActual() >= monto ){
-			cuenta.extraccion(monto);
+			cuenta.setSaldoActual(cuenta.getSaldoActual()-monto);
 		}
 		else{
 			throw new NoPoseeSaldoExcepcion();
@@ -204,14 +213,22 @@ public class Banco {
 	
 	public void extraccion ( CuentaCorriente cuenta, double monto){
 		if ( (cuenta.getSaldoActual()+cuenta.getGiroEnDescubierto()) >= monto ){
-			cuenta.extraccion(monto);
+			cuenta.setSaldoActual(cuenta.getSaldoActual()-monto);
 		}
 		else{
 			throw new NoPoseeSaldoExcepcion();
 		}
 	}
 	
-	public void deposito ( Cheque cheque, CuentaCorriente emisora, CajaDeAhorro destino){
+	// DEPOSITO //
+	
+	public void deposito ( Cuenta cuenta, double monto ){
+		cuenta.setSaldoActual(cuenta.getSaldoActual()+monto);
+	}
+
+	
+	public void deposito ( Cheque cheque, CajaDeAhorro destino){
+		CuentaCorriente emisora = cheque.getEmisora();
 		LocalDate hoy = new LocalDate();
 		if ( emisora.getSaldoActual()+emisora.getGiroEnDescubierto() >= cheque.getMonto() ){
 			if ( destino.getFechaAlta().isBefore(hoy.minusMonths(6))){
@@ -230,8 +247,9 @@ public class Banco {
 	}
 	
 	
-	public void deposito ( Cheque cheque, CuentaCorriente emisora, CuentaCorriente destino){
-		if ( emisora.getSaldoActual()+emisora.getGiroEnDescubierto() >= cheque.getMonto() ){
+	public void deposito ( Cheque cheque, CuentaCorriente destino){
+		CuentaCorriente emisora = cheque.getEmisora();
+		if ( emisora.getSaldoActual()+emisora.getGiroEnDescubierto() >= cheque.getMonto() && !cheque.getCobrado()){
 			emisora.cobrarCheque(cheque);
 			destino.depositar(cheque);
 		}
@@ -241,10 +259,15 @@ public class Banco {
 		}
 	}
 	
-	public void transferencia ( double monto, CajaDeAhorro emisora, Cuenta destino){
+	
+	// TRANSFERENCIA //
+	
+	// Desde una caja de ahorro a cualquier cuenta del mismo banco
+	public void transferencia ( double monto, CajaDeAhorro emisora, Cuenta cuentaDestino){
 		if ( emisora.getSaldoActual() >= monto ){
-			if ( this.listaCajasDeAhorro.values().contains(destino) || this.listaCuentasCorriente.values().contains(destino) ){
-				emisora.transferir(monto, destino);
+			if ( this.listaCajasDeAhorro.values().contains(cuentaDestino) || this.listaCuentasCorriente.values().contains(cuentaDestino) ){
+				emisora.setSaldoActual(emisora.getSaldoActual()-monto);
+				cuentaDestino.transferenciaRecibida(emisora, monto);
 			}
 			else{
 				throw new NoExisteLaCuentaExcepcion();
@@ -255,10 +278,12 @@ public class Banco {
 		}
 	}
 	
-	public void transferencia ( double monto, CuentaCorriente emisora, Cuenta destino){
+	// Desde una cuenta corriente a cualquier cuenta del mismo banco
+	public void transferencia ( double monto, CuentaCorriente emisora, Cuenta cuentaDestino){
 		if ( emisora.getSaldoActual()+emisora.getGiroEnDescubierto() >= monto ){
-			if ( this.listaCajasDeAhorro.values().contains(destino) || this.listaCuentasCorriente.values().contains(destino) ){
-				emisora.transferir(monto, destino);
+			if ( this.listaCajasDeAhorro.values().contains(cuentaDestino) || this.listaCuentasCorriente.values().contains(cuentaDestino) ){
+				emisora.setSaldoActual(emisora.getSaldoActual()-monto);
+				cuentaDestino.transferenciaRecibida(emisora, monto);
 			}
 			else{
 				throw new NoExisteLaCuentaExcepcion();
@@ -269,19 +294,7 @@ public class Banco {
 		}
 	}
 	
-	
-	public void transferencia (double monto, Cuenta emisora, Cuenta destino){
-		if ( this.listaCajasDeAhorro.values().contains(destino) ){
-			transferencia ( monto, this.listaCajasDeAhorro.get(emisora.getNumeroCuenta()),destino);
-		}
-		else if ( this.listaCuentasCorriente.values().contains(destino) ){
-			transferencia ( monto, this.listaCuentasCorriente.get(emisora.getNumeroCuenta()),destino);
-		}
-		else{
-			throw new NoExisteLaCuentaExcepcion();
-		}
-	}
-	
+	// Desde cualquier cuenta, a un cbu de otro banco. Se transfiere el dinero a una cuenta del mismo banco
 	public void transferencia (double monto, Cuenta emisora, long destino){
 		if ( this.listaCajasDeAhorro.values().contains(destino) ){
 			transferencia ( monto, this.listaCajasDeAhorro.get(emisora.getNumeroCuenta()),destino);
@@ -294,23 +307,18 @@ public class Banco {
 		}
 	}
 	
-	public void transferencia ( double monto, CajaDeAhorro emisora, long CBUdestino){
+	// Desde cualquier cuenta, a un cbu de otro banco. Se transfiere el dinero sin validar
+	public void transferenciaPorCbu ( double monto, Cuenta emisora, long CBUdestino){
 		if ( emisora.getSaldoActual() >= monto ){
-			emisora.transferir(monto, CBUdestino);
+			emisora.setSaldoActual(emisora.getSaldoActual()-monto);
 		}
 		else{
 			throw new NoPoseeSaldoExcepcion();
 		}
 	}
 	
-	public void transferencia ( double monto, CuentaCorriente emisora, long CBUdestino){
-		if ( emisora.getSaldoActual()+emisora.getGiroEnDescubierto() >= monto ){
-			emisora.transferir(monto, CBUdestino);
-		}
-		else{
-			throw new NoPoseeSaldoExcepcion();
-		}
-	}
+	
+	// ---------------------------------------------------------------------------------------------- //
 	
 	public boolean disponeSaldo(double monto, long nroCuenta){
 		if ( this.listaCajasDeAhorro.containsKey(nroCuenta) || this.listaCuentasCorriente.containsKey(nroCuenta) ){
@@ -357,15 +365,6 @@ public class Banco {
 		this.listaResumenes = listaResumenes;
 	}
 
-	public void deposito ( double monto, Cuenta cuenta){
-		if ( this.listaCajasDeAhorro.values().contains(cuenta) || this.listaCuentasCorriente.values().contains(cuenta) ){
-		cuenta.depositar(monto);
-		}
-		else
-			throw new NoExisteLaCuentaExcepcion();
-	}
-	
-	
 	
 	// --------------------------- ALTA Y BAJA SEGUROS --------------------------------------------------
 	
