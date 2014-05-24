@@ -48,7 +48,7 @@ public class Banco {
 	
 	
 	public Cliente verCliente ( long DNI ){
-		for (Usuario usuario : this.listaClientes.keySet()) {
+		for (Usuario usuario : this.listaClientes.keySet() ) {
 			if ( usuario.getDni() == DNI ){
 				return this.listaClientes.get(usuario);
 			}
@@ -136,10 +136,11 @@ public class Banco {
 	
 	// EL CLIENTE ES NUEVO
 	public void altaCuentaCorriente ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento, double giroEnDescubierto){
-		if ( this.verCliente(dni) == null ){
+		if ( verCliente(dni) == null ){
 			Usuario usuario = new Usuario(dni, apellido, domicilio, nombre, telefono, fechaNacimiento);
 			Cliente cliente = new Cliente(this.listaClientes.size()+1L);
 			this.listaClientes.put(usuario, cliente);
+			this.listaUsuarios.put(dni, usuario);
 		}
 		altaCuentaCorriente(dni,giroEnDescubierto);
 	}
@@ -160,10 +161,11 @@ public class Banco {
 	
 	// EL CLIENTE ES NUEVO
 	public void altaCuentaCredito(long dni, String apellido, String marca, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento, double limiteCompra){
-		if ( this.verCliente(dni) == null ){
+		if ( verCliente(dni) == null ){
 			Usuario usuario = new Usuario(dni, apellido, domicilio, nombre, telefono, fechaNacimiento);
 			Cliente cliente = new Cliente(this.listaClientes.size()+1L);
 			this.listaClientes.put(usuario, cliente);
+			this.listaUsuarios.put(dni, usuario);
 		}
 		altaCuentaCredito(dni, marca, limiteCompra);
 	}

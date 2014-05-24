@@ -7,7 +7,7 @@ import org.joda.time.LocalDate;
 public class Principal {
 
 	
-	// ver error pin car
+	// ver error pin car ---> FUNCIONA
 	public static void main(String[] args) throws IOException {
 		
 		Banco bancoFrances = Banco.recuperarMiBanco();
@@ -64,9 +64,9 @@ public class Principal {
 			
 			// ALTAS
 				bancoFrances.altaCuentaCredito(3L, "Lopez", "Mastercard", "LN Alem", "Carlos", "2342-2342", new LocalDate(),  30000.00);
-				Cliente car = bancoFrances.verCliente(3L);	
-				car.setClavePin(3);
+				Cliente car = bancoFrances.verCliente(3L);
 				
+				car.setClavePin(300);
 		
 		bancoFrances.cierreDeTarjeta();
 		System.out.println(Banco.recuperarMiBanco().getListaClientes().size());
@@ -93,12 +93,12 @@ public class Principal {
 		System.out.println("cuentas credito: "+car.getCuentasCredito());
 		System.out.println("tarjeta debito: " +car.getTajetaDeDebito());
 		System.out.println("tarjeta credito: "+car.getTarjetasCredito());
-	
+
 		
 		System.out.println(Banco.recuperarMiBanco().getListaClientes());
 		InicioJFrame inicio = new InicioJFrame();
 		inicio.setVisible(true);
-	
+		
 	}
 
 }

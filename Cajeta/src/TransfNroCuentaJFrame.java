@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-// mismo banco --->> Validar!
+// mismo banco --->> Validar!  checked!
 
 public class TransfNroCuentaJFrame extends JFrame {
 
@@ -82,12 +82,11 @@ public class TransfNroCuentaJFrame extends JFrame {
 		confirmarBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( destino.getText()!= null && isNumeric( destino.getText() ) ) {
-					if( Banco.recuperarMiBanco().getListaCuentasCorriente().containsKey(Long.valueOf(destino.getText() ) ) ) {
-		
-						Banco.recuperarMiBanco().transferencia(getMonto(), getCuenta(), Banco.recuperarMiBanco().getListaCuentasCorriente().get(Long.valueOf(destino.getText() ) ));
+					if( Banco.recuperarMiBanco().getListaCuentasCorriente().containsKey(getCuenta().getCBU() ) )  {
+						Banco.recuperarMiBanco().transferencia(getMonto(), (CuentaCorriente)getCuenta(), Banco.recuperarMiBanco().getListaCuentasCorriente().get(Long.valueOf(destino.getText() ) ));
 					}
-					if( Banco.recuperarMiBanco().getListaCajasDeAhorro().containsKey(Long.valueOf(destino.getText() ) ) ) {
-						Banco.recuperarMiBanco().transferencia(getMonto(), getCuenta(), Banco.recuperarMiBanco().getListaCajasDeAhorro().get(Long.valueOf(destino.getText() ) ));
+					if( Banco.recuperarMiBanco().getListaCajasDeAhorro().containsKey(getCuenta().getCBU() ) )  {
+						Banco.recuperarMiBanco().transferencia(getMonto(), (CajaDeAhorro)getCuenta(), Banco.recuperarMiBanco().getListaCajasDeAhorro().get(Long.valueOf(destino.getText() ) ));
 					}
 					
 				}
