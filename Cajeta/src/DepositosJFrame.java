@@ -1,4 +1,4 @@
-// VALIDAR CANT DINERO INGRESADO > 0
+// VALIDAR CANT DINERO INGRESADO > 0 --> CHECKED!
 // HACER OTROS FRAMES
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -14,7 +14,9 @@ import javax.swing.JLabel;
 
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.JTextField;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -25,11 +27,20 @@ public class DepositosJFrame extends JFrame {
 	private long dni;
 	private OperacionJFrame padre;
 	private JTextField monto;
+	private Cuenta cuentaSelec;
+
+	public Cuenta getCuentaSelec() {
+		return cuentaSelec;
+	}
+
+	public void setCuentaSelec(Cuenta cuentaSelec) {
+		this.cuentaSelec = cuentaSelec;
+	}
 
 	/**
 	 * Create the frame.
 	 */
-	public DepositosJFrame(long dni, OperacionJFrame consultas) {
+	public DepositosJFrame(final long dni, OperacionJFrame consultas) {
 		this.dni = dni;
 		this.padre = consultas;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,15 +64,15 @@ public class DepositosJFrame extends JFrame {
 
 		int i=0;
 		int cantCuentas = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().size();
-		final String[] nombreCuentas = new String[cantCuentas];
+		final Cuenta[] nombreCuentas = new Cuenta[cantCuentas];
 		
 		for (Long nroCuenta : Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().keySet()) {
-			nombreCuentas[i] = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuenta).toString();
+			nombreCuentas[i] = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuenta);
 			i++;
 		}
 		
 		
-		JComboBox cuentas = new JComboBox(nombreCuentas);
+		final JComboBox cuentas = new JComboBox(nombreCuentas);
 		cuentas.setBounds(6, 117, 240, 50);
 		contentPane.add(cuentas);
 		
@@ -92,10 +103,27 @@ public class DepositosJFrame extends JFrame {
 		home.setBounds(6, 228, 48, 44);
 		contentPane.add(home);
 		
+		monto = new JTextField();
+		monto.setBounds(26, 188, 203, 28);
+		contentPane.add(monto);
+		monto.setColumns(10);
+		
+		final JLabel lblMontoNoAdecuado = new JLabel("Monto no adecuado");
+		lblMontoNoAdecuado.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblMontoNoAdecuado.setForeground(Color.RED);
+		lblMontoNoAdecuado.setEnabled(false);
+		lblMontoNoAdecuado.setBounds(64, 228, 117, 14);
+		contentPane.add(lblMontoNoAdecuado);
+		
 		JButton btnNewButton = new JButton("Efectivo");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoEfectivo();
+				if( isNumeric(monto.getText() ) && Double.parseDouble(monto.getText()) > 0 && monto.getText() != null ){
+					setCuentaSelec( Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get( (nombreCuentas[cuentas.getSelectedIndex()]).getNumeroCuenta() ));
+					eventoEfectivo(Double.parseDouble(monto.getText()));
+				}
+				else
+					lblMontoNoAdecuado.setVisible(true);					
 			}
 		});
 		btnNewButton.setBounds(284, 128, 117, 29);
@@ -111,11 +139,7 @@ public class DepositosJFrame extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(16, 162, 213, 22);
 		contentPane.add(lblNewLabel);
-		
-		monto = new JTextField();
-		monto.setBounds(26, 188, 203, 28);
-		contentPane.add(monto);
-		monto.setColumns(10);
+			
 	}
 
 	public void clickAtras(){
@@ -129,9 +153,21 @@ public class DepositosJFrame extends JFrame {
 		
 	}
 	
-	public void eventoEfectivo(){
+	public void eventoEfectivo(Double monto){
 		OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(dni, this);
+		System.out.println(Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get( getCuentaSelec().getNumeroCuenta() ).getSaldoActual() );
+		Banco.recuperarMiBanco().deposito(getCuentaSelec(), monto);
+		System.out.println(Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get( getCuentaSelec().getNumeroCuenta() ).getSaldoActual() );
 		op.setVisible(true);
 		this.setVisible(false);
+	}
+
+	private static boolean isNumeric(String cadena){
+		try {
+			Double.parseDouble(cadena);
+			return true;
+		} catch (NumberFormatException nfe){
+			return false;
+		}
 	}
 }
