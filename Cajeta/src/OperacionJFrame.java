@@ -29,12 +29,13 @@ public class OperacionJFrame extends JFrame {
 	private JPanel contentPane;
 	private final long dni;
 	private InicioJFrame padre;
+	private static OperacionJFrame operacion = null;
 
 
 	/**
 	 * Create the frame.
 	 */
-	public OperacionJFrame(long dni, InicioJFrame inicio) {
+	private OperacionJFrame(long dni, InicioJFrame inicio) {
 		this.padre = inicio;
 		this.dni = dni;
 		setBackground(Color.WHITE);
@@ -155,7 +156,7 @@ public class OperacionJFrame extends JFrame {
 	}
 	
 	public void transferencias(){
-		TransferenciasJFrame transferencias = new TransferenciasJFrame(dni);
+		TransferenciasJFrame transferencias = new TransferenciasJFrame(dni, this);
 		transferencias.setVisible(true);
 		this.setVisible(false);
 	}
@@ -172,5 +173,13 @@ public class OperacionJFrame extends JFrame {
 	public void cerrarSesion(){
 		padre.setVisible(true);
 		this.dispose();
+	}
+	
+	public static OperacionJFrame recuperarOperacion(long dni, InicioJFrame inicio) {
+		  if( operacion == null) {
+			  operacion = new OperacionJFrame(dni, inicio);
+		  }
+		  operacion.setVisible(true);
+		  return operacion;
 	}
 }

@@ -178,7 +178,8 @@ public class AutenticacionJFrame extends JFrame {
 		if ( Banco.recuperarMiBanco().verCliente(dniIng) != null && existeDni && isNumeric(pin.getText())){
 			int pinIng = Integer.valueOf(pin.getText());
 			if ( Banco.recuperarMiBanco().verCliente(dniIng).getClavePin() == pinIng){
-				OperacionJFrame operacion = new OperacionJFrame(dniIng, this.padre);
+				OperacionJFrame operacion = OperacionJFrame.recuperarOperacion(dniIng, this.padre);
+				//OperacionJFrame operacion = new OperacionJFrame(dniIng, this.padre);
 				operacion.setVisible(true);
 				this.dispose();
 			}

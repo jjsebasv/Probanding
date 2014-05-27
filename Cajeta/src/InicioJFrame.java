@@ -1,4 +1,4 @@
-
+// AYUDA CON ESTE
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.SystemColor;
@@ -17,12 +17,12 @@ import javax.swing.border.EmptyBorder;
 public class InicioJFrame extends JFrame {
 
 	private JPanel contentPane;
-
+	private static InicioJFrame Inicio = null;
 
 	/**
 	 * Create the frame.
 	 */
-	public InicioJFrame() {
+	private InicioJFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -67,7 +67,13 @@ public class InicioJFrame extends JFrame {
 	public void eventoClickIngresar(){
 		AutenticacionJFrame principal = new AutenticacionJFrame(this);
 		principal.setVisible(true);
-		this.hide();
+		this.setVisible(false);
 	}
 
+	public static InicioJFrame recuperarInicio() {
+		  if( Inicio == null) {
+			  Inicio = new InicioJFrame();
+		  }
+		  return Inicio;
+	}
 }
