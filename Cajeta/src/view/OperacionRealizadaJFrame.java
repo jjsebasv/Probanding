@@ -74,7 +74,7 @@ public class OperacionRealizadaJFrame extends JFrame {
 	
 	public void clickAtras(){
 		InicioJFrame inicio = InicioJFrame.recuperarInicio();
-		OperacionJFrame operacion = OperacionJFrame.recuperarOperacion(dni, inicio);
+		OperacionJFrame operacion = OperacionJFrame.recuperarOperacion();
 		operacion.setVisible(true);
 		this.dispose();
 	}
