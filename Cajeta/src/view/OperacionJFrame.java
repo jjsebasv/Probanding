@@ -28,7 +28,7 @@ import java.awt.SystemColor;
 public class OperacionJFrame extends JFrame {
 
 	private JPanel contentPane;
-	private final long dni;
+	private long dni;
 	private InicioJFrame padre;
 	private static OperacionJFrame operacion = null;
 
@@ -36,9 +36,7 @@ public class OperacionJFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	private OperacionJFrame(long dni, InicioJFrame inicio) {
-		this.padre = inicio;
-		this.dni = dni;
+	private OperacionJFrame() {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -144,6 +142,14 @@ public class OperacionJFrame extends JFrame {
 		contentPane.add(btnClaves);
 	}
 	
+	public InicioJFrame getPadre() {
+		return padre;
+	}
+
+	public void setPadre(InicioJFrame padre) {
+		this.padre = padre;
+	}
+
 	public void depositos(){
 		DepositosJFrame depositos = new DepositosJFrame(dni,this);
 		depositos.setVisible(true);
@@ -176,9 +182,17 @@ public class OperacionJFrame extends JFrame {
 		this.dispose();
 	}
 	
-	public static OperacionJFrame recuperarOperacion(long dni, InicioJFrame inicio) {
+	public long getDni() {
+		return dni;
+	}
+	
+	public void setDni( long dni){
+		this.dni = dni;
+	}
+
+	public static OperacionJFrame recuperarOperacion() {
 		  if( operacion == null) {
-			  operacion = new OperacionJFrame(dni, inicio);
+			  operacion = new OperacionJFrame();
 		  }
 		  operacion.setVisible(true);
 		  return operacion;

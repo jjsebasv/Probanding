@@ -1,5 +1,7 @@
 package banco;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.joda.time.LocalDate;
@@ -8,16 +10,14 @@ public class CuentaCorriente extends Cuenta {
 
 	private final double IMP_DEBITOS_Y_CREDITOS  = 0.006;
 	
-	private Set<Cheque> chequesEmitidos;
-	private Set<Cheque> chequesRechazados;
+	private Map<Long,Cheque> chequesEmitidos;
 	private double giroEnDescubierto;
 	
 
 
 	public CuentaCorriente(double giroEnDescubierto) {
 		super();
-		chequesEmitidos = new HashSet<Cheque>();
-		chequesRechazados = new HashSet<Cheque>();
+		chequesEmitidos = new HashMap<Long,Cheque>();
 		this.giroEnDescubierto = giroEnDescubierto;
 	} 
 
@@ -45,7 +45,7 @@ public class CuentaCorriente extends Cuenta {
 	
 	public void emitirCheque(Cliente destinatario, double monto, LocalDate fechaCobro){
 		Cheque cheque = new Cheque(destinatario, monto, fechaCobro, this);
-		this.chequesEmitidos.add(cheque);
+		this.chequesEmitidos.put(cheque.getNumeroCheque(), cheque);
 	}
 	
 	// --------------------------- DEPOSITAR, EXTRAER, TRANSFERIR  -----------------------------------
@@ -69,7 +69,7 @@ public class CuentaCorriente extends Cuenta {
 	}
 
 	public void depositar(Cheque cheque) {
-		
+		Banco.recuperarMiBanco().deposito(cheque,this);
 		this.cobrarImpuesto(cheque.getMonto());
 		Movimiento mov = new Movimiento("DEPOSITO CHEQUE", cheque.getMonto(), null);
 		this.movimientos.push(mov);
@@ -94,25 +94,20 @@ public class CuentaCorriente extends Cuenta {
 	// --------------------------- GETTERS Y SETTERS  -----------------------------------
 
 
-	public Set<Cheque> getChequesEmitidos() {
-		return chequesEmitidos;
-	}
 
-	public void setChequesEmitidos(Set<Cheque> chequesEmitidos) {
-		this.chequesEmitidos = chequesEmitidos;
-	}
-
-	public Set<Cheque> getChequesRechazados() {
-		return chequesRechazados;
-	}
-
-	public void setChequesRechazados(Set<Cheque> chequesRechazados) {
-		this.chequesRechazados = chequesRechazados;
-	}
 
 
 	public double getGiroEnDescubierto() {
 		return giroEnDescubierto;
+	}
+
+	public Map<Long, Cheque> getChequesEmitidos() {
+		return chequesEmitidos;
+	}
+
+
+	public void setChequesEmitidos(Map<Long, Cheque> chequesEmitidos) {
+		this.chequesEmitidos = chequesEmitidos;
 	}
 
 	public void setGiroEnDescubierto(double giroEnDescubierto) {
@@ -126,19 +121,19 @@ public class CuentaCorriente extends Cuenta {
 		}
 
 
+
+
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		long temp;
 		temp = Double.doubleToLongBits(IMP_DEBITOS_Y_CREDITOS);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result
 				+ ((chequesEmitidos == null) ? 0 : chequesEmitidos.hashCode());
-		result = prime
-				* result
-				+ ((chequesRechazados == null) ? 0 : chequesRechazados
-						.hashCode());
 		temp = Double.doubleToLongBits(giroEnDescubierto);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
@@ -149,7 +144,7 @@ public class CuentaCorriente extends Cuenta {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -161,11 +156,6 @@ public class CuentaCorriente extends Cuenta {
 			if (other.chequesEmitidos != null)
 				return false;
 		} else if (!chequesEmitidos.equals(other.chequesEmitidos))
-			return false;
-		if (chequesRechazados == null) {
-			if (other.chequesRechazados != null)
-				return false;
-		} else if (!chequesRechazados.equals(other.chequesRechazados))
 			return false;
 		if (Double.doubleToLongBits(giroEnDescubierto) != Double
 				.doubleToLongBits(other.giroEnDescubierto))

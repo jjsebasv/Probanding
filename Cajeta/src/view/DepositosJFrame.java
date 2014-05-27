@@ -77,6 +77,11 @@ public class DepositosJFrame extends JFrame {
 		
 		
 		final JComboBox cuentas = new JComboBox(nombreCuentas);
+		cuentas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eventoClickCombo(cuentas.getSelectedItem().toString());
+			}
+		});
 		cuentas.setBounds(6, 117, 240, 50);
 		contentPane.add(cuentas);
 		
@@ -181,8 +186,29 @@ public class DepositosJFrame extends JFrame {
 		}
 	}
 	
+	public void eventoClickCombo( String nroCuenta ){
+		Long nroCuentaSeleccionada = 0L;
+		
+		for (Cuenta cuenta : Banco.recuperarMiBanco().getListaCajasDeAhorro().values()) {
+			if ( cuenta.toString().equals(nroCuenta) ){
+				nroCuentaSeleccionada = cuenta.getNumeroCuenta();
+			}
+		}
+		
+		if ( nroCuentaSeleccionada == 0 ){
+			for (Cuenta cuenta : Banco.recuperarMiBanco().getListaCuentasCorriente().values()) {
+				if ( cuenta.toString().equals(nroCuenta) ){
+					nroCuentaSeleccionada = cuenta.getNumeroCuenta();
+				}
+			}
+		}
+		System.out.println("NRO DE CUENTA SELECCIONADA (ENDPJFRAME)" + nroCuentaSeleccionada);
+		cuentaSelec = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuentaSeleccionada);
+	}
+	
 	public void eventoCheque(){
-		DepositoChequeJFrame depositos = new DepositoChequeJFrame(dni, Double.valueOf(monto.getText()), getCuentaSelec(), this);
+		System.out.println("CUENTA SELECCIONADA: ( EN DEPOJFRAME) "+ getCuentaSelec());
+		DepositoChequeJFrame depositos = new DepositoChequeJFrame(dni, Double.valueOf(monto.getText()), cuentaSelec, this);
 		depositos.setVisible(true);
 		this.setVisible(false);
 		

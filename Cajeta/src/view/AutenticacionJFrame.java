@@ -1,3 +1,4 @@
+
 package view;
 // ARREGLAR:
 // CUANDO SE ENTRA CON LOS USUARIOS NAN Y NOWI FUNCIONA. PRIMERO LOS AGREGE Y DSP LES AGREGUE PRODUCTOS.
@@ -173,23 +174,21 @@ public class AutenticacionJFrame extends JFrame {
 	public void eventoClickOperaciones(){
 		Long dniIng = Long.valueOf(dni.getText());
 		boolean existeDni = Banco.recuperarMiBanco().getListaUsuarios().containsKey(dniIng);
-				
-		System.out.println(dniIng);
-		System.out.println(existeDni);
+	
 		
 		
 		if ( Banco.recuperarMiBanco().verCliente(dniIng) != null && existeDni && isNumeric(pin.getText())){
 			int pinIng = Integer.valueOf(pin.getText());
 			if ( Banco.recuperarMiBanco().verCliente(dniIng).getClavePin() == pinIng){
-				OperacionJFrame operacion = OperacionJFrame.recuperarOperacion(dniIng, this.padre);
-				//OperacionJFrame operacion = new OperacionJFrame(dniIng, this.padre);
+				System.out.println("DNI INGRESADO  "+dniIng);
+				System.out.println("PIN INGRESADO  "+pinIng);
+				OperacionJFrame operacion = OperacionJFrame.recuperarOperacion();
+				operacion.recuperarOperacion().setDni(dniIng);
+				operacion.recuperarOperacion().setPadre(this.padre);
 				operacion.setVisible(true);
 				this.dispose();
 			}
-			//	else if ( dni.getText().equals("admin") && pin.getText().equals("admin")){
-			//	ManagerJFrame manager = new ManagerJFrame();
-			//	manager.setVisible(true);
-			//}
+
 			else{
 				datosErroneos.setVisible(true);
 			}

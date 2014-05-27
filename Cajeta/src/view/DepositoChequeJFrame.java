@@ -17,6 +17,10 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
+import exception.NoPoseeSaldoExcepcion;
+import exception.NoSePuedeDepositarChequeExcepcion;
+import banco.Banco;
+import banco.Cheque;
 import banco.Cuenta;
 
 import java.awt.event.ActionListener;
@@ -29,15 +33,17 @@ public class DepositoChequeJFrame extends JFrame {
 	private long dni;
 	private double monto;
 	private Cuenta cuenta;
-	private JTextField textField;
+	private JTextField nroChequeString;
 	private DepositosJFrame padre;
 	private JLabel lblNewLabel;
+	private JTextField nroCuentatext;
 	
 
 	public DepositoChequeJFrame(long dni, double monto, Cuenta cuenta, DepositosJFrame padre) {
 		this.dni = dni;
 		this.monto = monto;
 		this.padre = padre;
+		this.cuenta = cuenta;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -71,7 +77,7 @@ public class DepositoChequeJFrame extends JFrame {
 		lblIngreseNroDe.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblIngreseNroDe.setForeground(new Color(30, 144, 255));
 		lblIngreseNroDe.setFont(lblIngreseNroDe.getFont().deriveFont(lblIngreseNroDe.getFont().getStyle() | Font.BOLD | Font.ITALIC));
-		lblIngreseNroDe.setBounds(125, 95, 214, 34);
+		lblIngreseNroDe.setBounds(16, 94, 170, 34);
 		contentPane.add(lblIngreseNroDe);
 		
 		JButton button_1 = new JButton("");
@@ -85,10 +91,10 @@ public class DepositoChequeJFrame extends JFrame {
 		button_1.setBounds(6, 228, 48, 44);
 		contentPane.add(button_1);
 		
-		textField = new JTextField();
-		textField.setBounds(125, 134, 214, 28);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		nroChequeString = new JTextField();
+		nroChequeString.setBounds(16, 134, 170, 28);
+		contentPane.add(nroChequeString);
+		nroChequeString.setColumns(10);
 		
 		lblNewLabel = new JLabel("No se puede depositar Cheque");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -99,21 +105,44 @@ public class DepositoChequeJFrame extends JFrame {
 		final JButton confirmarBoton = new JButton("CONFIRMAR");
 		confirmarBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				confirmar(confirmarBoton.getText());
+				confirmar();
 			}
 		});
 		confirmarBoton.setBounds(175, 174, 117, 29);
 		contentPane.add(confirmarBoton);
+		
+		JLabel lblIngreseNroDe_1 = new JLabel("Ingrese Nro de Cta. Emisora:");
+		lblIngreseNroDe_1.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblIngreseNroDe_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIngreseNroDe_1.setForeground(new Color(30, 144, 255));
+		lblIngreseNroDe_1.setFont(lblIngreseNroDe_1.getFont().deriveFont(lblIngreseNroDe_1.getFont().getStyle() | Font.BOLD | Font.ITALIC));
+		lblIngreseNroDe_1.setBounds(211, 94, 200, 34);
+		contentPane.add(lblIngreseNroDe_1);
+		
+		nroCuentatext = new JTextField();
+		nroCuentatext.setColumns(10);
+		nroCuentatext.setBounds(211, 134, 200, 28);
+		contentPane.add(nroCuentatext);
 		lblNewLabel.setVisible(false);
 	}
 	
-	public void confirmar(String nroCheque){
+	public void confirmar(){
 		try {
-			long nroC = Long.valueOf(nroCheque);
-			cuenta.depositar(nroC);
-		} catch (Exception e) {
+			long nroC = Long.valueOf(nroChequeString.getText());
+			Cheque cheque = Banco.recuperarMiBanco().getListaCuentasCorriente().get(Long.valueOf(nroCuentatext.getText())).getChequesEmitidos().get(nroC);
+			System.out.println("SALDO DESTINO ANTES DEPOSITO"+cuenta.getSaldoActual());
+			cuenta.depositar(cheque);
+			cheque.getEmisora().cobrarCheque(cheque);
+			System.out.println("SALDO DESTINO DSP DEPOSITO "+cuenta.getSaldoActual());
+			OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(dni, this);
+			op.setVisible(true);
+			this.setVisible(false);
+		} catch (NoSePuedeDepositarChequeExcepcion e) {
 			lblNewLabel.setVisible(true);
-		}
+		} catch ( NoPoseeSaldoExcepcion e){
+			lblNewLabel.setText("No posee saldo");
+			lblNewLabel.setVisible(true);
+		} 
 	}
 	
 	public void clickAtras(){

@@ -27,6 +27,7 @@ public class Principal {
 
 			// DEPOSITOS
 			nan.getCuentasMonetarias().get(1L).depositar(1000.00);
+			System.out.println("saldo depo 1000pe:"+nan.getCuentasMonetarias().get(1L).getSaldoActual());
 			nan.getCuentasMonetarias().get(2L).depositar(5000);
 		
 		// CLIENTE 2: NOELIA
@@ -62,6 +63,7 @@ public class Principal {
 				nowi.getCuentasMonetarias().get(3L).extraccion(50);
 				nowi.getCuentasMonetarias().get(3L).transferir(2500, 2L);
 				nowi.getCuentasMonetarias().get(3L).transferir(30, nan.getCuentasMonetarias().get(1L));
+				nowi.getCuentasMonetarias().get(5L).depositar(1000);
 				
 		// CLIENTE 3: CARLOS
 			
@@ -72,8 +74,6 @@ public class Principal {
 				car.setClavePin(300);
 		
 		bancoFrances.cierreDeTarjeta();
-		System.out.println(Banco.recuperarMiBanco().getListaClientes().size());
-				System.out.println(car);
 
 		//	---------------------------------------------------------------------------------------------------- //
 		
@@ -96,9 +96,15 @@ public class Principal {
 		System.out.println("cuentas credito: "+car.getCuentasCredito());
 		System.out.println("tarjeta debito: " +car.getTajetaDeDebito());
 		System.out.println("tarjeta credito: "+car.getTarjetasCredito());
+		System.out.println();
+		System.out.println();
 
+		CuentaCorriente cuenta = (CuentaCorriente) nowi.getCuentasMonetarias().get(5L);
+		cuenta.emitirCheque(nan, 100, new LocalDate());
 		
-		System.out.println(Banco.recuperarMiBanco().getListaClientes());
+		System.out.println("SALDO CUENTA CORRIENTE EMISORA:"+cuenta.getSaldoActual());
+		System.out.println("CHEQUE EMITIDO: "+cuenta.getChequesEmitidos());
+		
 		InicioJFrame inicio = InicioJFrame.recuperarInicio();
 		inicio.setVisible(true);
 		
