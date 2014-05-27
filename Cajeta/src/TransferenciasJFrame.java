@@ -28,8 +28,29 @@ public class TransferenciasJFrame extends JFrame {
 	private final long dni;
 	private JLabel lblMontoIncorrecto;
 	private String msjDefault = "No registra mas Cuentas.";
-	static Double montoS;
-	static Long seleccionado;
+	private Double montoS;
+	private Long seleccionado;
+	
+	// ------------- Getters & Setters -------------->
+	
+	public Double getMontoS() {
+		return montoS;
+	}
+
+	public void setMontoS(Double montoS) {
+		this.montoS = montoS;
+	}
+
+	public Long getSeleccionado() {
+		return seleccionado;
+	}
+
+	public void setSeleccionado(Long seleccionado) {
+		this.seleccionado = seleccionado;
+	}
+
+	// <-------------
+	
 	JLabel lblUdNoDispone;
 	
 
@@ -63,7 +84,7 @@ public class TransferenciasJFrame extends JFrame {
 		
 		for (Cuenta c : Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().values() ) {
 			Long aux = c.getNumeroCuenta();
-			comboBox.addItem(aux.toString());
+			comboBox.addItem(aux);
 		}
 			comboBox.addItem(msjDefault);
 			
@@ -96,38 +117,37 @@ public class TransferenciasJFrame extends JFrame {
 		montoField.setColumns(10);
 		
 		
-		// Valido que el monto ingresado sea un numero
-		
-		String montoSelec = montoField.getText();
-		if(isNumeric(montoSelec)){
-			this.montoS = Double.parseDouble(montoSelec);
-		}
-		else {
-			lblMontoIncorrecto.setVisible(true);
-		}
-		
-		
+				
+		final String montoSelec = montoField.getText();
+		setMontoS( Double.parseDouble(montoSelec) );
 		
 		JButton otroClienteBoton = new JButton("Otro Cliente BBVA");
 		otroClienteBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(comboBox.getSelectedItem().toString() != msjDefault && TransferenciasJFrame.montoS != null){
-					TransferenciasJFrame.seleccionado = Long.parseLong(comboBox.getSelectedItem().toString());
+				if(comboBox.getSelectedItem().toString() != msjDefault && getMontoS() != null && isNumeric(montoSelec)){
+					setMontoS( Double.parseDouble(montoSelec) );
+					setSeleccionado( Long.parseLong(comboBox.getSelectedItem().toString() ) ) ;
 					eventoClickMismoBanco( montoS ,seleccionado);
+				}
+				else{
+					lblMontoIncorrecto.setVisible(true);
 				}
 			}
 		});
 		otroClienteBoton.setBounds(294, 130, 139, 29);
 		contentPane.add(otroClienteBoton);
 		
-		//@jsuarezb te haces cargo!
+	
 		
 		JButton otroBancoBoton = new JButton("Otro Banco");
 		otroBancoBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(comboBox.getSelectedItem().toString() != msjDefault && TransferenciasJFrame.montoS != null){
-					TransferenciasJFrame.seleccionado = Long.parseLong(comboBox.getSelectedItem().toString());
+				if(comboBox.getSelectedItem().toString() != msjDefault && getMontoS() != null && isNumeric(montoSelec)){
+					setSeleccionado( Long.parseLong(comboBox.getSelectedItem().toString() ) );
 					eventoClickOtroBanco( montoS ,seleccionado);
+				}
+				else{
+					lblMontoIncorrecto.setVisible(true);
 				}
 			}
 		});
