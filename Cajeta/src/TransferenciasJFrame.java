@@ -25,19 +25,21 @@ public class TransferenciasJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField montoField;
-	private final long dni;
 	private JLabel lblMontoIncorrecto;
 	private String msjDefault = "No registra mas Cuentas.";
 	static Double montoS;
 	static Long seleccionado;
 	JLabel lblUdNoDispone;
+	private OperacionJFrame padre;
+	private long dni;
 	
 
 	/**
 	 * Create the frame.
 	 */
-	public TransferenciasJFrame( long dni) {
+	public TransferenciasJFrame( long dni, OperacionJFrame padre) {
 		this.dni = dni;
+		this.padre = padre;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -62,8 +64,7 @@ public class TransferenciasJFrame extends JFrame {
 		contentPane.add(comboBox);
 		
 		for (Cuenta c : Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().values() ) {
-			Long aux = c.getNumeroCuenta();
-			comboBox.addItem(aux.toString());
+			comboBox.addItem(c);
 		}
 			comboBox.addItem(msjDefault);
 			
@@ -73,6 +74,7 @@ public class TransferenciasJFrame extends JFrame {
 		lblMontoIncorrecto.setForeground(Color.RED);
 		lblMontoIncorrecto.setBounds(125, 215, 134, 14);
 		contentPane.add(lblMontoIncorrecto);
+		lblMontoIncorrecto.setVisible(false);
 			
 		JLabel cuentas = new JLabel("");
 		cuentas.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
@@ -149,6 +151,18 @@ public class TransferenciasJFrame extends JFrame {
 		lblUdNoDispone.setEnabled(false);
 		lblUdNoDispone.setBounds(125, 237, 173, 14);
 		contentPane.add(lblUdNoDispone);
+		lblUdNoDispone.setVisible(false);
+		
+		JButton button_1 = new JButton("");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clickAtras();
+			}
+		});
+		button_1.setIcon(new ImageIcon("/Users/user/git/TP POO/Probanding/Cajeta/imagenes/home.png"));
+		button_1.setHorizontalAlignment(SwingConstants.LEFT);
+		button_1.setBounds(6, 227, 48, 44);
+		contentPane.add(button_1);
 		
 		
 	}
@@ -187,5 +201,17 @@ public class TransferenciasJFrame extends JFrame {
 			Cuenta aux = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(miCuenta);
 			TransfNroCuentaJFrame trnsMismoBc = new TransfNroCuentaJFrame(aux, monto);
 		}
+	}
+	
+	
+	public void clickAtras(){
+		this.padre.clickAtras();
+		this.dispose();
+	}
+
+	public void cerrarSesion(){
+		this.padre.cerrarSesion();
+		this.dispose();
+		
 	}
 }

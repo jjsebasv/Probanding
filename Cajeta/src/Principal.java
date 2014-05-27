@@ -96,7 +96,7 @@ public class Principal {
 
 		
 		System.out.println(Banco.recuperarMiBanco().getListaClientes());
-		InicioJFrame inicio = new InicioJFrame();
+		InicioJFrame inicio = InicioJFrame.recuperarInicio();
 		inicio.setVisible(true);
 		
 	}
