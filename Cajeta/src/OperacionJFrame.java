@@ -81,7 +81,7 @@ public class OperacionJFrame extends JFrame {
 		JButton btnTransferencias = new JButton("TRANSFERENCIAS");
 		btnTransferencias.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Transferencias();
+				transferencias();
 			}
 		});
 		btnTransferencias.setHorizontalAlignment(SwingConstants.LEFT);
@@ -115,8 +115,7 @@ public class OperacionJFrame extends JFrame {
 		JButton btnOtrasOperaciones = new JButton("OTRAS OPERACIONES");
 		btnOtrasOperaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				OtrasOperacionesJFrame otrasOp = new OtrasOperacionesJFrame();
-				otrasOp.setVisible(true);
+				otrasOperaciones();
 			}
 		});
 		btnOtrasOperaciones.setHorizontalAlignment(SwingConstants.LEFT);
@@ -155,10 +154,15 @@ public class OperacionJFrame extends JFrame {
 		this.setVisible(false);
 	}
 	
-	public void Transferencias(){
+	public void transferencias(){
 		TransferenciasJFrame transferencias = new TransferenciasJFrame(dni);
 		transferencias.setVisible(true);
 		this.setVisible(false);
+	}
+	
+	public void otrasOperaciones(){
+		OtrasOperacionesJFrame otrasOp = new OtrasOperacionesJFrame(dni, this);
+		otrasOp.setVisible(true);
 	}
 	
 	public void clickAtras(){
