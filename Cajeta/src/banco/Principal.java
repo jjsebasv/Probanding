@@ -82,6 +82,7 @@ public class Principal {
 		System.out.println("cuentas credito: "+nan.getCuentasCredito());
 		System.out.println("tarjeta debito: " +nan.getTajetaDeDebito());
 		System.out.println("tarjeta credito: "+nan.getTarjetasCredito());
+		System.out.println("CBU: "+nan.getCBU());
 		System.out.println();
 		
 		System.out.println("DE NOE");

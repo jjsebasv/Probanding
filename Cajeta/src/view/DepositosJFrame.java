@@ -169,7 +169,7 @@ public class DepositosJFrame extends JFrame {
 	}
 	
 	public void eventoEfectivo(Double monto){
-		OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(dni, this);
+		OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(this);
 		System.out.println(Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get( getCuentaSelec().getNumeroCuenta() ).getSaldoActual() );
 		Banco.recuperarMiBanco().deposito(getCuentaSelec(), monto);
 		System.out.println(Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get( getCuentaSelec().getNumeroCuenta() ).getSaldoActual() );

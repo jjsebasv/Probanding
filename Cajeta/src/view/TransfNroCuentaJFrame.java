@@ -26,11 +26,13 @@ public class TransfNroCuentaJFrame extends JFrame {
 	private final double monto;
 	private final Cuenta cuenta;
 	private JTextField destino;
-
+	private JLabel lblNumeroDeCuenta;
+	private TransferenciasJFrame padre;
 	/**
 	 * Create the frame.
 	 */
-	public TransfNroCuentaJFrame(Cuenta miCuenta, double monto) {
+	public TransfNroCuentaJFrame(Cuenta miCuenta, double monto, TransferenciasJFrame padre) {
+		this.padre = padre;
 		this.cuenta = miCuenta;
 		this.monto = monto;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,6 +44,11 @@ public class TransfNroCuentaJFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton button = new JButton("");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				clickAtras();
+			}
+		});
 		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBounds(396, 227, 48, 44);
@@ -82,24 +89,39 @@ public class TransfNroCuentaJFrame extends JFrame {
 		contentPane.add(cuentaLabel);
 		cuentaLabel.setText(miCuenta.toString());
 		
+		lblNumeroDeCuenta = new JLabel("Numero de Cuenta erroneo");
+		lblNumeroDeCuenta.setForeground(Color.RED);
+		lblNumeroDeCuenta.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNumeroDeCuenta.setEnabled(false);
+		lblNumeroDeCuenta.setBounds(193, 217, 193, 14);
+		contentPane.add(lblNumeroDeCuenta);
+		lblNumeroDeCuenta.setVisible(false);
+		
+		
 		JButton confirmarBoton = new JButton("Confirmar");
 		confirmarBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( destino.getText()!= null && isNumeric( destino.getText() ) ) {
-					if( Banco.recuperarMiBanco().getListaCuentasCorriente().containsKey(getCuenta().getCBU() ) )  {
-						Banco.recuperarMiBanco().transferencia(getMonto(), (CuentaCorriente)getCuenta(), Banco.recuperarMiBanco().getListaCuentasCorriente().get(Long.valueOf(destino.getText() ) ));
-					}
-					if( Banco.recuperarMiBanco().getListaCajasDeAhorro().containsKey(getCuenta().getCBU() ) )  {
-						Banco.recuperarMiBanco().transferencia(getMonto(), (CajaDeAhorro)getCuenta(), Banco.recuperarMiBanco().getListaCajasDeAhorro().get(Long.valueOf(destino.getText() ) ));
-					}
-					
+					try {
+						if( Banco.recuperarMiBanco().getListaCuentasCorriente().containsKey(getCuenta().getCBU() ) )  {
+							Banco.recuperarMiBanco().transferencia(getMonto(), (CuentaCorriente)getCuenta(), Banco.recuperarMiBanco().getListaCuentasCorriente().get(Long.valueOf(destino.getText() ) ));
+							done();
+						}
+						if( Banco.recuperarMiBanco().getListaCajasDeAhorro().containsKey(getCuenta().getCBU() ) )  {
+							Banco.recuperarMiBanco().transferencia(getMonto(), (CajaDeAhorro)getCuenta(), Banco.recuperarMiBanco().getListaCajasDeAhorro().get(Long.valueOf(destino.getText() ) ));
+							done();
+						}
+					} catch (Exception NoExisteLaCuentaExcepcion) {
+						lblNumeroDeCuenta.setVisible(true);
+					}					
+				}
+				else{
+					lblNumeroDeCuenta.setVisible(true);
 				}
 			}
 		});
 		confirmarBoton.setBounds(66, 210, 117, 29);
 		contentPane.add(confirmarBoton);
-		
-		
 		
 		
 	}
@@ -120,5 +142,23 @@ public class TransfNroCuentaJFrame extends JFrame {
 			return false;
 		}
 	}
+
+	public void done(){
+		OperacionRealizadaJFrame opRealizada = new OperacionRealizadaJFrame(this);
+		opRealizada.setVisible(true);
+		this.setVisible(false);
+	}
+	
+	public void clickAtras(){
+		this.padre.clickAtras();
+		this.dispose();
+	}
+
+	public void cerrarSesion(){
+		this.padre.cerrarSesion();
+		this.dispose();
+		
+	}
+	
 	
 }

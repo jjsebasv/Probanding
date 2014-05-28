@@ -329,8 +329,13 @@ public class Banco {
 	// ---------------------------------------------------------------------------------------------- //
 	
 	public boolean disponeSaldo(double monto, long nroCuenta){
-		if ( this.listaCajasDeAhorro.containsKey(nroCuenta) || this.listaCuentasCorriente.containsKey(nroCuenta) ){
-			if(this.listaCajasDeAhorro.get(nroCuenta).getSaldoActual() > monto || (this.listaCuentasCorriente.get(nroCuenta).getSaldoActual()+this.listaCuentasCorriente.get(nroCuenta).getGiroEnDescubierto()) > monto )
+		if ( this.listaCajasDeAhorro.containsKey(nroCuenta) ){
+			if(this.listaCajasDeAhorro.get(nroCuenta).getSaldoActual() > monto ) 
+				return true;
+			else
+				return false;
+		}else if (this.listaCuentasCorriente.containsKey(nroCuenta) ){
+			if((this.listaCuentasCorriente.get(nroCuenta).getSaldoActual()+this.listaCuentasCorriente.get(nroCuenta).getGiroEnDescubierto()) > monto )
 				return true;
 			else
 				return false;

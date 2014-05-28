@@ -16,7 +16,6 @@ import javax.swing.border.EmptyBorder;
 
 import banco.Banco;
 import banco.Cuenta;
-import banco.TransfCBUJFrame;
 
 
 public class TransferenciasJFrame extends JFrame {
@@ -124,16 +123,14 @@ public class TransferenciasJFrame extends JFrame {
 		otroClienteBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBox.getSelectedItem().toString() != msjDefault && montoField.getText() != null && isNumeric(montoField.getText())){
-					System.out.println("ENTRO AL true 1");
+					lblMontoIncorrecto.setVisible(false);
+					lblUdNoDispone.setVisible(false);
 					setMontoS( Double.parseDouble(montoField.getText()) );
-					System.out.println("ENTRO AL true 2");
 					setSeleccionado( Long.parseLong(comboBox.getSelectedItem().toString() ) ) ;
-					System.out.println("ENTRO AL true 3");
 					eventoClickMismoBanco( getMontoS() ,getSeleccionado());
 				}
 				else{
 					lblMontoIncorrecto.setVisible(true);
-					System.out.println("ENTRO AL FALSO");
 				}
 			}
 		});
@@ -146,16 +143,14 @@ public class TransferenciasJFrame extends JFrame {
 		otroBancoBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBox.getSelectedItem().toString() != msjDefault && montoField.getText() != null && isNumeric(montoField.getText())){
-					System.out.println("ENTRO AL true 1");
+					lblMontoIncorrecto.setVisible(false);
+					lblUdNoDispone.setVisible(false);
 					setSeleccionado( Long.parseLong(comboBox.getSelectedItem().toString() ) );
-					System.out.println("ENTRO AL true 2");
 					setMontoS(Double.parseDouble(montoField.getText()));
-					System.out.println("ENTRO AL true 3");
 					eventoClickOtroBanco( getMontoS() ,getSeleccionado());
 				}
 				else{
 					lblMontoIncorrecto.setVisible(true);
-					System.out.println("ENTRO AL FALSO");
 				}
 			}
 		});
@@ -211,7 +206,7 @@ public class TransferenciasJFrame extends JFrame {
 		}
 		else{
 			Cuenta aux = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(miCuenta);
-			TransfCBUJFrame trnsOtroBc = new TransfCBUJFrame(aux, monto);
+			TransfCBUJFrame trnsOtroBc = new TransfCBUJFrame(aux, monto,this);
 			trnsOtroBc.setVisible(true);
 			this.setVisible(false);
 		}
@@ -227,7 +222,7 @@ public class TransferenciasJFrame extends JFrame {
 		}
 		else {
 			Cuenta aux = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(miCuenta);
-			TransfNroCuentaJFrame trnsMismoBc = new TransfNroCuentaJFrame(aux, monto);
+			TransfNroCuentaJFrame trnsMismoBc = new TransfNroCuentaJFrame(aux, monto, this);
 			trnsMismoBc.setVisible(true);
 			this.setVisible(false);
 		}
