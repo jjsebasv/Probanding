@@ -1,10 +1,16 @@
 package banco;
+import java.io.Serializable;
+
 import org.joda.time.LocalDate;
 
 
 
-public class Servicio{
+public class Servicio implements Serializable{
 	  
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final String tipo;
 	private final LocalDate fechaVencimiento;
 	private final LocalDate fechaPago;

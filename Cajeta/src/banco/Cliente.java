@@ -1,5 +1,6 @@
 package banco;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,8 +14,12 @@ import exception.NoHayServicios;
 import exception.NoPoseeSaldoExcepcion;
 
 
-public class Cliente {
+public class Cliente implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int claveHomeBanking;
 	private int clavePin;
 	private long CBU;

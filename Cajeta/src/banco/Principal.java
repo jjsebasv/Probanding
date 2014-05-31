@@ -108,6 +108,8 @@ public class Principal {
 		
 		InicioJFrame inicio = InicioJFrame.recuperarInicio();
 		inicio.setVisible(true);
+	
+		bancoFrances.save();
 		
 	}
 

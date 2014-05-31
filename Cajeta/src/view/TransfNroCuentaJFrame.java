@@ -18,7 +18,9 @@ import banco.CajaDeAhorro;
 import banco.Cuenta;
 import banco.CuentaCorriente;
 
+// FUNCIONA
 // mismo banco --->> Validar!  checked!
+
 
 public class TransfNroCuentaJFrame extends JFrame {
 
@@ -101,19 +103,21 @@ public class TransfNroCuentaJFrame extends JFrame {
 		JButton confirmarBoton = new JButton("Confirmar");
 		confirmarBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println( Banco.recuperarMiBanco().getListaCajasDeAhorro().keySet());
+				System.out.println( Banco.recuperarMiBanco().getListaCuentasCorriente().keySet());
 				if( destino.getText()!= null && isNumeric( destino.getText() ) ) {
-					try {
-						if( Banco.recuperarMiBanco().getListaCuentasCorriente().containsKey(getCuenta().getCBU() ) )  {
+					System.out.println("entro al if");
+						if( Banco.recuperarMiBanco().getListaCuentasCorriente().containsKey( Long.parseLong(destino.getText()) ) )  {
 							Banco.recuperarMiBanco().transferencia(getMonto(), (CuentaCorriente)getCuenta(), Banco.recuperarMiBanco().getListaCuentasCorriente().get(Long.valueOf(destino.getText() ) ));
 							done();
 						}
-						if( Banco.recuperarMiBanco().getListaCajasDeAhorro().containsKey(getCuenta().getCBU() ) )  {
+						else if( Banco.recuperarMiBanco().getListaCajasDeAhorro().containsKey(Long.parseLong(destino.getText()) ) )  {
 							Banco.recuperarMiBanco().transferencia(getMonto(), (CajaDeAhorro)getCuenta(), Banco.recuperarMiBanco().getListaCajasDeAhorro().get(Long.valueOf(destino.getText() ) ));
 							done();
 						}
-					} catch (Exception NoExisteLaCuentaExcepcion) {
-						lblNumeroDeCuenta.setVisible(true);
-					}					
+						else {
+							lblNumeroDeCuenta.setVisible(true);
+						}
 				}
 				else{
 					lblNumeroDeCuenta.setVisible(true);
@@ -147,6 +151,7 @@ public class TransfNroCuentaJFrame extends JFrame {
 		OperacionRealizadaJFrame opRealizada = new OperacionRealizadaJFrame(this);
 		opRealizada.setVisible(true);
 		this.setVisible(false);
+		
 	}
 	
 	public void clickAtras(){

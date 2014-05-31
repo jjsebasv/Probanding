@@ -8,6 +8,11 @@ import org.joda.time.LocalDate;
 
 public class CuentaCorriente extends Cuenta {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private final double IMP_DEBITOS_Y_CREDITOS  = 0.006;
 	
 	private Map<Long,Cheque> chequesEmitidos;

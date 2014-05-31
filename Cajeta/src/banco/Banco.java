@@ -1,4 +1,16 @@
 package banco;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
+import java.io.SerializablePermission;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,7 +22,12 @@ import exception.NoExisteClienteExcepcion;
 import exception.NoExisteLaCuentaExcepcion;
 import exception.NoPoseeSaldoExcepcion;
 import exception.NoSePuedeDepositarChequeExcepcion;
-public class Banco {
+public class Banco implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	//prueba
 	private static Banco bancoFrances = null;
 
@@ -459,11 +476,39 @@ public class Banco {
 		return CUOTA_MENSUAL_SEGURO;
 	}   
 	
+	public void save(){
+		
+		FileOutputStream fileOut;
+		try {
+			fileOut = new FileOutputStream("bancoFrances");
+			ObjectOutputStream obj_out = new ObjectOutputStream (fileOut);
+			obj_out.writeObject (Banco.bancoFrances);
+			obj_out.close();
+		} catch ( IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public static Banco recuperarMiBanco() {
-		  if(bancoFrances == null) {
-			  bancoFrances = new Banco();
-		  }
-		  return bancoFrances;
+		
+		//try {
+		//	ObjectInputStream obj_in = new ObjectInputStream( new FileInputStream("bancoFrances") );
+		//	bancoFrances = (Banco)obj_in.readObject();
+			
+		//	System.out.println("Guardando banco");
+			
+	//	} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+	//		e.printStackTrace();
+	//	}
+		
+		if(bancoFrances == null) {
+			
+			bancoFrances = new Banco();
+		}
+		return bancoFrances;
 	}
 	
 	public Map<Long, Usuario> getListaUsuarios() {
@@ -472,6 +517,10 @@ public class Banco {
 
 	public void setListaUsuarios(Map<Long, Usuario> listaUsuarios) {
 		this.listaUsuarios = listaUsuarios;
+	}
+	
+	public void guardar(){
+		bancoFrances = this;
 	}
 	
 }

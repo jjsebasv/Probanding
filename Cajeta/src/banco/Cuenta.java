@@ -3,13 +3,19 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
+
 import org.joda.time.LocalDate;
 
 
-public abstract class Cuenta {
+public abstract class Cuenta implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final long CBU;
 	private final LocalDate fechaAlta;
 	private double saldoActual;

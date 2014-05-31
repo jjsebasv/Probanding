@@ -2,8 +2,12 @@ package banco;
 
 
 
-public class CajaDeAhorro extends Cuenta {
+public class CajaDeAhorro extends Cuenta{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final double IMP_AL_CHEQUE = 0.12;
 	
 	public CajaDeAhorro() {

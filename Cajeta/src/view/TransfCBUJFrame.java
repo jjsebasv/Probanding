@@ -25,7 +25,7 @@ import banco.Cuenta;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
+// FUNCIONA! 
 //Banco distinto -->> no validar
 
 public class TransfCBUJFrame extends JFrame {
@@ -108,29 +108,20 @@ public class TransfCBUJFrame extends JFrame {
 		JButton button_1 = new JButton("Confirmar");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// --- Estoy seguro de que tiene saldo, lo valida el JFrame anterior
 				if( destino.getText()!= null && isNumeric( destino.getText() ) ){
-					try {
 						setMonto(Double.parseDouble(destino.getText().toString()));
-						Banco.recuperarMiBanco().transferencia(getMonto(), getCuenta(), Long.parseLong(destino.getText()));
-						System.out.println("DON**************************************E");
+						Banco.recuperarMiBanco().transferenciaPorCbu(getMonto(), getCuenta(), Long.parseLong(destino.getText()));
 						done();
-					} catch (NoExisteLaCuentaExcepcion e1) {
-						lblCbuNoAdecuado.setVisible(true);
-					}catch (NoPoseeSaldoExcepcion e2 ){
-						lblCbuNoAdecuado.setVisible(true);
-					}
-					
 				}
 				else{
-					System.out.println("NOTT DON**************************************E");
 					lblCbuNoAdecuado.setVisible(true);
 				}
 			}
 		});
 		button_1.setBounds(66, 210, 117, 29);
 		panel.add(button_1);
-		
-		
+				
 	}
 	
 	

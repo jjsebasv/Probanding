@@ -1,14 +1,20 @@
 package banco;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import org.joda.time.LocalDate;
 
 
-public class CuentaCredito {
+public class CuentaCredito implements Serializable {
 
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 		private final Cliente titular;
 		private final long nroCuenta;
 		private final LocalDate fechaAlta;

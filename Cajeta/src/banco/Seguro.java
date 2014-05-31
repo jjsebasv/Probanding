@@ -1,8 +1,14 @@
 package banco;
 
+import java.io.Serializable;
 
-public class Seguro {
 
+public class Seguro implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// hacer algo para cobrar todos los meses.
 	private final String tipo;
 	private final long nroPoliza;

@@ -3,13 +3,18 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 
 import org.joda.time.LocalDate;
 
 
-public class Resumen {
+public class Resumen implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Cliente duenio;
 	private final double PORCENTAJE = 0.3;
 	private final long numeroResumen;
