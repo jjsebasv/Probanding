@@ -130,10 +130,8 @@ public class DepositoChequeJFrame extends JFrame {
 		try {
 			long nroC = Long.valueOf(nroChequeString.getText());
 			Cheque cheque = Banco.recuperarMiBanco().getListaCuentasCorriente().get(Long.valueOf(nroCuentatext.getText())).getChequesEmitidos().get(nroC);
-			System.out.println("SALDO DESTINO ANTES DEPOSITO"+cuenta.getSaldoActual());
 			cuenta.depositar(cheque);
 			cheque.getEmisora().cobrarCheque(cheque);
-			System.out.println("SALDO DESTINO DSP DEPOSITO "+cuenta.getSaldoActual());
 			OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(dni, this);
 			op.setVisible(true);
 			this.setVisible(false);

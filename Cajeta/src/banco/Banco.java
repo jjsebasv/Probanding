@@ -237,8 +237,7 @@ public class Banco {
 	public void deposito ( Cheque cheque, CajaDeAhorro destino) throws NoSePuedeDepositarChequeExcepcion, NoPoseeSaldoExcepcion{
 		CuentaCorriente emisora = cheque.getEmisora();
 		LocalDate hoy = new LocalDate();
-		System.out.println("a caja de ahorro");
-		if ( (emisora.getSaldoActual()+emisora.getGiroEnDescubierto()) >= cheque.getMonto() ){
+		if ( (emisora.getSaldoActual()+emisora.getGiroEnDescubierto()) >= cheque.getMonto() && !cheque.getCobrado()){
 			if ( destino.getFechaAlta().isBefore(hoy.minusMonths(6))){
 				emisora.setSaldoActual(emisora.getSaldoActual()-cheque.getMonto());
 				destino.depositar(emisora.getSaldoActual()+cheque.getMonto());
@@ -253,12 +252,10 @@ public class Banco {
 			throw new NoPoseeSaldoExcepcion();
 		}
 	}
-	// agregar 1344622638 chque eno cobrao
 	
 	public void deposito ( Cheque cheque, CuentaCorriente destino) throws NoSePuedeDepositarChequeExcepcion, NoPoseeSaldoExcepcion{
 		CuentaCorriente emisora = cheque.getEmisora();
-		System.out.println("a cuenta corriente");
-		if ( (emisora.getSaldoActual()+emisora.getGiroEnDescubierto()) >= cheque.getMonto() ){
+		if ( (emisora.getSaldoActual()+emisora.getGiroEnDescubierto()) >= cheque.getMonto() && !cheque.getCobrado()){
 			destino.setSaldoActual(destino.getSaldoActual()+cheque.getMonto());
 			cheque.setCobrado(true);
 		}

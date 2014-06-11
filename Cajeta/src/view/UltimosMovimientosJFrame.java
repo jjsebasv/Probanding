@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.TimerTask;
+import java.util.Timer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
 import banco.Banco;
@@ -25,10 +26,10 @@ public class UltimosMovimientosJFrame extends JFrame {
 	private ConsultasJFrame padre;
 	private long dni;
 	private JProgressBar progressBar;
-	private Timer timer;
-	private JLabel lblNewLabel;
-	private int j = 0;
-	private JButton home;
+	//private Timer timer;
+	private final JLabel lblNewLabel;
+	//private int j = 0;
+	private final JButton home;
 	
 	/**
 	 * Create the frame.
@@ -118,11 +119,38 @@ public class UltimosMovimientosJFrame extends JFrame {
 		home.setVisible(true);
 		lblNewLabel.setVisible(false);
 		
+		TimerTask task = new TimerTask() {
+			
+			private Integer i=0;
+			
+			@Override
+			public void run() {
+				llenarBarra();
+			}
+			
+			public void llenarBarra(){
+				  if(i>100){
+					  this.cancel();
+					  progressBar.setVisible(false);
+					  home.setVisible(true);
+					  lblNewLabel.setVisible(false);
+				  }
+				  else{
+					  progressBar.setValue(i++);
+				  }
+			}
+		};
+		
+		Timer t = new Timer();
+		
+		t.scheduleAtFixedRate(task, 0L, 5L);
+		
+		/*
 		timer = new Timer(3,new ActionListener(){
 			  public void actionPerformed(ActionEvent ae){
 			  	llenarBarra();
 			  }
-			 });
+			 });*/
 	}
 	
 	public void eventoClickCombo( String nroCuenta ){
@@ -155,7 +183,7 @@ public class UltimosMovimientosJFrame extends JFrame {
 	
 	public void llenarBarra(){
 	{
-			timer.start();	
+			/*timer.start();	
 			getContentPane().add(progressBar);
 			
 			  if(j>1000){
@@ -166,7 +194,9 @@ public class UltimosMovimientosJFrame extends JFrame {
 			  }
 			  else{
 				  progressBar.setValue(j++);
-			  }
+			  }*/
+		
+		
 	}
 	
 	

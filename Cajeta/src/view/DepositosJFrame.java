@@ -1,6 +1,5 @@
 package view;
-// VALIDAR CANT DINERO INGRESADO > 0 --> CHECKED!
-// HACER OTROS FRAMES
+// HACER QUE NO HAGA NADA SI NO SELECCIONO NINGUNA CUENTA!!!!!!!!!!!!!!!!
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -32,10 +31,7 @@ public class DepositosJFrame extends JFrame {
 	private OperacionJFrame padre;
 	private JTextField monto;
 	private Cuenta cuentaSelec;
-
-	public Cuenta getCuentaSelec() {
-		return cuentaSelec;
-	}
+	private JComboBox cuentas;
 
 	public void setCuentaSelec(Cuenta cuentaSelec) {
 		this.cuentaSelec = cuentaSelec;
@@ -44,7 +40,7 @@ public class DepositosJFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DepositosJFrame(final long dni, OperacionJFrame consultas) {
+	public DepositosJFrame(long dni, OperacionJFrame consultas) {
 		this.dni = dni;
 		this.padre = consultas;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,7 +72,7 @@ public class DepositosJFrame extends JFrame {
 		}
 		
 		
-		final JComboBox cuentas = new JComboBox(nombreCuentas);
+		cuentas = new JComboBox(nombreCuentas);
 		cuentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eventoClickCombo(cuentas.getSelectedItem().toString());
@@ -128,12 +124,7 @@ public class DepositosJFrame extends JFrame {
 		JButton btnNewButton = new JButton("Efectivo");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if( isNumeric(monto.getText() ) && Double.parseDouble(monto.getText()) > 0 && monto.getText() != null ){
-					setCuentaSelec( Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get( (nombreCuentas[cuentas.getSelectedIndex()]).getNumeroCuenta() ));
-					eventoEfectivo(Double.parseDouble(monto.getText()));
-				}
-				else
-					lblMontoNoAdecuado.setVisible(true);					
+				eventoEfectivo();				
 			}
 		});
 		btnNewButton.setBounds(284, 128, 117, 29);
@@ -168,13 +159,13 @@ public class DepositosJFrame extends JFrame {
 		
 	}
 	
-	public void eventoEfectivo(Double monto){
+	public void eventoEfectivo(){
+		if( isNumeric(monto.getText() ) && Double.parseDouble(monto.getText()) > 0 && monto.getText() != null ){
 		OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(dni, this);
-		System.out.println(Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get( getCuentaSelec().getNumeroCuenta() ).getSaldoActual() );
-		Banco.recuperarMiBanco().deposito(getCuentaSelec(), monto);
-		System.out.println(Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get( getCuentaSelec().getNumeroCuenta() ).getSaldoActual() );
+		cuentaSelec.depositar(Double.valueOf(monto.getText()));
 		op.setVisible(true);
 		this.setVisible(false);
+		}
 	}
 
 	private static boolean isNumeric(String cadena){
@@ -185,6 +176,8 @@ public class DepositosJFrame extends JFrame {
 			return false;
 		}
 	}
+	
+	
 	
 	public void eventoClickCombo( String nroCuenta ){
 		Long nroCuentaSeleccionada = 0L;
@@ -202,15 +195,14 @@ public class DepositosJFrame extends JFrame {
 				}
 			}
 		}
-		System.out.println("NRO DE CUENTA SELECCIONADA (ENDPJFRAME)" + nroCuentaSeleccionada);
 		cuentaSelec = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(nroCuentaSeleccionada);
 	}
 	
 	public void eventoCheque(){
-		System.out.println("CUENTA SELECCIONADA: ( EN DEPOJFRAME) "+ getCuentaSelec());
+		System.out.println(cuentaSelec);
 		DepositoChequeJFrame depositos = new DepositoChequeJFrame(dni, Double.valueOf(monto.getText()), cuentaSelec, this);
 		depositos.setVisible(true);
 		this.setVisible(false);
-		
+	
 	}
 }
