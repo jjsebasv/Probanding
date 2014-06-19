@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import banco.Banco;
+
 
 public class InicioJFrame extends JFrame {
 
@@ -66,6 +68,7 @@ public class InicioJFrame extends JFrame {
 	}
 	
 	public void eventoClickIngresar(){
+		Banco.save(Banco.recuperarMiBanco());
 		AutenticacionJFrame principal = new AutenticacionJFrame(this);
 		principal.setVisible(true);
 		this.setVisible(false);

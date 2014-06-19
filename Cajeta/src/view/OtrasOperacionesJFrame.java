@@ -6,12 +6,19 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Color;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+
+import banco.Banco;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -56,6 +63,11 @@ public class OtrasOperacionesJFrame extends JFrame {
 		contentPane.add(btnRecargaDeCelular);
 		
 		JButton btnAsociacionTcCoord = new JButton("ASOCIACION COORD");
+		btnAsociacionTcCoord.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Coordenadas();
+			}
+		});
 		btnAsociacionTcCoord.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnAsociacionTcCoord.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAsociacionTcCoord.setBounds(29, 118, 178, 29);
@@ -96,14 +108,22 @@ public class OtrasOperacionesJFrame extends JFrame {
 	}
 	
 	public void clickAtras(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.clickAtras();
 		this.dispose();
 	}
 
 	public void cerrarSesion(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.cerrarSesion();
 		this.dispose();
 		
+	}
+	
+	public void Coordenadas(){
+		AsociacionCoordenadasJFrame rc = new AsociacionCoordenadasJFrame(dni,this);
+		rc.setVisible(true);
+		this.setVisible(false);
 	}
 	
 	public void registroCelular(){

@@ -15,8 +15,10 @@ public class Principal {
 	// ver error pin car ---> FUNCIONA
 	public static void main(String[] args) throws IOException, NoPoseeSaldoExcepcion {
 		
+		
+		
+		if(Banco.leer() == null){
 		Banco bancoFrances = Banco.recuperarMiBanco();
-
 		// CLIENTE 1: NANCY
 		bancoFrances.nuevoCliente(2L, "Fontana", "Matheu 234", "Nancy", "6666-8888", new LocalDate());
 		bancoFrances.verCliente(2L).setClavePin(2);
@@ -93,10 +95,13 @@ public class Principal {
 		System.out.println("SALDO CUENTA CORRIENTE EMISORA:"+cuenta.getSaldoActual());
 		System.out.println("CHEQUE EMITIDO: "+cuenta.getChequesEmitidos());
 		
+		Banco.save(bancoFrances);
+		}
+		else{
+			Banco bancoFrances = Banco.leer();	
+		}
 		InicioJFrame inicio = InicioJFrame.recuperarInicio();
 		inicio.setVisible(true);
-	
-		bancoFrances.save();
 		
 	}
 

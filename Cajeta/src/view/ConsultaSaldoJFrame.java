@@ -164,11 +164,13 @@ public class ConsultaSaldoJFrame extends JFrame {
 	}
 	
 	public void clickAtras(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.clickAtras();
 		this.dispose();
 	}
 
 	public void cerrarSesion(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.cerrarSesion();
 		this.dispose();
 		

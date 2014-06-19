@@ -111,7 +111,13 @@ public class TransfCBUJFrame extends JFrame {
 				// --- Estoy seguro de que tiene saldo, lo valida el JFrame anterior
 				if( destino.getText()!= null && isNumeric( destino.getText() ) ){
 						setMonto(Double.parseDouble(destino.getText().toString()));
-						Banco.recuperarMiBanco().transferenciaPorCbu(getMonto(), getCuenta(), Long.parseLong(destino.getText()));
+						try {
+							Banco.recuperarMiBanco().transferenciaPorCbu(getMonto(), getCuenta(), Long.parseLong(destino.getText()));
+						} catch (NoPoseeSaldoExcepcion e1) {
+							// TODO Auto-generated catch block
+							// No va a entrar aca, el JFrame anterior chequea que tenga saldo
+							e1.printStackTrace();
+						}
 						done();
 				}
 				else{
@@ -157,11 +163,13 @@ public class TransfCBUJFrame extends JFrame {
 	}
 	
 	public void clickAtras(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.clickAtras();
 		this.dispose();
 	}
 
 	public void cerrarSesion(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.cerrarSesion();
 		this.dispose();
 		

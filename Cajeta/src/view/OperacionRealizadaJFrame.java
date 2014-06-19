@@ -7,12 +7,19 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+
+import banco.Banco;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -72,12 +79,14 @@ public class OperacionRealizadaJFrame extends JFrame {
 	
 	public void clickAtras(){
 		InicioJFrame inicio = InicioJFrame.recuperarInicio();
+		Banco.save(Banco.recuperarMiBanco());
 		OperacionJFrame operacion = OperacionJFrame.recuperarOperacion();
 		operacion.setVisible(true);
 		this.dispose();
 	}
 
 	public void cerrarSesion(){
+		Banco.save(Banco.recuperarMiBanco());
 		InicioJFrame inicio = InicioJFrame.recuperarInicio();
 		inicio.setVisible(true);
 		this.dispose();
