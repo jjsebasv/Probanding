@@ -47,14 +47,14 @@ public class InicioJFrame extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("");
-		ImageIcon imageIcon = new ImageIcon("./imagenes/mzl.fgseuiha.png");
+		ImageIcon imageIcon = new ImageIcon("./src/imagenes/mzl.fgseuiha.png");
 		Image image = imageIcon.getImage().getScaledInstance(320, 278, Image.SCALE_SMOOTH);
 		lblNewLabel.setIcon(new ImageIcon(image));
 		lblNewLabel.setBounds(70, 0, 320, 278);
 		contentPane.add(lblNewLabel);
 		
 		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		button.setIcon(new ImageIcon("./src/imagenes/shut-down.png"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);

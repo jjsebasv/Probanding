@@ -43,7 +43,7 @@ public class UltimosMovimientosJFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton button = new JButton("");
-		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		button.setIcon(new ImageIcon("./src/imagenes/shut-down.png"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cerrarSesion();
@@ -73,7 +73,7 @@ public class UltimosMovimientosJFrame extends JFrame {
 		contentPane.add(Cuentas);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("./src/imagenes/LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(new Color(0, 191, 255));
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));
@@ -96,7 +96,7 @@ public class UltimosMovimientosJFrame extends JFrame {
 		home.setHorizontalAlignment(SwingConstants.LEFT);
 		home.setBounds(6, 228, 48, 44);
 		contentPane.add(home);
-		home.setIcon(new ImageIcon("./imagenes/home.png"));
+		home.setIcon(new ImageIcon("./src/imagenes/home.png"));
 		home.setVisible(true);
 		
 	}

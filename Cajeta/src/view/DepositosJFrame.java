@@ -60,7 +60,7 @@ public class DepositosJFrame extends JFrame {
 		cerrarSesion.setHorizontalAlignment(SwingConstants.LEFT);
 		cerrarSesion.setBounds(396, 228, 48, 44);
 		contentPane.add(cerrarSesion);
-		cerrarSesion.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		cerrarSesion.setIcon(new ImageIcon("./src/imagenes/shut-down.png"));
 
 		int i=0;
 		int cantCuentas = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().size();
@@ -83,7 +83,7 @@ public class DepositosJFrame extends JFrame {
 		
 		JLabel label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("./src/imagenes/LOGO BBV.gif"));
 		label.setForeground(new Color(0, 191, 255));
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));
 		label.setBackground(Color.LIGHT_GRAY);
@@ -103,7 +103,7 @@ public class DepositosJFrame extends JFrame {
 				clickAtras();
 			}
 		});
-		home.setIcon(new ImageIcon("./imagenes/home.png"));
+		home.setIcon(new ImageIcon("./src/imagenes/home.png"));
 		home.setHorizontalAlignment(SwingConstants.LEFT);
 		home.setBounds(6, 228, 48, 44);
 		contentPane.add(home);

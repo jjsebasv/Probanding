@@ -73,7 +73,7 @@ public class TransferenciasJFrame extends JFrame {
 			clickAtras();
 			}
 		});
-		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		button.setIcon(new ImageIcon("./src/imagenes/shut-down.png"));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBounds(396, 227, 48, 44);
 		contentPane.add(button);
@@ -98,7 +98,7 @@ public class TransferenciasJFrame extends JFrame {
 		
 		
 		JLabel cuentas = new JLabel("");
-		cuentas.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
+		cuentas.setIcon(new ImageIcon("./src/imagenes/LOGO BBV.gif"));
 		cuentas.setHorizontalAlignment(SwingConstants.CENTER);
 		cuentas.setForeground(new Color(0, 191, 255));
 		cuentas.setFont(cuentas.getFont().deriveFont(cuentas.getFont().getStyle() | Font.BOLD | Font.ITALIC, cuentas.getFont().getSize() + 9f));
@@ -180,7 +180,7 @@ public class TransferenciasJFrame extends JFrame {
 				clickAtras();
 			}
 		});
-		button_1.setIcon(new ImageIcon("./imagenes/home.png"));
+		button_1.setIcon(new ImageIcon("./src/imagenes/home.png"));
 		button_1.setHorizontalAlignment(SwingConstants.LEFT);
 		button_1.setBounds(6, 227, 48, 44);
 		contentPane.add(button_1);

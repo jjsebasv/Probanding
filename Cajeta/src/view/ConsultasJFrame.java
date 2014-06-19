@@ -53,7 +53,7 @@ public class ConsultasJFrame extends JFrame {
 				Saldo();
 			}
 		});
-		btnConsultaDeSaldo.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
+		btnConsultaDeSaldo.setIcon(new ImageIcon("./src/imagenes/1307051141_737.png"));
 		btnConsultaDeSaldo.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultaDeSaldo.setBounds(28, 71, 178, 29);
 		contentPane.add(btnConsultaDeSaldo);
@@ -64,7 +64,7 @@ public class ConsultasJFrame extends JFrame {
 				Cbu();
 			}
 		});
-		btnConsultaDeCbu.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
+		btnConsultaDeCbu.setIcon(new ImageIcon("./src/imagenes/1307051141_737.png"));
 		btnConsultaDeCbu.setHorizontalAlignment(SwingConstants.LEFT);
 		btnConsultaDeCbu.setBounds(28, 112, 178, 29);
 		contentPane.add(btnConsultaDeCbu);
@@ -75,7 +75,7 @@ public class ConsultasJFrame extends JFrame {
 				Limites();
 			}
 		});
-		btnLimitesDisponibles.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
+		btnLimitesDisponibles.setIcon(new ImageIcon("./src/imagenes/1307051141_737.png"));
 		btnLimitesDisponibles.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLimitesDisponibles.setBounds(28, 153, 178, 29);
 		contentPane.add(btnLimitesDisponibles);
@@ -86,7 +86,7 @@ public class ConsultasJFrame extends JFrame {
 				movimiento();
 			}
 		});
-		btnUltimosMovimientos.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
+		btnUltimosMovimientos.setIcon(new ImageIcon("./src/imagenes/1307051141_737.png"));
 		btnUltimosMovimientos.setHorizontalAlignment(SwingConstants.LEFT);
 		btnUltimosMovimientos.setBounds(267, 112, 178, 29);
 		contentPane.add(btnUltimosMovimientos);
@@ -97,7 +97,7 @@ public class ConsultasJFrame extends JFrame {
 				impresion();
 			}
 		});
-		btnImpresionDeResumen.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
+		btnImpresionDeResumen.setIcon(new ImageIcon("./src/imagenes/1307051141_737.png"));
 		btnImpresionDeResumen.setHorizontalAlignment(SwingConstants.LEFT);
 		btnImpresionDeResumen.setBounds(267, 71, 178, 29);
 		contentPane.add(btnImpresionDeResumen);
@@ -108,7 +108,7 @@ public class ConsultasJFrame extends JFrame {
 				cerrarSesion();
 			}
 		});
-		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		button.setIcon(new ImageIcon("./src/imagenes/shut-down.png"));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBounds(397, 228, 48, 44);
 		contentPane.add(button);
@@ -119,7 +119,7 @@ public class ConsultasJFrame extends JFrame {
 				clickAtras();
 			}
 		});
-		button_1.setIcon(new ImageIcon("./imagenes/home.png"));
+		button_1.setIcon(new ImageIcon("./src/imagenes/home.png"));
 		button_1.setHorizontalAlignment(SwingConstants.LEFT);
 		button_1.setBounds(5, 228, 48, 44);
 		contentPane.add(button_1);

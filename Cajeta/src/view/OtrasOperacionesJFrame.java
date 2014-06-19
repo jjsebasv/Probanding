@@ -57,7 +57,7 @@ public class OtrasOperacionesJFrame extends JFrame {
 				recargaCelular();
 			}
 		});
-		btnRecargaDeCelular.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
+		btnRecargaDeCelular.setIcon(new ImageIcon("./src/imagenes/1307051141_737.png"));
 		btnRecargaDeCelular.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRecargaDeCelular.setBounds(29, 77, 178, 29);
 		contentPane.add(btnRecargaDeCelular);
@@ -68,7 +68,7 @@ public class OtrasOperacionesJFrame extends JFrame {
 				Coordenadas();
 			}
 		});
-		btnAsociacionTcCoord.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
+		btnAsociacionTcCoord.setIcon(new ImageIcon("./src/imagenes/1307051141_737.png"));
 		btnAsociacionTcCoord.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAsociacionTcCoord.setBounds(29, 118, 178, 29);
 		contentPane.add(btnAsociacionTcCoord);
@@ -79,7 +79,7 @@ public class OtrasOperacionesJFrame extends JFrame {
 				registroCelular();
 			}
 		});
-		btnRegistroCelular.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
+		btnRegistroCelular.setIcon(new ImageIcon("./src/imagenes/1307051141_737.png"));
 		btnRegistroCelular.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRegistroCelular.setBounds(239, 77, 178, 29);
 		contentPane.add(btnRegistroCelular);
@@ -90,7 +90,7 @@ public class OtrasOperacionesJFrame extends JFrame {
 				cerrarSesion();
 			}
 		});
-		button_5.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		button_5.setIcon(new ImageIcon("./src/imagenes/shut-down.png"));
 		button_5.setHorizontalAlignment(SwingConstants.LEFT);
 		button_5.setBounds(398, 234, 48, 44);
 		contentPane.add(button_5);
@@ -101,7 +101,7 @@ public class OtrasOperacionesJFrame extends JFrame {
 				clickAtras();
 			}
 		});
-		button.setIcon(new ImageIcon("./imagenes/home.png"));
+		button.setIcon(new ImageIcon("./src/imagenes/home.png"));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBounds(6, 234, 48, 44);
 		contentPane.add(button);

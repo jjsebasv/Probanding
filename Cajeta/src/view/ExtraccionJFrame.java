@@ -61,7 +61,7 @@ public class ExtraccionJFrame extends JFrame {
 		contentPane.add(comboBox);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("./src/imagenes/LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(new Color(0, 191, 255));
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));
@@ -78,7 +78,7 @@ public class ExtraccionJFrame extends JFrame {
 		button_1.setHorizontalAlignment(SwingConstants.LEFT);
 		button_1.setBounds(396, 228, 48, 44);
 		contentPane.add(button_1);
-		button_1.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		button_1.setIcon(new ImageIcon("./src/imagenes/shut-down.png"));
 		
 		JLabel label_1 = new JLabel("");
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -103,7 +103,7 @@ public class ExtraccionJFrame extends JFrame {
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBounds(6, 228, 48, 44);
 		contentPane.add(button);
-		button.setIcon(new ImageIcon("./imagenes/home.png"));
+		button.setIcon(new ImageIcon("./src/imagenes/home.png"));
 		
 		montoField = new JTextField();
 		montoField.setBounds(16, 166, 222, 28);

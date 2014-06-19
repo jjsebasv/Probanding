@@ -52,7 +52,7 @@ public class ImpresionResumenJFrame extends JFrame {
 				System.exit(0);
 			}
 		});
-		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		button.setIcon(new ImageIcon("./src/imagenes/shut-down.png"));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBounds(396, 228, 48, 44);
 		contentPane.add(button);
@@ -68,7 +68,7 @@ public class ImpresionResumenJFrame extends JFrame {
 	
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("./src/imagenes/LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(new Color(0, 191, 255));
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));
@@ -92,7 +92,7 @@ public class ImpresionResumenJFrame extends JFrame {
 		home.setHorizontalAlignment(SwingConstants.LEFT);
 		home.setBounds(6, 228, 48, 44);
 		contentPane.add(home);
-		home.setIcon(new ImageIcon("./imagenes/home.png"));
+		home.setIcon(new ImageIcon("./src/imagenes/home.png"));
 		
 		final JComboBox comboBox = new JComboBox(nombreCuentas);
 		comboBox.addActionListener(new ActionListener() {

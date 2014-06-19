@@ -57,7 +57,7 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		contentPane.setLayout(null);
 	
 		JButton cerrarSesion = new JButton("");
-		cerrarSesion.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		cerrarSesion.setIcon(new ImageIcon("./src/imagenes/shut-down.png"));
 		cerrarSesion.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -93,7 +93,7 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		
 		
 		JLabel bbva = new JLabel("");
-		bbva.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
+		bbva.setIcon(new ImageIcon("./src/imagenes/LOGO BBV.gif"));
 		bbva.setHorizontalAlignment(SwingConstants.CENTER);
 		bbva.setForeground(new Color(0, 191, 255));
 		bbva.setFont(bbva.getFont().deriveFont(bbva.getFont().getStyle() | Font.BOLD | Font.ITALIC, bbva.getFont().getSize() + 9f));
@@ -137,7 +137,7 @@ public class LimitesDisponiblesJFrame extends JFrame {
 		rtaUnPagoCompra.setVisible(false);
 		
 		JButton button_1 = new JButton("");
-		button_1.setIcon(new ImageIcon("./imagenes/home.png"));
+		button_1.setIcon(new ImageIcon("./src/imagenes/home.png"));
 		button_1.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 				clickAtras();

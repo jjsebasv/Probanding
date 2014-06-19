@@ -50,7 +50,7 @@ public class CbuJFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton cerrarSesion = new JButton("");
-		cerrarSesion.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		cerrarSesion.setIcon(new ImageIcon("./src/imagenes/shut-down.png"));
 		cerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cerrarSesion();
@@ -80,7 +80,7 @@ public class CbuJFrame extends JFrame {
 		contentPane.add(Cuentas);
 
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("./src/imagenes/LOGO BBV.gif"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(new Color(0, 191, 255));
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));
@@ -106,7 +106,7 @@ public class CbuJFrame extends JFrame {
 				clickAtras();
 			}
 		});
-		home.setIcon(new ImageIcon("./imagenes/home.png"));
+		home.setIcon(new ImageIcon("./src/imagenes/home.png"));
 		home.setHorizontalAlignment(SwingConstants.LEFT);
 		home.setBounds(6, 228, 48, 44);
 		contentPane.add(home);

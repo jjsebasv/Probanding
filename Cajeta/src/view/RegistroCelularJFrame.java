@@ -50,7 +50,7 @@ public class RegistroCelularJFrame extends JFrame {
 			}
 		});
 		button.setHorizontalAlignment(SwingConstants.LEFT);
-		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
+		button.setIcon(new ImageIcon("./src/imagenes/shut-down.png"));
 		button.setBounds(396, 228, 48, 44);
 		contentPane.add(button);
 		
@@ -60,7 +60,7 @@ public class RegistroCelularJFrame extends JFrame {
 		label.setFont(label.getFont().deriveFont(label.getFont().getStyle() | Font.BOLD | Font.ITALIC, label.getFont().getSize() + 9f));
 		label.setBackground(Color.LIGHT_GRAY);
 		label.setBounds(6, 6, 440, 62);
-		label.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
+		label.setIcon(new ImageIcon("./src/imagenes/LOGO BBV.gif"));
 		contentPane.add(label);
 		
 		JButton home = new JButton("");
@@ -71,7 +71,7 @@ public class RegistroCelularJFrame extends JFrame {
 		});
 		home.setHorizontalAlignment(SwingConstants.LEFT);
 		home.setBounds(6, 228, 48, 44);
-		home.setIcon(new ImageIcon("./imagenes/home.png"));
+		home.setIcon(new ImageIcon("./src/imagenes/home.png"));
 		contentPane.add(home);
 		
 		JLabel lblIngreseCompania = new JLabel("INGRESE COMPANIA");
