@@ -56,6 +56,11 @@ public class OtrasOperacionesJFrame extends JFrame {
 		contentPane.add(btnRecargaDeCelular);
 		
 		JButton btnAsociacionTcCoord = new JButton("ASOCIACION COORD");
+		btnAsociacionTcCoord.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Coordenadas();
+			}
+		});
 		btnAsociacionTcCoord.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnAsociacionTcCoord.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAsociacionTcCoord.setBounds(29, 118, 178, 29);
@@ -104,6 +109,12 @@ public class OtrasOperacionesJFrame extends JFrame {
 		this.padre.cerrarSesion();
 		this.dispose();
 		
+	}
+	
+	public void Coordenadas(){
+		AsociacionCoordenadasJFrame rc = new AsociacionCoordenadasJFrame(dni,this);
+		rc.setVisible(true);
+		this.setVisible(false);
 	}
 	
 	public void registroCelular(){
