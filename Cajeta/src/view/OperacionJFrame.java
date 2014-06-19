@@ -33,9 +33,6 @@ public class OperacionJFrame extends JFrame {
 	private static OperacionJFrame operacion = null;
 
 
-	/**
-	 * Create the frame.
-	 */
 	private OperacionJFrame() {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,8 +100,7 @@ public class OperacionJFrame extends JFrame {
 		JButton btnExtraccion = new JButton("EXTRACCION");
 		btnExtraccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ExtraccionesJFrame extracciones = new ExtraccionesJFrame();
-				extracciones.setVisible(true);
+				extracciones();
 			}
 		});
 		btnExtraccion.setHorizontalAlignment(SwingConstants.LEFT);
@@ -135,7 +131,7 @@ public class OperacionJFrame extends JFrame {
 		btnNewButton.setBounds(396, 228, 48, 44);
 		contentPane.add(btnNewButton);
 		
-		JButton btnClaves = new JButton("CLAVES");
+		JButton btnClaves = new JButton("CAMBIO DE CLAVE");
 		btnClaves.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnClaves.setHorizontalAlignment(SwingConstants.LEFT);
 		btnClaves.setBounds(272, 173, 178, 29);
@@ -190,6 +186,11 @@ public class OperacionJFrame extends JFrame {
 		this.dni = dni;
 	}
 
+	public void extracciones(){
+		ExtraccionJFrame extracciones = new ExtraccionJFrame(dni, this);
+		extracciones.setVisible(true);
+	}
+	
 	public static OperacionJFrame recuperarOperacion() {
 		  if( operacion == null) {
 			  operacion = new OperacionJFrame();

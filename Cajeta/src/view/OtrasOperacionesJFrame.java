@@ -45,6 +45,11 @@ public class OtrasOperacionesJFrame extends JFrame {
 		contentPane.add(label);
 		
 		JButton btnRecargaDeCelular = new JButton("RECARGA DE CELULAR");
+		btnRecargaDeCelular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				recargaCelular();
+			}
+		});
 		btnRecargaDeCelular.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnRecargaDeCelular.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRecargaDeCelular.setBounds(29, 77, 178, 29);
@@ -57,6 +62,11 @@ public class OtrasOperacionesJFrame extends JFrame {
 		contentPane.add(btnAsociacionTcCoord);
 		
 		JButton btnRegistroCelular = new JButton("REGISTRO CELULAR");
+		btnRegistroCelular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				registroCelular();
+			}
+		});
 		btnRegistroCelular.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
 		btnRegistroCelular.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRegistroCelular.setBounds(239, 77, 178, 29);
@@ -72,12 +82,6 @@ public class OtrasOperacionesJFrame extends JFrame {
 		button_5.setHorizontalAlignment(SwingConstants.LEFT);
 		button_5.setBounds(398, 234, 48, 44);
 		contentPane.add(button_5);
-		
-		JButton btnAltaSeguro = new JButton("ALTA SEGURO");
-		btnAltaSeguro.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
-		btnAltaSeguro.setHorizontalAlignment(SwingConstants.LEFT);
-		btnAltaSeguro.setBounds(239, 118, 178, 29);
-		contentPane.add(btnAltaSeguro);
 		
 		JButton button = new JButton("");
 		button.addActionListener(new ActionListener() {
@@ -100,5 +104,17 @@ public class OtrasOperacionesJFrame extends JFrame {
 		this.padre.cerrarSesion();
 		this.dispose();
 		
+	}
+	
+	public void registroCelular(){
+		RegistroCelularJFrame rc = new RegistroCelularJFrame(dni,this);
+		rc.setVisible(true);
+		this.setVisible(false);
+	}
+	
+	public void recargaCelular(){
+		RecargaDeCelularJFrame rc = new RecargaDeCelularJFrame(dni,this);
+		rc.setVisible(true);
+		this.setVisible(false);
 	}
 }

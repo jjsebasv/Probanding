@@ -1,10 +1,16 @@
 package banco;
+import java.io.Serializable;
+
 import org.joda.time.LocalDate;
  
-public class Cheque {
+public class Cheque implements Serializable {
 
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final long numeroCheque;
 	private final CuentaCorriente emisora;
 	private final Cliente destinatario;

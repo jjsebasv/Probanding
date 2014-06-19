@@ -1,5 +1,6 @@
 package banco;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,9 +14,12 @@ import exception.NoHayServicios;
 import exception.NoPoseeSaldoExcepcion;
 
 
-public class Cliente {
+public class Cliente implements Serializable{
 
-	private int claveHomeBanking;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int clavePin;
 	private long CBU;
 	private final long numeroCliente;
@@ -35,7 +39,6 @@ public class Cliente {
 	private Map<Long,CuentaCredito> cuentasCredito;
 	private Map<Long, Cuenta> cuentasMonetarias;
 	private Set<Movimiento> movimientos;
-	private Set<Seguro> seguros;
 	private Map<Long,Tarjeta> tarjetasCredito;
 	private Map<Long,Servicio> listaServicios;
 	
@@ -44,7 +47,6 @@ public class Cliente {
 		this.numeroCliente = numeroCliente;
 		cuentasCredito = new HashMap<Long,CuentaCredito>();
 		cuentasMonetarias = new HashMap<Long,Cuenta>();
-		seguros = new HashSet<Seguro>();
 		tarjetasCredito = new HashMap<Long,Tarjeta>();
 		movimientos = new HashSet<Movimiento>();
 		listaServicios = new HashMap<Long,Servicio>();
@@ -66,7 +68,6 @@ public class Cliente {
 				+ ((movimientos == null) ? 0 : movimientos.hashCode());
 		result = prime * result
 				+ (int) (numeroCliente ^ (numeroCliente >>> 32));
-		result = prime * result + ((seguros == null) ? 0 : seguros.hashCode());
 		result = prime * result
 				+ ((tajetaDeDebito == null) ? 0 : tajetaDeDebito.hashCode());
 		result = prime * result
@@ -97,11 +98,6 @@ public class Cliente {
 		} else if (!movimientos.equals(other.movimientos))
 			return false;
 		if (numeroCliente != other.numeroCliente)
-			return false;
-		if (seguros == null) {
-			if (other.seguros != null)
-				return false;
-		} else if (!seguros.equals(other.seguros))
 			return false;
 		if (tajetaDeDebito == null) {
 			if (other.tajetaDeDebito != null)
@@ -135,10 +131,6 @@ public class Cliente {
 		return tarjetasCredito;
 	}	
 		
-		
-	public int getClaveHomeBanking() {
-		return claveHomeBanking;
-	}
 
 	public Map<Long, Servicio> getListaServicios() {
 		return listaServicios;
@@ -147,11 +139,6 @@ public class Cliente {
 	public void setListaServicios(Map<Long, Servicio> listaServicios) {
 		this.listaServicios = listaServicios;
 	}
-
-	public void setClaveHomeBanking(int claveHomeBanking) {
-		this.claveHomeBanking = claveHomeBanking;
-	}
-
 
 
 	public int getClavePin() {
@@ -224,20 +211,6 @@ public class Cliente {
 	}
 
 
-
-	public Set<Seguro> getSeguros() {
-		return seguros;
-	}
-
-
-
-	public void setSeguros(Set<Seguro> seguros) {
-		this.seguros = seguros;
-	}
-
-
-
-
 	public long getNumeroCliente() {
 		return numeroCliente;
 	}
@@ -259,7 +232,7 @@ public class Cliente {
 	
 	
 		
-	public void pagarServicio(String tipo, long nroCuenta){
+	public void pagarServicio(String tipo, long nroCuenta) throws NoPoseeSaldoExcepcion{
 		
 		if( this.listaServicios.isEmpty() ){
 			throw new NoHayServicios();

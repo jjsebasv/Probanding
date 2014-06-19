@@ -149,11 +149,13 @@ public class DepositosJFrame extends JFrame {
 	}
 
 	public void clickAtras(){
+		Banco.recuperarMiBanco().guardar();
 		this.padre.clickAtras();
 		this.dispose();
 	}
 
 	public void cerrarSesion(){
+		Banco.recuperarMiBanco().guardar();
 		this.padre.cerrarSesion();
 		this.dispose();
 		
@@ -161,12 +163,22 @@ public class DepositosJFrame extends JFrame {
 	
 	public void eventoEfectivo(){
 		if( isNumeric(monto.getText() ) && Double.parseDouble(monto.getText()) > 0 && monto.getText() != null ){
-		OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(dni, this);
-		cuentaSelec.depositar(Double.valueOf(monto.getText()));
+			cuentaSelec.depositar(Double.valueOf(monto.getText()));
+		}
+		OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(this);
+		this.setVisible(false);
+		op.setVisible(true);
+	}
+		
+	public void eventoEfectivo(Double monto){
+		OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(this);
+		System.out.println(Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(cuentaSelec.getNumeroCuenta() ).getSaldoActual() );
+		Banco.recuperarMiBanco().deposito(cuentaSelec, monto);
+		System.out.println(Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get( cuentaSelec.getNumeroCuenta() ).getSaldoActual() );
 		op.setVisible(true);
 		this.setVisible(false);
-		}
 	}
+	
 
 	private static boolean isNumeric(String cadena){
 		try {

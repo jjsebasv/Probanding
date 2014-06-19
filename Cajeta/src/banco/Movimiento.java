@@ -3,10 +3,16 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
+
 import org.joda.time.LocalDate;
 
-public class Movimiento {
+public class Movimiento implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final String tipo;
 	private final LocalDate fecha;
 	private final double monto;

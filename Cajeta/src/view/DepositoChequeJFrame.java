@@ -132,7 +132,8 @@ public class DepositoChequeJFrame extends JFrame {
 			Cheque cheque = Banco.recuperarMiBanco().getListaCuentasCorriente().get(Long.valueOf(nroCuentatext.getText())).getChequesEmitidos().get(nroC);
 			cuenta.depositar(cheque);
 			cheque.getEmisora().cobrarCheque(cheque);
-			OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(dni, this);
+			OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(this);
+			System.out.println("SALDO DESTINO DSP DEPOSITO "+cuenta.getSaldoActual());
 			op.setVisible(true);
 			this.setVisible(false);
 		} catch (NoSePuedeDepositarChequeExcepcion e) {

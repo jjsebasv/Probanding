@@ -2,6 +2,10 @@ package banco;
 
 public class Consumo extends Movimiento {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final String comercio;
 	private final String domicilio;
 	private final boolean cuotas;

@@ -16,7 +16,6 @@ import javax.swing.border.EmptyBorder;
 
 import banco.Banco;
 import banco.Cuenta;
-import banco.TransfCBUJFrame;
 
 
 public class TransferenciasJFrame extends JFrame {
@@ -24,6 +23,7 @@ public class TransferenciasJFrame extends JFrame {
 	private JPanel contentPane;
 	private JTextField montoField;
 	private JLabel lblMontoIncorrecto;
+	private JLabel lblUdNoDispone;
 	private String msjDefault = "No registra mas Cuentas.";
 	private Double montoS;
 	private Long seleccionado;
@@ -48,7 +48,7 @@ public class TransferenciasJFrame extends JFrame {
 
 	// <-------------
 	
-	JLabel lblUdNoDispone;
+	
 	private OperacionJFrame padre;
 	private long dni;
 	
@@ -70,7 +70,7 @@ public class TransferenciasJFrame extends JFrame {
 		JButton button = new JButton("");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			System.exit(0);
+			clickAtras();
 			}
 		});
 		button.setIcon(new ImageIcon("./imagenes/shut-down.png"));
@@ -95,7 +95,8 @@ public class TransferenciasJFrame extends JFrame {
 		lblMontoIncorrecto.setBounds(125, 215, 134, 14);
 		contentPane.add(lblMontoIncorrecto);
 		lblMontoIncorrecto.setVisible(false);
-			
+		
+		
 		JLabel cuentas = new JLabel("");
 		cuentas.setIcon(new ImageIcon("./imagenes/LOGO BBV.gif"));
 		cuentas.setHorizontalAlignment(SwingConstants.CENTER);
@@ -117,18 +118,16 @@ public class TransferenciasJFrame extends JFrame {
 		contentPane.add(montoField);
 		montoField.setColumns(10);
 		
-		
-				
-		final String montoSelec = montoField.getText();
-		setMontoS( Double.parseDouble(montoSelec) );
-		
+			
 		JButton otroClienteBoton = new JButton("Otro Cliente BBVA");
 		otroClienteBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(comboBox.getSelectedItem().toString() != msjDefault && getMontoS() != null && isNumeric(montoSelec)){
-					setMontoS( Double.parseDouble(montoSelec) );
+				if(comboBox.getSelectedItem().toString() != msjDefault && montoField.getText() != null && isNumeric(montoField.getText())){
+					lblMontoIncorrecto.setVisible(false);
+					lblUdNoDispone.setVisible(false);
+					setMontoS( Double.parseDouble(montoField.getText()) );
 					setSeleccionado( Long.parseLong(comboBox.getSelectedItem().toString() ) ) ;
-					eventoClickMismoBanco( montoS ,seleccionado);
+					eventoClickMismoBanco( getMontoS() ,getSeleccionado());
 				}
 				else{
 					lblMontoIncorrecto.setVisible(true);
@@ -143,9 +142,12 @@ public class TransferenciasJFrame extends JFrame {
 		JButton otroBancoBoton = new JButton("Otro Banco");
 		otroBancoBoton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(comboBox.getSelectedItem().toString() != msjDefault && getMontoS() != null && isNumeric(montoSelec)){
+				if(comboBox.getSelectedItem().toString() != msjDefault && montoField.getText() != null && isNumeric(montoField.getText())){
+					lblMontoIncorrecto.setVisible(false);
+					lblUdNoDispone.setVisible(false);
 					setSeleccionado( Long.parseLong(comboBox.getSelectedItem().toString() ) );
-					eventoClickOtroBanco( montoS ,seleccionado);
+					setMontoS(Double.parseDouble(montoField.getText()));
+					eventoClickOtroBanco( getMontoS() ,getSeleccionado());
 				}
 				else{
 					lblMontoIncorrecto.setVisible(true);
@@ -178,7 +180,7 @@ public class TransferenciasJFrame extends JFrame {
 				clickAtras();
 			}
 		});
-		button_1.setIcon(new ImageIcon("/Users/user/git/TP POO/Probanding/Cajeta/imagenes/home.png"));
+		button_1.setIcon(new ImageIcon("./imagenes/home.png"));
 		button_1.setHorizontalAlignment(SwingConstants.LEFT);
 		button_1.setBounds(6, 227, 48, 44);
 		contentPane.add(button_1);
@@ -197,28 +199,32 @@ public class TransferenciasJFrame extends JFrame {
 	
 	public void eventoClickOtroBanco(double monto, long miCuenta){
 		if( monto < 0.0 ){
-			lblMontoIncorrecto.setVisible(true);
+			this.lblMontoIncorrecto.setVisible(true);
 		}
-		else if (!Banco.recuperarMiBanco().disponeSaldo(monto, miCuenta)) {
-			lblUdNoDispone.setVisible(true);
+		else if (!(Banco.recuperarMiBanco().disponeSaldo(monto, miCuenta))) {
+			this.lblUdNoDispone.setVisible(true);
 		}
 		else{
 			Cuenta aux = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(miCuenta);
-			TransfCBUJFrame trnsMismoBc = new TransfCBUJFrame(aux, monto);
+			TransfCBUJFrame trnsOtroBc = new TransfCBUJFrame(aux, monto,this);
+			trnsOtroBc.setVisible(true);
+			this.setVisible(false);
 		}
 	}
 	
 	public void eventoClickMismoBanco(double monto, long miCuenta){
 	
 		if( monto < 0.0 ){
-			lblMontoIncorrecto.setVisible(true);
+			this.lblMontoIncorrecto.setVisible(true);
 		}
-		else if (!Banco.recuperarMiBanco().disponeSaldo(monto, miCuenta)){
-			lblUdNoDispone.setVisible(true);
+		else if (!(Banco.recuperarMiBanco().disponeSaldo(monto, miCuenta)) ){
+			this.lblUdNoDispone.setVisible(true);
 		}
 		else {
 			Cuenta aux = Banco.recuperarMiBanco().verCliente(dni).getCuentasMonetarias().get(miCuenta);
-			TransfNroCuentaJFrame trnsMismoBc = new TransfNroCuentaJFrame(aux, monto);
+			TransfNroCuentaJFrame trnsMismoBc = new TransfNroCuentaJFrame(aux, monto, this);
+			trnsMismoBc.setVisible(true);
+			this.setVisible(false);
 		}
 	}
 	

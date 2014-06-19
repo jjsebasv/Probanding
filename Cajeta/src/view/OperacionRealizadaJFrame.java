@@ -20,11 +20,9 @@ import java.awt.event.ActionEvent;
 public class OperacionRealizadaJFrame extends JFrame {
 
 	private JPanel contentPane;
-	private final long dni;
 	private JFrame padre;
 
-	public OperacionRealizadaJFrame(long dni, JFrame padre) {
-		this.dni = dni;
+	public OperacionRealizadaJFrame( JFrame padre) {
 		this.padre = padre;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

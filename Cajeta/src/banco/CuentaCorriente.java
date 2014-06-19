@@ -6,6 +6,9 @@ import java.util.Set;
 
 import org.joda.time.LocalDate;
 
+import exception.NoPoseeSaldoExcepcion;
+import exception.NoSePuedeDepositarChequeExcepcion;
+
 public class CuentaCorriente extends Cuenta {
 
 	private final double IMP_DEBITOS_Y_CREDITOS  = 0.006;
@@ -34,13 +37,15 @@ public class CuentaCorriente extends Cuenta {
 	
 	public void cobrarImpuesto (double monto){
 		this.setSaldoActual(getSaldoActual()-monto*IMP_DEBITOS_Y_CREDITOS);
+		Movimiento mov = new Movimiento("LEY IMPUESTO DEBITOS Y CREDITOS", monto*IMP_DEBITOS_Y_CREDITOS*(-1),null);
+		this.movimientos.push(mov);
 	}
 	
 	public void cobrarCheque ( Cheque cheque ){
 		Banco.recuperarMiBanco().cobrarCheque(cheque, this);
-		this.cobrarImpuesto(cheque.getMonto());
 		Movimiento mov = new Movimiento("COBRO DE CHEQUE: "+cheque.getNumeroCheque(), cheque.getMonto()*(-1), null);
 		this.movimientos.push(mov);
+		this.cobrarImpuesto(cheque.getMonto());
 	}
 	
 	public void emitirCheque(Cliente destinatario, double monto, LocalDate fechaCobro){
@@ -48,11 +53,23 @@ public class CuentaCorriente extends Cuenta {
 		this.chequesEmitidos.put(cheque.getNumeroCheque(), cheque);
 	}
 	
+	public void cobrarRecargaCelular(double monto) throws NoPoseeSaldoExcepcion{
+		if ( this.getSaldoActual() + this.getGiroEnDescubierto() >= monto){
+			this.setSaldoActual(this.getSaldoActual()-monto);
+			this.cobrarImpuesto(monto);
+			Movimiento mov = new Movimiento("RECARGA DE CELULAR: ",monto*(-1), null);
+			this.movimientos.push(mov);
+		}
+		else{
+			throw new NoPoseeSaldoExcepcion();
+		}
+	}
+	
 	// --------------------------- DEPOSITAR, EXTRAER, TRANSFERIR  -----------------------------------
 
 		// EXTRACCION //
 	
-	public void extraccion(double monto) {
+	public void extraccion(double monto) throws NoPoseeSaldoExcepcion {
 		Banco.recuperarMiBanco().extraccion(this, monto);
 		this.cobrarImpuesto(monto);
 		Movimiento mov = new Movimiento("EXTRACCION", monto*(-1), null);
@@ -68,7 +85,7 @@ public class CuentaCorriente extends Cuenta {
 		this.movimientos.push(mov);
 	}
 
-	public void depositar(Cheque cheque) {
+	public void depositar(Cheque cheque) throws NoSePuedeDepositarChequeExcepcion, NoPoseeSaldoExcepcion {
 		Banco.recuperarMiBanco().deposito(cheque,this);
 		this.cobrarImpuesto(cheque.getMonto());
 		Movimiento mov = new Movimiento("DEPOSITO CHEQUE", cheque.getMonto(), null);
@@ -78,14 +95,14 @@ public class CuentaCorriente extends Cuenta {
 	
 			// TRANSFERENCIA //
 	
-	public void transferir(double monto, Cuenta cuentaDestino) {
+	public void transferir(double monto, Cuenta cuentaDestino) throws NoPoseeSaldoExcepcion {
 		Banco.recuperarMiBanco().transferencia(monto, this, cuentaDestino);
 		this.cobrarImpuesto(monto);
 		Movimiento mov = new Movimiento("TRANSFENCIA A "+cuentaDestino.getNumeroCuenta(), monto*(-1), null);
 		this.movimientos.push(mov);
 	}
 	
-	public void transferir(double monto, long CBUdestino) {
+	public void transferir(double monto, long CBUdestino) throws NoPoseeSaldoExcepcion {
 		Banco.recuperarMiBanco().transferenciaPorCbu(monto, this, CBUdestino);
 		this.cobrarImpuesto(monto);
 	}

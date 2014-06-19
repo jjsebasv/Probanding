@@ -3,13 +3,22 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
+
 import org.joda.time.LocalDate;
 
+import exception.NoPoseeSaldoExcepcion;
+import exception.NoSePuedeDepositarChequeExcepcion;
 
-public abstract class Cuenta {
 
+public abstract class Cuenta implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final long CBU;
 	private final LocalDate fechaAlta;
 	private double saldoActual;
@@ -25,11 +34,12 @@ public abstract class Cuenta {
 		movimientos = new LinkedList<Movimiento>();
 	}
 	
-	public abstract void transferir( double monto, Cuenta cuentaDestino);
-	public abstract void extraccion( double monto );
+	public abstract void transferir( double monto, Cuenta cuentaDestino) throws NoPoseeSaldoExcepcion;
+	public abstract void extraccion( double monto ) throws NoPoseeSaldoExcepcion;
 	public abstract void depositar ( double monto );
-	public abstract void depositar ( Cheque cheque );
+	public abstract void depositar ( Cheque cheque ) throws NoSePuedeDepositarChequeExcepcion, NoPoseeSaldoExcepcion;
 	public abstract void cobrarConsumo ( Consumo consumo);
+	public abstract void cobrarRecargaCelular( double monto ) throws NoPoseeSaldoExcepcion;
 	
 	public double montoExtHoy(){
 		LocalDate hoy = new LocalDate();
@@ -69,7 +79,7 @@ public abstract class Cuenta {
 		return fechaAlta;
 	}
 	
-	public void transferir(double monto, long nroCuenta){
+	public void transferir(double monto, long nroCuenta) throws NoPoseeSaldoExcepcion{
 		if ( Banco.recuperarMiBanco().getListaCajasDeAhorro().containsKey(nroCuenta))
 			this.transferir(monto, Banco.recuperarMiBanco().getListaCajasDeAhorro().get(nroCuenta));
 		else

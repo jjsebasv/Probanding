@@ -1,9 +1,16 @@
 package banco;
 
+import exception.NoPoseeSaldoExcepcion;
+import exception.NoSePuedeDepositarChequeExcepcion;
 
 
-public class CajaDeAhorro extends Cuenta {
 
+public class CajaDeAhorro extends Cuenta{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final double IMP_AL_CHEQUE = 0.12;
 	
 	public CajaDeAhorro() {
@@ -23,13 +30,13 @@ public class CajaDeAhorro extends Cuenta {
 
 		// TRANSFERENCIA //
 	
-	public void transferir(double monto, Cuenta cuentaDestino) {	
+	public void transferir(double monto, Cuenta cuentaDestino) throws NoPoseeSaldoExcepcion {	
 		Banco.recuperarMiBanco().transferencia(monto, this, cuentaDestino);
 		Movimiento mov = new Movimiento("TRANSFENCIA A "+cuentaDestino.toString(), monto*(-1), null);
 		this.movimientos.push(mov);
 	}
 	
-	public void transferirPorCbu(double monto, long CBUdestino) {
+	public void transferirPorCbu(double monto, long CBUdestino) throws NoPoseeSaldoExcepcion {
 		Banco.recuperarMiBanco().transferenciaPorCbu(monto, this, CBUdestino);
 		Movimiento mov = new Movimiento("TRANSFENCIA A "+CBUdestino, monto*(-1), null);
 		this.movimientos.push(mov);
@@ -38,7 +45,7 @@ public class CajaDeAhorro extends Cuenta {
 	
 		// EXTRACCION //
 
-	public void extraccion(double monto) {
+	public void extraccion(double monto) throws NoPoseeSaldoExcepcion {
 		Banco.recuperarMiBanco().extraccion(this, monto);
 		Movimiento mov = new Movimiento("EXTRACCION", monto, null);
 		this.movimientos.push(mov);
@@ -82,7 +89,7 @@ public class CajaDeAhorro extends Cuenta {
 		return IMP_AL_CHEQUE;
 	}
 
-	public void depositar(Cheque cheque) {
+	public void depositar(Cheque cheque) throws NoSePuedeDepositarChequeExcepcion, NoPoseeSaldoExcepcion {
 		Banco.recuperarMiBanco().deposito(cheque, this);
 		this.cobrarImpuestoCheque(cheque.getMonto());
 		Movimiento mov = new Movimiento("DEPOSITO CHEQUE", cheque.getMonto(), null);
@@ -90,12 +97,22 @@ public class CajaDeAhorro extends Cuenta {
 	}
 
 	
+	public void cobrarRecargaCelular(double monto) throws NoPoseeSaldoExcepcion{
+		if ( this.getSaldoActual()  >= monto){
+			this.setSaldoActual(this.getSaldoActual()-monto);
+			Movimiento mov = new Movimiento("RECARGA DE CELULAR: ",monto*(-1), null);
+			this.movimientos.push(mov);
+		}
+		else{
+			throw new NoPoseeSaldoExcepcion();
+		}
+	}
+
+	@Override
 	public void cobrarConsumo(Consumo consumo) {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 
 
 }

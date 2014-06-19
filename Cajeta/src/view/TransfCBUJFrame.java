@@ -1,4 +1,4 @@
-package banco;
+package view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -17,10 +17,15 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
+import exception.NoExisteLaCuentaExcepcion;
+import exception.NoPoseeSaldoExcepcion;
+import banco.Banco;
+import banco.Cuenta;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
+// FUNCIONA! 
 //Banco distinto -->> no validar
 
 public class TransfCBUJFrame extends JFrame {
@@ -29,12 +34,15 @@ public class TransfCBUJFrame extends JFrame {
 	private JTextField destino;
 	private double monto;
 	private Cuenta cuenta;
+	private JLabel lblCbuNoAdecuado;
+	private TransferenciasJFrame padre;
 
 
 	/**
 	 * Create the frame.
 	 */
-	public TransfCBUJFrame(Cuenta cuenta, double monto) {
+	public TransfCBUJFrame(Cuenta cuenta, double monto, TransferenciasJFrame padre) {
+		this.padre = padre;
 		this.monto = monto;
 		this.cuenta = cuenta;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,6 +63,7 @@ public class TransfCBUJFrame extends JFrame {
 		button.setIcon(new ImageIcon("shut-down.png"));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				clickAtras();
 			}
 		});
 		button.setHorizontalAlignment(SwingConstants.LEFT);
@@ -77,34 +86,49 @@ public class TransfCBUJFrame extends JFrame {
 		lblNumeroDeCbu.setBounds(38, 116, 213, 16);
 		panel.add(lblNumeroDeCbu);
 		
+		final JLabel lblCbuNoAdecuado = new JLabel("CBU no adecuado");
+		lblCbuNoAdecuado.setForeground(Color.RED);
+		lblCbuNoAdecuado.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblCbuNoAdecuado.setEnabled(false);
+		lblCbuNoAdecuado.setBounds(255, 180, 134, 14);
+		panel.add(lblCbuNoAdecuado);
+		lblCbuNoAdecuado.setVisible(false);
+		
 		destino = new JTextField();
 		destino.setColumns(10);
 		destino.setBounds(255, 110, 134, 28);
 		panel.add(destino);
 		
-		JLabel label_2 = new JLabel("Monto: 0.0");
+		JLabel label_2 = new JLabel("Monto: " + getMonto());
 		label_2.setForeground(Color.RED);
 		label_2.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		label_2.setBounds(255, 150, 125, 16);
 		panel.add(label_2);
 		
-		JLabel label_3 = new JLabel((String) null);
-		label_3.setForeground(Color.RED);
-		label_3.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
-		label_3.setBounds(255, 178, 125, 16);
-		panel.add(label_3);
-		
 		JButton button_1 = new JButton("Confirmar");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// --- Estoy seguro de que tiene saldo, lo valida el JFrame anterior
 				if( destino.getText()!= null && isNumeric( destino.getText() ) ){
-					Banco.recuperarMiBanco().transferencia(getMonto(), getCuenta(), Long.valueOf(destino.getText()));
+						setMonto(Double.parseDouble(destino.getText().toString()));
+						Banco.recuperarMiBanco().transferenciaPorCbu(getMonto(), getCuenta(), Long.parseLong(destino.getText()));
+						done();
 				}
-				// mostrar mensaje de mal CBU
+				else{
+					lblCbuNoAdecuado.setVisible(true);
+				}
 			}
 		});
 		button_1.setBounds(66, 210, 117, 29);
 		panel.add(button_1);
+				
+	}
+	
+	
+	public void done(){
+		OperacionRealizadaJFrame opRealizada = new OperacionRealizadaJFrame(this);
+		opRealizada.setVisible(true);
+		this.setVisible(false);
 	}
 	
 	public double getMonto() {
@@ -132,4 +156,14 @@ public class TransfCBUJFrame extends JFrame {
 		}
 	}
 	
+	public void clickAtras(){
+		this.padre.clickAtras();
+		this.dispose();
+	}
+
+	public void cerrarSesion(){
+		this.padre.cerrarSesion();
+		this.dispose();
+		
+	}
 }

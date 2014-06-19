@@ -2,6 +2,10 @@ package banco;
 
 public class TarjetaDeCredito extends Tarjeta {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private double porcentajeLimite;
 	private CuentaCredito cuentaCredito;
 	

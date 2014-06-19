@@ -1,12 +1,17 @@
 package banco;
- import java.util.ArrayList;
+ import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
 
-public class TarjetaDeCoordenadas {
+public class TarjetaDeCoordenadas implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final long numeroTarjeta;
 	private final Map<String, Map<Integer, Integer>> datos;
 	

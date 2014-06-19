@@ -1,10 +1,16 @@
 package banco;
 
+import java.io.Serializable;
+
 import org.joda.time.LocalDate;
 
 
-public abstract class Tarjeta {
+public abstract class Tarjeta implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final String marca;
 	private final long numeroTarjeta;
 	private final LocalDate fechaEmision;

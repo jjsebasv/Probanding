@@ -3,15 +3,17 @@ package banco;
 import java.io.IOException;
 import java.util.Date;
        
+
 import org.joda.time.LocalDate;
 
+import exception.NoPoseeSaldoExcepcion;
 import view.InicioJFrame;
 
 public class Principal {
 
 	
 	// ver error pin car ---> FUNCIONA
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, NoPoseeSaldoExcepcion {
 		
 		Banco bancoFrances = Banco.recuperarMiBanco();
 
@@ -51,8 +53,8 @@ public class Principal {
 				Consumo consumo2 = new Consumo("COMPRA", 50.00, bancoFrances.verCliente(1L).getTarjetasCredito().get(1L), "Mc donalds", "Corrientes", false);
 				Consumo consumo3 = new Consumo("COMPRA", 25.00, nowi.getTajetaDeDebito(), "Kiosko", "Castelar", false);
 				Consumo consumo4 = new Consumo("COMPRA", 1500.00, nowi.getTajetaDeDebito(), "Super", "Caba", false);
-				nowi.getCuentasCredito().get(1L).getConsumosDelPeriodo().add(consumo1);
-				nowi.getCuentasCredito().get(1L).getConsumosDelPeriodo().add(consumo2);
+				nowi.getCuentasCredito().get(2L).getConsumosDelPeriodo().add(consumo1);
+				nowi.getCuentasCredito().get(2L).getConsumosDelPeriodo().add(consumo2);
 				nowi.getCuentasMonetarias().get(3L).movimientos.push(consumo3);
 				nowi.getCuentasMonetarias().get(3L).movimientos.push(consumo4);
 				
@@ -65,13 +67,6 @@ public class Principal {
 				nowi.getCuentasMonetarias().get(3L).transferir(30, nan.getCuentasMonetarias().get(1L));
 				nowi.getCuentasMonetarias().get(5L).depositar(1000);
 				
-		// CLIENTE 3: CARLOS
-			
-			// ALTAS
-				bancoFrances.altaCuentaCredito(3L, "Lopez", "Mastercard", "LN Alem", "Carlos", "2342-2342", new LocalDate(),  30000.00);
-				Cliente car = bancoFrances.verCliente(3L);
-				
-				car.setClavePin(300);
 		
 		bancoFrances.cierreDeTarjeta();
 
@@ -82,6 +77,7 @@ public class Principal {
 		System.out.println("cuentas credito: "+nan.getCuentasCredito());
 		System.out.println("tarjeta debito: " +nan.getTajetaDeDebito());
 		System.out.println("tarjeta credito: "+nan.getTarjetasCredito());
+		System.out.println("CBU: "+nan.getCBU());
 		System.out.println();
 		
 		System.out.println("DE NOE");
@@ -89,14 +85,6 @@ public class Principal {
 		System.out.println("cuentas credito: "+nowi.getCuentasCredito());
 		System.out.println("tarjeta debito: " +nowi.getTajetaDeDebito());
 		System.out.println("tarjeta credito: "+nowi.getTarjetasCredito());
-		System.out.println();
-
-		System.out.println("DE CAR");
-		System.out.println("cuentas monetarias: "+car.getCuentasMonetarias());
-		System.out.println("cuentas credito: "+car.getCuentasCredito());
-		System.out.println("tarjeta debito: " +car.getTajetaDeDebito());
-		System.out.println("tarjeta credito: "+car.getTarjetasCredito());
-		System.out.println();
 		System.out.println();
 
 		CuentaCorriente cuenta = (CuentaCorriente) nowi.getCuentasMonetarias().get(5L);
@@ -107,6 +95,8 @@ public class Principal {
 		
 		InicioJFrame inicio = InicioJFrame.recuperarInicio();
 		inicio.setVisible(true);
+	
+		bancoFrances.save();
 		
 	}
 

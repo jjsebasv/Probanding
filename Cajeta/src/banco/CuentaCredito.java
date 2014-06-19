@@ -1,14 +1,20 @@
 package banco;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import org.joda.time.LocalDate;
 
 
-public class CuentaCredito {
+public class CuentaCredito implements Serializable {
 
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 		private final Cliente titular;
 		private final long nroCuenta;
 		private final LocalDate fechaAlta;
@@ -62,6 +68,7 @@ public class CuentaCredito {
 		}
 		
 		public void cierreLiquidacion ( long nroResumen ){
+			Set<Consumo> consumos = new HashSet<Consumo>();
 			double monto = 0;
 			double saldoAnterior = 0;
 			
@@ -70,6 +77,7 @@ public class CuentaCredito {
 			
 			for (Consumo consumo : consumosDelPeriodo) {
 				monto += consumo.getMonto();
+				consumos.add(consumo);
 			}
 			if ( saldoAnterior >= 0 ){
 				monto += saldoAnterior * TEM; // debia plata
@@ -77,7 +85,8 @@ public class CuentaCredito {
 			else
 				monto += saldoAnterior; // tenia saldo a favor
 			
-			Resumen resumen = new Resumen(nroResumen , monto, this.titular);
+
+			Resumen resumen = new Resumen(nroResumen , monto, this.titular, consumos);
 			this.resumenes.put(this.resumenes.size()+1L, resumen);
 			removerConsumos();
 		}

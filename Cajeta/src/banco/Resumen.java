@@ -3,13 +3,16 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.joda.time.LocalDate;
 
 
-public class Resumen {
-	
+public class Resumen implements Serializable{
+
 	private Cliente duenio;
 	private final double PORCENTAJE = 0.3;
 	private final long numeroResumen;
@@ -18,14 +21,16 @@ public class Resumen {
 	private final LocalDate fechaCierre;
 	private final LocalDate fechaVencimiento;
 	private double montoAbonado;
+	private Set<Consumo> consumos;
 	
-	public Resumen ( long numeroResumen, double monto, Cliente duenio ){
+	public Resumen ( long numeroResumen, double monto, Cliente duenio, Set<Consumo> consumos ){
 		this.numeroResumen = numeroResumen;
 		this.monto = monto;
 		this.pagoMinimo = monto * PORCENTAJE;
 		this.fechaCierre = new LocalDate();
 		this.fechaVencimiento = this.fechaCierre.plusWeeks(2);
 		this.duenio = duenio;
+		this.consumos = consumos;
 		
 	}
 
@@ -52,6 +57,11 @@ public class Resumen {
 			bw.newLine();
 			bw.append("MONTO: "+this.monto);
 			bw.newLine();
+			bw.newLine();
+			for (Consumo consumo : consumos) {
+				bw.append(consumo.toString());
+				bw.newLine();
+			}
 			bw.newLine();
 			bw.append("******************************************************************");
 			bw.newLine();

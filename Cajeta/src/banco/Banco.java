@@ -1,4 +1,16 @@
 package banco;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
+import java.io.SerializablePermission;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,7 +22,12 @@ import exception.NoExisteClienteExcepcion;
 import exception.NoExisteLaCuentaExcepcion;
 import exception.NoPoseeSaldoExcepcion;
 import exception.NoSePuedeDepositarChequeExcepcion;
-public class Banco {
+public class Banco implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	//prueba
 	private static Banco bancoFrances = null;
 
@@ -19,7 +36,6 @@ public class Banco {
 	
 	private Set<Tarjeta> listaTarjetas;
 	private Set<TarjetaDeCoordenadas> listaTarjetasCoord;
-	private Set<Seguro> listaSeguros;
 	
 	private Map<Long,CuentaCredito> listaCuentasCredito;
 	private Map<Long,Resumen> listaResumenes;
@@ -38,7 +54,6 @@ public class Banco {
 		listaCuentasCorriente = new HashMap<Long,CuentaCorriente>();
 		listaCuentasCredito = new HashMap<Long,CuentaCredito>();
 		listaTarjetas = new HashSet<Tarjeta>();
-		listaSeguros = new HashSet<Seguro>();
 		listaResumenes = new HashMap<Long,Resumen>();
 		listaTarjetasCoord = new HashSet<TarjetaDeCoordenadas>();
 		listaUsuarios = new HashMap<Long, Usuario>();
@@ -76,10 +91,6 @@ public class Banco {
 		this.verCliente(dni).setClavePin(clavePin);
 	}
 	
-	public void generacionClaveHome ( int claveHome, long dni){
-		this.verCliente(dni).setClaveHomeBanking(claveHome);
-	}
-	
 	public void generacionUsuario ( String usuario, long dni){
 		this.verCliente(dni).setUsuario(usuario);
 	}
@@ -113,16 +124,6 @@ public class Banco {
 		
 	}
 	
-	// EL CLIENTE ES NUEVO.
-	public void altaCajaDeAhorro ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento) throws NoExisteClienteExcepcion{
-		if ( this.verCliente(dni) == null ){
-			Usuario usuario = new Usuario(dni, apellido, domicilio, nombre, telefono, fechaNacimiento);
-			Cliente cliente = new Cliente(this.listaClientes.size()+1L);
-			this.listaClientes.put(usuario, cliente);
-		}
-		altaCajaAhorro(dni);	
-	}
-	
 	// EL CLIENTE EXISTE. 
 	public void altaCuentaCorriente ( long DNI, double giroEnDescubierto ) throws NoExisteClienteExcepcion{
 		if ( this.verCliente(DNI) == null ){
@@ -139,16 +140,6 @@ public class Banco {
 		}
 	}
 	
-	// EL CLIENTE ES NUEVO
-	public void altaCuentaCorriente ( long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento, double giroEnDescubierto){
-		if ( verCliente(dni) == null ){
-			Usuario usuario = new Usuario(dni, apellido, domicilio, nombre, telefono, fechaNacimiento);
-			Cliente cliente = new Cliente(this.listaClientes.size()+1L);
-			this.listaClientes.put(usuario, cliente);
-			this.listaUsuarios.put(dni, usuario);
-		}
-		altaCuentaCorriente(dni,giroEnDescubierto);
-	}
 	
 	// 	EL CLIENTE EXISTE
 	public void altaCuentaCredito( long DNI, String marca, double limiteCompra ){
@@ -160,21 +151,11 @@ public class Banco {
 			TarjetaDeCredito tarjetaDeCredito = nuevaTarjetaDeCredito(cuentaCredito, limiteCompra,1,marca);
 			cuentaCredito.setTarTitular(tarjetaDeCredito);
 			Banco.recuperarMiBanco().verCliente(DNI).getTarjetasCredito().put(tarjetaDeCredito.getNumeroTarjeta(), tarjetaDeCredito);
-			verCliente(DNI).getCuentasCredito().put(cuentaCredito.getNroCuenta(), cuentaCredito);
+			Banco.recuperarMiBanco().getListaCuentasCredito().put(cuentaCredito.getNroCuenta(), cuentaCredito);
+			Banco.recuperarMiBanco().verCliente(DNI).getCuentasCredito().put(cuentaCredito.getNroCuenta(), cuentaCredito);
 		}
 	}
 	
-	// EL CLIENTE ES NUEVO
-	public void altaCuentaCredito(long dni, String apellido, String marca, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento, double limiteCompra){
-		if ( verCliente(dni) == null ){
-			Usuario usuario = new Usuario(dni, apellido, domicilio, nombre, telefono, fechaNacimiento);
-			Cliente cliente = new Cliente(this.listaClientes.size()+1L);
-			this.listaClientes.put(usuario, cliente);
-			this.listaUsuarios.put(dni, usuario);
-		}
-		altaCuentaCredito(dni, marca, limiteCompra);
-	}
-
 	
 	// 
 	
@@ -208,7 +189,7 @@ public class Banco {
 	// EXTRACCION //
 
 	
-	public void extraccion ( CajaDeAhorro cuenta, double monto){
+	public void extraccion ( CajaDeAhorro cuenta, double monto) throws NoPoseeSaldoExcepcion{
 		if ( cuenta.getSaldoActual() >= monto ){
 			cuenta.setSaldoActual(cuenta.getSaldoActual()-monto);
 		}
@@ -218,7 +199,7 @@ public class Banco {
 		
 	}
 	
-	public void extraccion ( CuentaCorriente cuenta, double monto){
+	public void extraccion ( CuentaCorriente cuenta, double monto) throws NoPoseeSaldoExcepcion{
 		if ( (cuenta.getSaldoActual()+cuenta.getGiroEnDescubierto()) >= monto ){
 			cuenta.setSaldoActual(cuenta.getSaldoActual()-monto);
 		}
@@ -268,7 +249,7 @@ public class Banco {
 	// TRANSFERENCIA //
 	
 	// Desde una caja de ahorro a cualquier cuenta del mismo banco
-	public void transferencia ( double monto, CajaDeAhorro emisora, Cuenta cuentaDestino){
+	public void transferencia ( double monto, CajaDeAhorro emisora, Cuenta cuentaDestino) throws NoPoseeSaldoExcepcion{
 		if ( emisora.getSaldoActual() >= monto ){
 			if ( this.listaCajasDeAhorro.values().contains(cuentaDestino) || this.listaCuentasCorriente.values().contains(cuentaDestino) ){
 				emisora.setSaldoActual(emisora.getSaldoActual()-monto);
@@ -284,7 +265,7 @@ public class Banco {
 	}
 	
 	// Desde una cuenta corriente a cualquier cuenta del mismo banco
-	public void transferencia ( double monto, CuentaCorriente emisora, Cuenta cuentaDestino){
+	public void transferencia ( double monto, CuentaCorriente emisora, Cuenta cuentaDestino) throws NoPoseeSaldoExcepcion{
 		if ( emisora.getSaldoActual()+emisora.getGiroEnDescubierto() >= monto ){
 			if ( this.listaCajasDeAhorro.values().contains(cuentaDestino) || this.listaCuentasCorriente.values().contains(cuentaDestino) ){
 				emisora.setSaldoActual(emisora.getSaldoActual()-monto);
@@ -313,7 +294,7 @@ public class Banco {
 	}
 	
 	// Desde cualquier cuenta, a un cbu de otro banco. Se transfiere el dinero sin validar
-	public void transferenciaPorCbu ( double monto, Cuenta emisora, long CBUdestino){
+	public void transferenciaPorCbu ( double monto, Cuenta emisora, long CBUdestino) throws NoPoseeSaldoExcepcion{
 		if ( emisora.getSaldoActual() >= monto ){
 			emisora.setSaldoActual(emisora.getSaldoActual()-monto);
 		}
@@ -326,8 +307,13 @@ public class Banco {
 	// ---------------------------------------------------------------------------------------------- //
 	
 	public boolean disponeSaldo(double monto, long nroCuenta){
-		if ( this.listaCajasDeAhorro.containsKey(nroCuenta) || this.listaCuentasCorriente.containsKey(nroCuenta) ){
-			if(this.listaCajasDeAhorro.get(nroCuenta).getSaldoActual() > monto || (this.listaCuentasCorriente.get(nroCuenta).getSaldoActual()+this.listaCuentasCorriente.get(nroCuenta).getGiroEnDescubierto()) > monto )
+		if ( this.listaCajasDeAhorro.containsKey(nroCuenta) ){
+			if(this.listaCajasDeAhorro.get(nroCuenta).getSaldoActual() > monto ) 
+				return true;
+			else
+				return false;
+		}else if (this.listaCuentasCorriente.containsKey(nroCuenta) ){
+			if((this.listaCuentasCorriente.get(nroCuenta).getSaldoActual()+this.listaCuentasCorriente.get(nroCuenta).getGiroEnDescubierto()) > monto )
 				return true;
 			else
 				return false;
@@ -370,30 +356,6 @@ public class Banco {
 		this.listaResumenes = listaResumenes;
 	}
 
-	
-	// --------------------------- ALTA Y BAJA SEGUROS --------------------------------------------------
-	
-
-	// EL CLIENTE EXISTE
-	public void altaSeguro ( long DNI, String tipo ){
-		if ( this.verCliente(DNI) != null ){
-		Seguro seguro = new Seguro( tipo, this.listaSeguros.size()+1L, CUOTA_MENSUAL_SEGURO);
-		this.verCliente(DNI).getSeguros().add(seguro);
-		}
-		else
-			throw new NoExisteClienteExcepcion();
-		
-	}
-
-	// EL CLIENTE ES NUEVO
-	public void altaSeguro (  String tipo, long dni, String apellido, String domicilio, String nombre, String telefono, LocalDate fechaNacimiento){
-		if ( this.verCliente(dni) == null){
-			Usuario usuario = new Usuario(dni, apellido, domicilio, nombre, telefono, fechaNacimiento);
-			Cliente cliente = new Cliente(this.listaClientes.size()+1L);
-			this.listaClientes.put(usuario, cliente);
-		}
-		altaSeguro(dni,tipo);
-	}
 	
 	// --------------------------- GETTERS -----------------------------------
 
@@ -439,23 +401,32 @@ public class Banco {
 		this.listaTarjetas = listaTarjetas;
 	}
 
-	public Set<Seguro> getListaSeguros() {
-		return listaSeguros;
-	}
-
-	public void setListaSeguros(Set<Seguro> listaSeguros) {
-		this.listaSeguros = listaSeguros;
-	}
-
 	public int getCUOTA_MENSUAL_SEGURO() {
 		return CUOTA_MENSUAL_SEGURO;
 	}   
 	
+	public void save(){
+		
+		FileOutputStream fileOut;
+		try {
+			fileOut = new FileOutputStream("bancoFrances");
+			ObjectOutputStream obj_out = new ObjectOutputStream (fileOut);
+			obj_out.writeObject (Banco.bancoFrances);
+			obj_out.close();
+		} catch ( IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public static Banco recuperarMiBanco() {
-		  if(bancoFrances == null) {
-			  bancoFrances = new Banco();
-		  }
-		  return bancoFrances;
+		
+		if(bancoFrances == null) {
+			
+			bancoFrances = new Banco();
+		}
+		return bancoFrances;
 	}
 	
 	public Map<Long, Usuario> getListaUsuarios() {
@@ -464,6 +435,10 @@ public class Banco {
 
 	public void setListaUsuarios(Map<Long, Usuario> listaUsuarios) {
 		this.listaUsuarios = listaUsuarios;
+	}
+	
+	public void guardar(){
+		bancoFrances = this;
 	}
 	
 }

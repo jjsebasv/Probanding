@@ -25,10 +25,6 @@ public class UltimosMovimientosJFrame extends JFrame {
 	private JPanel contentPane;
 	private ConsultasJFrame padre;
 	private long dni;
-	private JProgressBar progressBar;
-	//private Timer timer;
-	private final JLabel lblNewLabel;
-	//private int j = 0;
 	private final JButton home;
 	
 	/**
@@ -91,21 +87,6 @@ public class UltimosMovimientosJFrame extends JFrame {
 		label_1.setBounds(168, 92, 200, 34);
 		contentPane.add(label_1);
 		
-		progressBar = new JProgressBar();
-		progressBar.setToolTipText("Imprimiendo resumen\n");
-		progressBar.setBackground(Color.CYAN);
-		progressBar.setBounds(6, 252, 378, 20);
-		contentPane.add(progressBar);
-		progressBar.setVisible(false);
-		progressBar.setMaximum(0);
-		progressBar.setMaximum(1000);
-		
-		lblNewLabel = new JLabel("Imprimiendo Resumen...");
-		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
-		lblNewLabel.setForeground(Color.RED);
-		lblNewLabel.setBounds(6, 224, 142, 16);
-		contentPane.add(lblNewLabel);
-		
 		home = new JButton("");
 		home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -117,40 +98,7 @@ public class UltimosMovimientosJFrame extends JFrame {
 		contentPane.add(home);
 		home.setIcon(new ImageIcon("./imagenes/home.png"));
 		home.setVisible(true);
-		lblNewLabel.setVisible(false);
 		
-		TimerTask task = new TimerTask() {
-			
-			private Integer i=0;
-			
-			@Override
-			public void run() {
-				llenarBarra();
-			}
-			
-			public void llenarBarra(){
-				  if(i>100){
-					  this.cancel();
-					  progressBar.setVisible(false);
-					  home.setVisible(true);
-					  lblNewLabel.setVisible(false);
-				  }
-				  else{
-					  progressBar.setValue(i++);
-				  }
-			}
-		};
-		
-		Timer t = new Timer();
-		
-		t.scheduleAtFixedRate(task, 0L, 5L);
-		
-		/*
-		timer = new Timer(3,new ActionListener(){
-			  public void actionPerformed(ActionEvent ae){
-			  	llenarBarra();
-			  }
-			 });*/
 	}
 	
 	public void eventoClickCombo( String nroCuenta ){
@@ -174,36 +122,10 @@ public class UltimosMovimientosJFrame extends JFrame {
 		}
 
 		cuentaS.imprimirUltimosMovimientos();
-		
-		this.progressBar.setVisible(true);
-		this.lblNewLabel.setVisible(true);
-		this.home.setVisible(false);
-		llenarBarra();
+		OperacionRealizadaJFrame op = new OperacionRealizadaJFrame(this);
+		this.setVisible(false);
+		op.setVisible(true);
 	}
-	
-	public void llenarBarra(){
-	{
-			/*timer.start();	
-			getContentPane().add(progressBar);
-			
-			  if(j>1000){
-				  timer.stop();
-				  progressBar.setVisible(false);
-				  this.home.setVisible(true);
-				  this.lblNewLabel.setVisible(false);
-			  }
-			  else{
-				  progressBar.setValue(j++);
-			  }*/
-		
-		
-	}
-	
-	
-	}
-	
-	
-	
 	
 	
 	public void clickAtras(){

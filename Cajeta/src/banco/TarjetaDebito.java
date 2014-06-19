@@ -2,6 +2,10 @@ package banco;
 
 public class TarjetaDebito extends Tarjeta {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private TarjetaDeCoordenadas tarjetaCoordVinculada;
 	private final static double LIMITE_COMPRA_DEBITO = 10000.00;
 	private final static double LIMITE_EXTRACCION_DEBITO = 5000.00;

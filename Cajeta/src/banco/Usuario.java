@@ -1,10 +1,16 @@
 package banco;
+import java.io.Serializable;
+
 import org.joda.time.LocalDate;
 
 
  
-public class Usuario {
+public class Usuario implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Celular celular;
 	private final long dni;
 	private final String apellido;
