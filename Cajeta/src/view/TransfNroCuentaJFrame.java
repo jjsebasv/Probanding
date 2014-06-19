@@ -19,7 +19,7 @@ import banco.CajaDeAhorro;
 import banco.Cuenta;
 import banco.CuentaCorriente;
 
-// FUNCIONA
+// FUNCIONA - great
 // mismo banco --->> Validar!  checked!
 
 

@@ -25,7 +25,7 @@ import banco.Cuenta;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-// FUNCIONA! 
+// FUNCIONA! - great 
 //Banco distinto -->> no validar
 
 public class TransfCBUJFrame extends JFrame {

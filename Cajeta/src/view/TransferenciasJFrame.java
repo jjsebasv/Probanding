@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 import banco.Banco;
 import banco.Cuenta;
-
+//funciona
 
 public class TransferenciasJFrame extends JFrame {
 
