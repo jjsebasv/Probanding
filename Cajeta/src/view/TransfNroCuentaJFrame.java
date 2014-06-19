@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import exception.NoPoseeSaldoExcepcion;
 import banco.Banco;
 import banco.CajaDeAhorro;
 import banco.Cuenta;
@@ -108,11 +109,23 @@ public class TransfNroCuentaJFrame extends JFrame {
 				if( destino.getText()!= null && isNumeric( destino.getText() ) ) {
 					System.out.println("entro al if");
 						if( Banco.recuperarMiBanco().getListaCuentasCorriente().containsKey( Long.parseLong(destino.getText()) ) )  {
-							Banco.recuperarMiBanco().transferencia(getMonto(), (CuentaCorriente)getCuenta(), Banco.recuperarMiBanco().getListaCuentasCorriente().get(Long.valueOf(destino.getText() ) ));
+							try {
+								Banco.recuperarMiBanco().transferencia(getMonto(), (CuentaCorriente)getCuenta(), Banco.recuperarMiBanco().getListaCuentasCorriente().get(Long.valueOf(destino.getText() ) ));
+							} catch (NoPoseeSaldoExcepcion e1) {
+								// TODO Auto-generated catch block
+								// No va a entrar aca, el JFrame anterior chequea que tenga saldo
+								e1.printStackTrace();
+							}
 							done();
 						}
 						else if( Banco.recuperarMiBanco().getListaCajasDeAhorro().containsKey(Long.parseLong(destino.getText()) ) )  {
-							Banco.recuperarMiBanco().transferencia(getMonto(), (CajaDeAhorro)getCuenta(), Banco.recuperarMiBanco().getListaCajasDeAhorro().get(Long.valueOf(destino.getText() ) ));
+							try {
+								Banco.recuperarMiBanco().transferencia(getMonto(), (CajaDeAhorro)getCuenta(), Banco.recuperarMiBanco().getListaCajasDeAhorro().get(Long.valueOf(destino.getText() ) ));
+							} catch (NoPoseeSaldoExcepcion e1) {
+								// TODO Auto-generated catch block
+								// No va a entrar aca, el JFrame anterior chequea que tenga saldo
+								e1.printStackTrace();
+							}
 							done();
 						}
 						else {
