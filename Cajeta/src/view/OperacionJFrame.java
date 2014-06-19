@@ -63,17 +63,16 @@ public class OperacionJFrame extends JFrame {
 		btnConsultas.setBounds(46, 75, 178, 29);
 		contentPane.add(btnConsultas);
 		
-		JButton btnNewButton_1 = new JButton("PAGO DE SERVICIOS");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnPagoServicios = new JButton("PAGO DE SERVICIOS");
+		btnPagoServicios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PagoDeServicioJFrame pagoDeServicios = new PagoDeServicioJFrame();
-				pagoDeServicios.setVisible(true);
+				pagoServicio();
 			}
 		});
-		btnNewButton_1.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton_1.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
-		btnNewButton_1.setBounds(46, 123, 178, 29);
-		contentPane.add(btnNewButton_1);
+		btnPagoServicios.setHorizontalAlignment(SwingConstants.LEFT);
+		btnPagoServicios.setIcon(new ImageIcon("./imagenes/1307051141_737.png"));
+		btnPagoServicios.setBounds(46, 123, 178, 29);
+		contentPane.add(btnPagoServicios);
 		
 		JButton btnTransferencias = new JButton("TRANSFERENCIAS");
 		btnTransferencias.addActionListener(new ActionListener() {
@@ -149,6 +148,12 @@ public class OperacionJFrame extends JFrame {
 	public void depositos(){
 		DepositosJFrame depositos = new DepositosJFrame(dni,this);
 		depositos.setVisible(true);
+		this.setVisible(false);
+	}
+	
+	public void pagoServicio(){
+		PagoDeServicioJFrame pagoDeServicios = new PagoDeServicioJFrame(dni, this);
+		pagoDeServicios.setVisible(true);
 		this.setVisible(false);
 	}
 	

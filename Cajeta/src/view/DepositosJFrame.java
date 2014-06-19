@@ -1,5 +1,5 @@
 package view;
-// HACER QUE NO HAGA NADA SI NO SELECCIONO NINGUNA CUENTA!!!!!!!!!!!!!!!!
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -124,7 +124,8 @@ public class DepositosJFrame extends JFrame {
 		JButton btnNewButton = new JButton("Efectivo");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoEfectivo();				
+				if(monto.getText() != null)
+					eventoEfectivo();				
 			}
 		});
 		btnNewButton.setBounds(284, 128, 117, 29);
@@ -133,7 +134,8 @@ public class DepositosJFrame extends JFrame {
 		JButton btnNewButton_1 = new JButton("Cheque");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventoCheque();
+				if(monto.getText() != null)
+					eventoCheque();
 			}
 		});
 		btnNewButton_1.setBounds(284, 187, 117, 29);
