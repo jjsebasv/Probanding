@@ -7,11 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+
+import banco.Banco;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -144,11 +149,13 @@ public class ConsultasJFrame extends JFrame {
 	}
 	
 	public void clickAtras(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.clickAtras();
 		this.dispose();
 	}
 
 	public void cerrarSesion(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.cerrarSesion();
 		this.dispose();
 	}

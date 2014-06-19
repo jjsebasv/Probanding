@@ -108,11 +108,13 @@ public class RegistroCelularJFrame extends JFrame {
 		contentPane.add(btnNewButton);
 	}
 	public void clickAtras(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.clickAtras();
 		this.dispose();
 	}
 
 	public void cerrarSesion(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.cerrarSesion();
 		this.dispose();
 		

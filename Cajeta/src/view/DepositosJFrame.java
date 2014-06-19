@@ -151,13 +151,13 @@ public class DepositosJFrame extends JFrame {
 	}
 
 	public void clickAtras(){
-		Banco.recuperarMiBanco().guardar();
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.clickAtras();
 		this.dispose();
 	}
 
 	public void cerrarSesion(){
-		Banco.recuperarMiBanco().guardar();
+		Banco.save(Banco.recuperarMiBanco());
 		this.padre.cerrarSesion();
 		this.dispose();
 		

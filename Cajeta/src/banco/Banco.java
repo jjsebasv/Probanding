@@ -29,7 +29,7 @@ public class Banco implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	//prueba
-	private static Banco bancoFrances = null;
+	private static Banco bancoFrances = Banco.leer();
 
 	private final int CUOTA_MENSUAL_SEGURO = 5;
 	private final int numeroEntidad = 17;
@@ -48,7 +48,7 @@ public class Banco implements Serializable{
 
 	private final String nombre = "Banco Frances";
 
-	private Banco (){
+	public Banco (){
 		listaClientes = new HashMap<Usuario,Cliente>();
 		listaCajasDeAhorro = new HashMap<Long,CajaDeAhorro>();
 		listaCuentasCorriente = new HashMap<Long,CuentaCorriente>();
@@ -405,25 +405,9 @@ public class Banco implements Serializable{
 		return CUOTA_MENSUAL_SEGURO;
 	}   
 	
-	public void save(){
-		
-		FileOutputStream fileOut;
-		try {
-			fileOut = new FileOutputStream("bancoFrances");
-			ObjectOutputStream obj_out = new ObjectOutputStream (fileOut);
-			obj_out.writeObject (Banco.bancoFrances);
-			obj_out.close();
-		} catch ( IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	
 	public static Banco recuperarMiBanco() {
-		
-		if(bancoFrances == null) {
-			
+		if(bancoFrances == null) {			
 			bancoFrances = new Banco();
 		}
 		return bancoFrances;
@@ -440,5 +424,56 @@ public class Banco implements Serializable{
 	public void guardar(){
 		bancoFrances = this;
 	}
+	
+	//**********************************************************************
+	
+	public static void save( Banco bancoFrances ){
+		bancoFrances.guardar();
+		File f = new File("bancoFrances");
+		FileOutputStream fos = null;
+		ObjectOutputStream escribirObjeto = null;
+		try{
+			fos = new FileOutputStream( f );
+		    escribirObjeto = new ObjectOutputStream( fos );
+		    escribirObjeto.writeObject( bancoFrances );
+		    }
+		    catch( Exception e ){ }
+		    finally
+		    {
+		        try{
+		        	if( escribirObjeto != null ) escribirObjeto.close();
+		        }catch( Exception ex ){}
+		    }
+	}
+	
+	public static Banco leer(){
+	    File f = new File("bancoFrances");
+	    FileInputStream fis = null;
+	    ObjectInputStream leerObjeto = null;
+	 
+	    try{
+	        fis = new FileInputStream( f );
+	        leerObjeto = new ObjectInputStream( fis );
+	 
+	        /* Se lee el archivo y lo que devuelve es el objeto guardado
+	         * este por estar guardado como tipo Object hay que castearlo
+	         * en nuestro caso es la clase Dato por lo tanto "CasaBulma casa_bulma = (CasaBulma)leerObjeto.readObject();"
+	         * si fuese un JPanel seria
+	         * Ejemplo: JPanel tablero = (JPanel)leerObjeto.readObject();
+	         */
+	        Banco bancoRecuperado = (Banco)leerObjeto.readObject();
+	        return bancoRecuperado;
+	    }
+	    catch( Exception e ){ }
+	    finally
+	    {
+	        try{
+	            if( leerObjeto != null ) leerObjeto.close();
+	        }catch( Exception ex ){}
+	    }
+	    return null;
+	}
+	
+	
 	
 }

@@ -91,10 +91,12 @@ public class CambioPinJFrame extends JFrame {
 	}
 	
 	public void clickAtras(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.setVisible(true);
 	}
 
 	public void cerrarSesion(){
+		Banco.save(Banco.recuperarMiBanco());
 		padre.setVisible(true);
 		this.dispose();
 	}

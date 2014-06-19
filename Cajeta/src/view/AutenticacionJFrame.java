@@ -202,6 +202,7 @@ public class AutenticacionJFrame extends JFrame {
 	}
 	
 	public void eventoClickCerrarSesion(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.dispose();
 		padre.enable();
 	}

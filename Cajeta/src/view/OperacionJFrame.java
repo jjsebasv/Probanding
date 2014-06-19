@@ -20,6 +20,8 @@ import java.awt.Color;
 
 import javax.swing.ImageIcon;
 
+import banco.Banco;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
@@ -175,10 +177,12 @@ public class OperacionJFrame extends JFrame {
 	}
 	
 	public void clickAtras(){
+		Banco.save(Banco.recuperarMiBanco());
 		this.setVisible(true);
 	}
 
 	public void cerrarSesion(){
+		Banco.save(Banco.recuperarMiBanco());
 		padre.setVisible(true);
 		this.dispose();
 	}
